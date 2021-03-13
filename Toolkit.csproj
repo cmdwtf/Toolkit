@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <RootNamespace>cmdwtf.Toolkit</RootNamespace>
+    <AssemblyName>cmdwtf.Toolkit</AssemblyName>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Description>A small collection of utility functions and tools created over the years, bundled up in a single package for easy inclusion and management. This is a meta package containing all the various bits of the toolkit.</Description>
+    <Copyright>© 2021 Chris Marc Dailey</Copyright>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <PackageProjectUrl>https://cmd.wtf/projects/toolkit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/cmdwtf/Toolkit</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>win32, windows, dialogs, winforms, history, undo, redo, utilities, extensions, helpers</PackageTags>
+    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+    <PackageId>cmdwtf.Toolkit</PackageId>
+    <Authors>Chris Marc Dailey (nitz)</Authors>
+    <Company>cmd.wtf</Company>
+    <Product>cmd.wtf Toolkit</Product>
+    <Version>0.9.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="Toolkit.Core\Toolkit.Core.csproj" />
+    <ProjectReference Include="Toolkit.History\Toolkit.History.csproj" />
+    <ProjectReference Include="Toolkit.Win32\Toolkit.Win32.csproj" />
+    <ProjectReference Include="Toolkit.WinForms.Dialogs\Toolkit.WinForms.Dialogs.csproj" />
+    <ProjectReference Include="Toolkit.WinForms\Toolkit.WinForms.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove=".\**" />
+    <EmbeddedResource Remove=".\**" />
+    <None Remove=".\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="copyright" />
+    <None Include=".editorconfig" />
+    <None Include="*.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>cmdwtf.Toolkit.Win32</RootNamespace>
+    <AssemblyName>cmdwtf.Toolkit.Win32</AssemblyName>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Description>A small collection of Windows specific utility functions and tools.</Description>
+    <Copyright>© 2021 Chris Marc Dailey</Copyright>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <PackageProjectUrl>https://cmd.wtf/projects/toolkit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/cmdwtf/Toolkit</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>win32, windows, utilities, extensions, helpers</PackageTags>
+    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+    <PackageId>cmdwtf.Toolkit.Win32</PackageId>
+    <Authors>Chris Marc Dailey (nitz)</Authors>
+    <Company>cmd.wtf</Company>
+    <Product>cmd.wtf Win32 Toolkit</Product>
+    <Version>0.9.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Security.Principal.Windows" Version="5.0.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
