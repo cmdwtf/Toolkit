@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
 using static cmdwtf.Toolkit.WinForms.Native.Gdi32;
+using static cmdwtf.Toolkit.WinForms.Native.GdiPlus;
 
 namespace cmdwtf.Toolkit.WinForms
 {
@@ -147,6 +148,46 @@ namespace cmdwtf.Toolkit.WinForms
 				graphicsPath.CloseAllFigures();
 				return graphicsPath;
 			}
+		}
+
+		public static void FillRectangleRadialGradient(this Graphics g, System.Drawing.Color fillColor, Rectangle target, System.Drawing.Color? highlightColor = null)
+			=> g.FillRectangleRadialGradient(fillColor, target, highlightColor);
+
+		// thanks, https://www.codeproject.com/Articles/20018/Gradients-made-easy
+		public static void FillRectangleRadialGradient(this Graphics g, System.Drawing.Color fillColor, RectangleF target, System.Drawing.Color? highlightColor = null)
+		{
+			var path = new GraphicsPath();
+			path.AddEllipse(target);
+
+			// Optional: create a blend for the gradient
+			//Blend blend = new Blend();
+
+			if (highlightColor == null)
+			{
+				highlightColor = System.Drawing.Color.White;
+			}
+
+			var brush = new PathGradientBrush(path)
+			{
+				//CenterPoint = new PointF(target.Width / 2, target.Height / 2),
+				CenterColor = highlightColor.Value,
+				SurroundColors = new System.Drawing.Color[] { fillColor },
+				WrapMode = WrapMode.Clamp
+				//Blend = blend
+			};
+
+			// for some reason, PathGradientBrush.GammaCorrection isn't in the API,
+			// so we have to call it natively ourselves.
+			SetPathGammaCorrection(brush, true);
+
+			//pgb.SetSigmaBellShape(0);
+
+			//g.FillPath(pgb, gp);
+			g.FillRectangle(new SolidBrush(fillColor), target);
+			g.FillRectangle(brush, target);
+
+			brush.Dispose();
+			path.Dispose();
 		}
 
 		/// <summary>
