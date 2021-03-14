@@ -1,0 +1,25 @@
+<Project>
+  <PropertyGroup>
+    <LibraryFrameworks>net5.0</LibraryFrameworks>
+    <LibraryFrameworksWindows>net5.0-windows</LibraryFrameworksWindows>
+    <LangVersion>9.0</LangVersion>
+    <BaseRootNamespace>cmdwtf.Toolkit</BaseRootNamespace>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Copyright>© 2021 Chris Marc Dailey</Copyright>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <PackageProjectUrl>https://cmd.wtf/projects/toolkit</PackageProjectUrl>
+    <BasePackageId>cmdwtf.Toolkit</BasePackageId>
+    <RepositoryUrl>https://github.com/cmdwtf/Toolkit</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Authors>Chris Marc Dailey (nitz)</Authors>
+    <Company>cmd.wtf</Company>
+    <Version>0.10.0</Version>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+</Project>

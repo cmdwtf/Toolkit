@@ -1,0 +1,6 @@
+<Project>
+  <Import Project=".meta\Defaults.props" />
+  <Import Project=".meta\Version.props" />
+  <Import Project=".meta\References.props" />
+  <Import Project=".meta\PackageStrings.props" />
+</Project>

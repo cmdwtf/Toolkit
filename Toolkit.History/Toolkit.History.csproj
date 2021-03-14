@@ -1,35 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0-windows</TargetFramework>
-    <UseWindowsForms>true</UseWindowsForms>
-    <RootNamespace>cmdwtf.Toolkit.History</RootNamespace>
-    <AssemblyName>cmdwtf.Toolkit.History</AssemblyName>
-    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Description>A small history toolkit. Supports saving states, undo, and redo. States are saved as serialized JSON objects, via the Newtonsoft.Json library.</Description>
-    <Copyright>© 2021 Chris Marc Dailey</Copyright>
-    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-    <PackageProjectUrl>https://cmd.wtf/projects/toolkit</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/cmdwtf/Toolkit</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageTags>history, undo, redo</PackageTags>
-    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
-    <PackageId>cmdwtf.Toolkit.History</PackageId>
-    <Authors>Chris Marc Dailey (nitz)</Authors>
-    <Company>cmd.wtf</Company>
+    <TargetFrameworks>$(LibraryFrameworks)</TargetFrameworks>
+    <RootNamespace>$(BaseRootNamespace).History</RootNamespace>
+    <AssemblyName>$(BaseRootNamespace).History</AssemblyName>
+    <PackageId>$(BasePackageId).History</PackageId>
     <Product>cmd.wtf History Toolkit</Product>
-    <Version>0.9.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,75 @@
+<Project>
+  <Choose>
+    <When Condition="'$(MSBuildProjectName)' == 'Toolkit'">
+      <PropertyGroup>
+        <PackageReleaseNotes>
+          Cleanup="" and refactoring. Added `FillRectangleRadialGradient()` to `WinForms`.
+        </PackageReleaseNotes>
+        <Description>
+          A small collection of utility functions and tools created over the years,
+          bundled up in a single package for easy inclusion and management. This is
+          a meta package containing all the various bits of the toolkit.
+        </Description>
+        <PackageTags>win32, windows, dialogs, winforms, history, undo, redo, utilities, extensions, helpers</PackageTags>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(MSBuildProjectName)' == 'Toolkit.Core'">
+      <PropertyGroup>
+        <PackageReleaseNotes>
+          Cleanup and refactoring.
+        </PackageReleaseNotes>
+        <Description>
+          A small collection of utility functions and tools created over the years,
+          bundled up in a single package for easy inclusion and management.
+        </Description>
+        <PackageTags>utilities, extensions, helpers</PackageTags>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(MSBuildProjectName)' == 'Toolkit.History'">
+      <PropertyGroup>
+        <PackageReleaseNotes>
+          Cleanup and refactoring.
+        </PackageReleaseNotes>
+        <Description>
+          A small history toolkit. Supports saving states, undo, and redo. States
+          are saved as serialized JSON objects, via the Newtonsoft.Json library.
+        </Description>
+        <PackageTags>history, undo, redo</PackageTags>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(MSBuildProjectName)' == 'Toolkit.Win32'">
+      <PropertyGroup>
+        <PackageReleaseNotes>
+          Cleanup and refactoring.
+        </PackageReleaseNotes>
+        <Description>
+          A small collection of Windows specific utility functions and tools.
+        </Description>
+        <PackageTags>win32, windows, utilities, extensions, helpers</PackageTags>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(MSBuildProjectName)' == 'Toolkit.WinForms'">
+      <PropertyGroup>
+        <PackageReleaseNotes>
+          Cleanup and refactoring. Added `FillRectangleRadialGradient()`.
+        </PackageReleaseNotes>
+        <Description>
+          A collection of tools, extensions, and helpers to get a little more out
+          of WinForms that isn't provided by the system components.
+        </Description>
+        <PackageTags>winforms, utilities, extensions, helpers</PackageTags>
+      </PropertyGroup>
+    </When>
+    <When Condition="'$(MSBuildProjectName)' == 'Toolkit.WinForms.Dialogs'">
+      <PropertyGroup>
+        <PackageReleaseNotes>
+          Cleanup and refactoring.
+        </PackageReleaseNotes>
+        <Description>
+          A small toolkit that provides easy-to-use Ookii.Dialogs functionality through MessageBox-style APIs.
+        </Description>
+        <PackageTags>dialogs, winforms, utilities, extensions, helpers</PackageTags>
+      </PropertyGroup>
+    </When>
+  </Choose>
+</Project>
