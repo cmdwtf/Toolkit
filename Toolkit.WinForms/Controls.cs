@@ -6,7 +6,8 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 using static System.Math;
-using static cmdwtf.Toolkit.WinForms.Native.Gdip;
+using static cmdwtf.Toolkit.WinForms.Native.Gdi32;
+using static cmdwtf.Toolkit.WinForms.Native.User32;
 using static cmdwtf.Toolkit.WinForms.Native.Windows;
 
 namespace cmdwtf.Toolkit.WinForms

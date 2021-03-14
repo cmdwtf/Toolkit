@@ -113,5 +113,32 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <returns>The new rectangle.</returns>
 		public static Rectangle Subtract(this Rectangle rect, int width, int height)
 			=> new(rect.Location, new Size(rect.Width - width, rect.Height - height));
+
+		/// <summary>
+		/// An alias for getting the shortest side of the rectangle.
+		/// </summary>
+		/// <param name="rect">The rectangle to check.</param>
+		/// <returns>A float representing the length of the shortest side.</returns>
+		public static float ShortestSide(RectangleF rect)
+			=> Min(rect.Width, rect.Height);
+
+		/// <inheritdoc cref="ShortestSide(RectangleF)"/>
+		public static int ShortestSide(Rectangle rect)
+			=> Min(rect.Width, rect.Height);
+
+		/// <summary>
+		/// Returns true if a size has a width and height greater than zero,
+		/// and both are actual numbers.
+		/// </summary>
+		/// <param name="size">The size to check.</param>
+		/// <returns>True, if the size is valid.</returns>
+		public static bool IsValidSize(this SizeF size)
+			=> !size.IsEmpty
+			&& !float.IsNaN(size.Width)
+			&& !float.IsNaN(size.Height);
+
+		/// <inheritdoc cref="IsValidSize(SizeF)"/>
+		public static bool IsValidSize(this Size size)
+			=> !size.IsEmpty;
 	}
 }

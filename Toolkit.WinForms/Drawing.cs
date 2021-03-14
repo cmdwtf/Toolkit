@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
-using static cmdwtf.Toolkit.WinForms.Native.Gdip;
+using static cmdwtf.Toolkit.WinForms.Native.Gdi32;
 
 namespace cmdwtf.Toolkit.WinForms
 {
@@ -159,7 +159,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="color">The color of the brush to create.</param>
 		/// <returns>The native brush handle.</returns>
 		public static Native.BrushHandle CreateSolidBrush(this IntPtr _, System.Drawing.Color color)
-			=> Native.Gdip.CreateSolidBrush(ColorTranslator.ToWin32(color));
+			=> Native.Gdi32.CreateSolidBrush(ColorTranslator.ToWin32(color));
 
 		/// <summary>
 		/// Sets the window's background brush to the given native brush.

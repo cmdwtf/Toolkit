@@ -3,39 +3,19 @@ using System.Runtime.InteropServices;
 
 namespace cmdwtf.Toolkit.WinForms.Native
 {
-
 	/// <summary>
-	/// Native methods, constants, and structs for GDI+/Forms operations.
+	/// Native methods, constants, and structs for GDI operations.
 	/// See Win32 documentation for more detail.
 	/// </summary>
 	/// <remarks>Some information reproduced here from https://pinvoke.net/ </remarks>
-	internal static class Gdip
+	internal static class Gdi32
 	{
-		[DllImport(Libraries.User32, CharSet = CharSet.Auto, ExactSpelling = true, SetLastError = true)]
-		public static extern int ValidateRect(IntPtr hWnd, ref RECT rect);
-		[DllImport(Libraries.User32, CharSet = CharSet.Auto, ExactSpelling = true, SetLastError = true)]
-		public static extern bool ValidateRect(IntPtr hWnd, IntPtr lpRect);
-		[DllImport(Libraries.User32, CharSet = CharSet.Auto, ExactSpelling = false, SetLastError = true)]
-		public static extern IntPtr GetDC(IntPtr hWnd);
-
-		[DllImport(Libraries.User32)]
-		public static extern IntPtr GetSysColorBrush(int nIndex);
-
-		[DllImport(Libraries.Gdi32, CharSet = CharSet.Auto, ExactSpelling = true, SetLastError = true)]
-		public static extern bool BitBlt(HandleRef hDC, int x, int y, int nWidth, int nHeight, HandleRef hSrcDC, int xSrc, int ySrc, int dwRop);
-		[DllImport(Libraries.Gdi32, CharSet = CharSet.Auto, ExactSpelling = true, SetLastError = true)]
-		public static extern bool FillRgn(IntPtr hdc, IntPtr hrgn, IntPtr hbr);
-		[DllImport(Libraries.Gdi32, CharSet = CharSet.Auto, ExactSpelling = true, SetLastError = true)]
-		public static extern IntPtr CreateRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect);
-		[DllImport(Libraries.Gdi32, CharSet = CharSet.Auto, ExactSpelling = true, SetLastError = true)]
-		public static extern BrushHandle CreateSolidBrush(int crColor);
-		[DllImport(Libraries.Gdi32, CharSet = CharSet.Auto, ExactSpelling = true, SetLastError = true)]
-		public static extern bool DeleteObject(IntPtr hObject);
+		public const string NativeLibrary = "gdi32.dll";
 
 		public const int GCL_HBRBACKGROUND = -10;
 
 		[Flags]
-		internal enum DrawingOptions
+		public enum DrawingOptions
 		{
 			PRF_CHECKVISIBLE = 0x01,
 			PRF_NONCLIENT = 0x02,
@@ -152,5 +132,23 @@ namespace cmdwtf.Toolkit.WinForms.Native
 
 			public override string ToString() => string.Format(System.Globalization.CultureInfo.CurrentCulture, "{{Left={0},Top={1},Right={2},Bottom={3}}}", Left, Top, Right, Bottom);
 		}
+
+		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool BitBlt(HandleRef hDC, int x, int y, int nWidth, int nHeight, HandleRef hSrcDC, int xSrc, int ySrc, int dwRop);
+
+		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
+		public static extern IntPtr CreateRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect);
+
+		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
+		public static extern BrushHandle CreateSolidBrush(int crColor);
+
+		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool DeleteObject(IntPtr hObject);
+
+		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool FillRgn(IntPtr hdc, IntPtr hrgn, IntPtr hbr);
 	}
 }

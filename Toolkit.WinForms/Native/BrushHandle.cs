@@ -19,7 +19,7 @@ namespace cmdwtf.Toolkit.WinForms.Native
 
 		protected override bool ReleaseHandle()
 		{
-			Gdip.DeleteObject(handle);
+			Gdi32.DeleteObject(handle);
 			return true;
 		}
 	}

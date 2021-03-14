@@ -8,9 +8,12 @@ namespace cmdwtf.Toolkit.Win32.Native
 	/// See Win32 documentation for more detail.
 	/// </summary>
 	/// <remarks>Some information reproduced here from https://pinvoke.net/ </remarks>
-	internal class Kernel
+	internal class Kernel32
 	{
-		[DllImport(Libraries.Kernel, CharSet = CharSet.Auto)]
+		public const string NativeLibrary = "kernel32.dll";
+
+		[DllImport(NativeLibrary, CharSet = CharSet.Auto, ExactSpelling = true, SetLastError = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
 		public static extern bool CloseHandle(IntPtr handle);
 	}
 }

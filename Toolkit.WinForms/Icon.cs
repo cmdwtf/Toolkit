@@ -2,7 +2,9 @@
 using System.IO;
 using System.Runtime.InteropServices;
 
-using static cmdwtf.Toolkit.WinForms.Native.Icon;
+using static cmdwtf.Toolkit.WinForms.Native.CommCtl32;
+using static cmdwtf.Toolkit.WinForms.Native.Shell32;
+using static cmdwtf.Toolkit.WinForms.Native.User32;
 
 using SDIcon = System.Drawing.Icon;
 

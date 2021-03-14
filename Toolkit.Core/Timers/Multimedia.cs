@@ -136,8 +136,10 @@ namespace cmdwtf.Toolkit.Timers
 
 			state[0] = callback;
 			uint userCtx = 0;
-			uint timerId = TimeSetEvent((uint)millisecondsDelay, 0, callback, ref userCtx, _eventTypeSingle);
-			if (timerId == 0)
+
+			MMRESULT result = TimeSetEvent((uint)millisecondsDelay, 0, callback, ref userCtx, _eventTypeSingle);
+
+			if (result != MMRESULT.MMSYSERR_NOERROR)
 			{
 				int error = Marshal.GetLastWin32Error();
 				throw new Win32Exception(error);
@@ -161,12 +163,17 @@ namespace cmdwtf.Toolkit.Timers
 			// Event type = 0, one off event
 			// Event type = 1, periodic event
 			uint userCtx = 0;
-			_timerId = TimeSetEvent((uint)Interval, (uint)Resolution, _callback, ref userCtx, _eventTypePeriodic);
-			if (_timerId == 0)
+			_timerId = 0;
+
+			MMRESULT result = TimeSetEvent((uint)Interval, (uint)Resolution, _callback, ref userCtx, _eventTypePeriodic);
+
+			if (result == 0)
 			{
 				int error = Marshal.GetLastWin32Error();
 				throw new Win32Exception(error);
 			}
+
+			_timerId = (uint)result;
 		}
 
 		/// <summary>

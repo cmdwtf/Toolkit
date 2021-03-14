@@ -53,8 +53,8 @@ namespace cmdwtf.Toolkit.Win32
 		public bool LoggedOn => _accessToken != IntPtr.Zero;
 
 		private IntPtr _accessToken = IntPtr.Zero;
-		private const int _logonType = AdvancedApi.LOGON32_LOGON_INTERACTIVE;
-		private const int _logonProvider = AdvancedApi.LOGON32_PROVIDER_DEFAULT;
+		private const int _logonType = AdvApi32.LOGON32_LOGON_INTERACTIVE;
+		private const int _logonProvider = AdvApi32.LOGON32_PROVIDER_DEFAULT;
 
 		/// <summary>
 		/// Logs in, getting a windows identity representing the account you want
@@ -77,7 +77,7 @@ namespace cmdwtf.Toolkit.Win32
 			{
 				Logout();
 
-				bool loggedOn = AdvancedApi.LogonUser(userName, domainName, password, _logonType, _logonProvider, ref _accessToken);
+				bool loggedOn = AdvApi32.LogonUser(userName, domainName, password, _logonType, _logonProvider, ref _accessToken);
 
 				if (loggedOn)
 				{
@@ -103,7 +103,7 @@ namespace cmdwtf.Toolkit.Win32
 		{
 			if (LoggedOn)
 			{
-				_ = Kernel.CloseHandle(_accessToken);
+				_ = Kernel32.CloseHandle(_accessToken);
 			}
 
 			_accessToken = IntPtr.Zero;

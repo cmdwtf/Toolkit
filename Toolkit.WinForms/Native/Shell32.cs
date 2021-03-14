@@ -4,13 +4,13 @@ using System.Runtime.InteropServices;
 namespace cmdwtf.Toolkit.WinForms.Native
 {
 	/// <summary>
-	/// Native methods, constants, and structs for Icon operations.
+	/// Native methods, constants, and structs for Shell32 operations.
 	/// See Win32 documentation for more detail.
 	/// </summary>
 	/// <remarks>Some information reproduced here from https://pinvoke.net/ </remarks>
-	internal static class Icon
+	internal static class Shell32
 	{
-		public const int ILD_TRANSPARENT = 0x00000001;
+		public const string NativeLibrary = "shell32.dll";
 
 		public const uint SHGFI_ICON = 0x000000100;
 
@@ -39,26 +39,7 @@ namespace cmdwtf.Toolkit.WinForms.Native
 			public string szTypeName;
 		};
 
-		public struct IconInfo
-		{
-			public bool fIcon;
-			public int xHotspot;
-			public int yHotspot;
-			public IntPtr hbmMask;
-			public IntPtr hbmColor;
-		}
-
-		[DllImport(Libraries.Shell32, CharSet = CharSet.Unicode)]
+		[DllImport(NativeLibrary, CharSet = CharSet.Unicode)]
 		public static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, ref SHFILEINFO psfi, uint cbFileInfo, uint uFlags);
-		[DllImport(Libraries.User32, SetLastError = true)]
-		[return: MarshalAs(UnmanagedType.Bool)]
-		public static extern bool DestroyIcon(IntPtr hIcon);
-		[DllImport(Libraries.ComCtl32, SetLastError = true)]
-		public static extern IntPtr ImageList_GetIcon(IntPtr html, int i, int flags);
-		[DllImport(Libraries.User32)]
-		[return: MarshalAs(UnmanagedType.Bool)]
-		public static extern bool GetIconInfo(IntPtr hIcon, ref IconInfo pIconInfo);
-		[DllImport(Libraries.User32)]
-		public static extern IntPtr CreateIconIndirect(ref IconInfo icon);
 	}
 }

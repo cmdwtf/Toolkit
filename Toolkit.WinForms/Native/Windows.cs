@@ -10,17 +10,6 @@ namespace cmdwtf.Toolkit.WinForms.Native
 	/// <remarks>Some information reproduced here from https://pinvoke.net/ </remarks>
 	internal static class Windows
 	{
-		[DllImport(Libraries.User32, CharSet = CharSet.Auto, ExactSpelling = false, SetLastError = true)]
-		public static extern int SendMessage(HandleRef hWnd, WM wMsg, IntPtr wParam, IntPtr lParam);
-		[DllImport(Libraries.User32, CharSet = CharSet.Auto, ExactSpelling = false, SetLastError = true)]
-		public static extern int SendMessage(IntPtr hWnd, WM wMsg, bool wParam, int lParam);
-		[DllImport(Libraries.User32, CharSet = CharSet.Auto, ExactSpelling = false, SetLastError = true)]
-		public static extern bool ShowWindow(HandleRef handle, ShowWindowCommands flags);
-		[DllImport(Libraries.User32, EntryPoint = "SetClassLong", CharSet = CharSet.Auto, ExactSpelling = false, SetLastError = true)]
-		public static extern IntPtr SetClassLongPtr32(IntPtr hWnd, int nIndex, uint dwNewLong);
-		[DllImport(Libraries.User32, EntryPoint = "SetClassLongPtr", CharSet = CharSet.Auto, ExactSpelling = false, SetLastError = true)]
-		public static extern IntPtr SetClassLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
-
 		/// <summary>
 		/// Windows Messages
 		/// Defined in the windows SDK,

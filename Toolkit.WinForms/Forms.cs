@@ -3,7 +3,8 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-using static cmdwtf.Toolkit.WinForms.Native.Gdip;
+using static cmdwtf.Toolkit.WinForms.Native.Gdi32;
+using static cmdwtf.Toolkit.WinForms.Native.User32;
 using static cmdwtf.Toolkit.WinForms.Native.Windows;
 
 namespace cmdwtf.Toolkit.WinForms
@@ -24,7 +25,7 @@ namespace cmdwtf.Toolkit.WinForms
 		public static bool ValidateRect(this IWin32Window window, Rectangle rect)
 		{
 			var nativeRect = new RECT(rect);
-			return Native.Gdip.ValidateRect(window.Handle, ref nativeRect) != 0;
+			return Native.User32.ValidateRect(window.Handle, ref nativeRect);
 		}
 
 		/// <summary>
