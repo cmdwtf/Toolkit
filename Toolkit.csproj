@@ -25,6 +25,7 @@
   <ItemGroup>
     <None Include="copyright" />
     <None Include=".editorconfig" />
+    <None Include="LICENSE" />
     <None Include="*.md">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
