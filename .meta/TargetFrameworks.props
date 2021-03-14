@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <LibraryFrameworks>net5.0;netstandard2.1;net48;net472;net471;net47</LibraryFrameworks>
+    <LibraryFrameworksWindows>net5.0-windows;net48;net472;net471;net47</LibraryFrameworksWindows>
+  </PropertyGroup>
+</Project>

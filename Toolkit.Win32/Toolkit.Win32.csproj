@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(LibraryFrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(LibraryFrameworksWindows)</TargetFrameworks>
     <RootNamespace>$(BaseRootNamespace).Win32</RootNamespace>
     <AssemblyName>$(BaseRootNamespace).Win32</AssemblyName>
     <PackageId>$(BasePackageId).Win32</PackageId>
@@ -9,8 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\Shared\IsExternalInit.cs" Link="IsExternalInit.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Security.Principal.Windows" Version="5.0.0" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>

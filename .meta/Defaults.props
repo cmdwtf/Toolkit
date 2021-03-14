@@ -1,8 +1,6 @@
 <Project>
   <PropertyGroup>
-    <LibraryFrameworks>net5.0</LibraryFrameworks>
-    <LibraryFrameworksWindows>net5.0-windows</LibraryFrameworksWindows>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>preview</LangVersion>
     <BaseRootNamespace>cmdwtf.Toolkit</BaseRootNamespace>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>

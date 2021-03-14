@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ookii.Dialogs.WinForms" Version="1.2.0" />
+    <PackageReference Include="Ookii.Dialogs.WinForms" Version="1.2.0" NoWarn="NU1701" />
   </ItemGroup>
 
   <ItemGroup>

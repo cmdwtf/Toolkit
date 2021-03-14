@@ -60,7 +60,7 @@ namespace cmdwtf.Toolkit.Timers
 		/// <summary>
 		/// Returns the amount of seconds remaining in the countdown.
 		/// </summary>
-		public float TimeLeft => Clamp((float)(_countdownTime - _watch.Elapsed.TotalSeconds), 0.0f, float.MaxValue);
+		public float TimeLeft => Math.Clamp((float)(_countdownTime - _watch.Elapsed.TotalSeconds), 0.0f, float.MaxValue);
 
 		/// <summary>
 		/// Is true if the countdown has expired.

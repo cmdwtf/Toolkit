@@ -1,4 +1,5 @@
 <Project>
+  <Import Project=".meta\TargetFrameworks.props" />
   <Import Project=".meta\Defaults.props" />
   <Import Project=".meta\Version.props" />
   <Import Project=".meta\References.props" />

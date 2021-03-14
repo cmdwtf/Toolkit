@@ -10,7 +10,7 @@ namespace cmdwtf.Toolkit
 	public static class Path
 	{
 		// Path.GetRelativePath wasn't there til .NET Standard 2.1... (.NET 5/.NET Core 3.0)
-#if !NETCOREAPP3_0_OR_GREATER
+#if !NETSTANDARD2_1_OR_GREATER
 		/// <summary>
 		/// Creates a relative path from a given working directory and absolute path.
 		/// </summary>
@@ -33,7 +33,7 @@ namespace cmdwtf.Toolkit
 			}
 
 			// this is the easy case.  The file is inside of the working directory.
-			if (fullPath.StartsWith(workingDirectory, ignoreCase.Value, CultureInfo.CurrentCulture))
+			if (fullPath.StartsWith(workingDirectory, ignoreCase.Value, System.Globalization.CultureInfo.CurrentCulture))
 			{
 				return fullPath.Substring(workingDirectory.Length + 1);
 			}
@@ -71,11 +71,11 @@ namespace cmdwtf.Toolkit
 			}
 
 			// append the file
-			result += fileDirs[^1];
+			result += fileDirs[fileDirs.Length - 1];
 
 			return result;
 		}
-#endif // !NETCOREAPP3_0_OR_GREATER
+#endif // !NETSTANDARD2_1_OR_GREATER
 
 		/// <summary>
 		/// Will determine if a path is a rooted, local path by attempting

@@ -13,8 +13,12 @@ namespace cmdwtf.Toolkit.Win32
 	/// <remarks>
 	/// Based on information from, and general design:
 	/// https://stackoverflow.com/a/51799484/944605
+	/// Worth a look if you need a slightly more robust impersonation framework:
+	/// https://github.com/mattjohnsonpint/SimpleImpersonation
 	/// </remarks>
+#if NET5_0_OR_GREATER
 	[SupportedOSPlatform("windows")]
+#endif //NET5_0_OR_GREATER
 	public class Impersonator : IDisposable
 	{
 		/// <summary>
@@ -161,6 +165,10 @@ namespace cmdwtf.Toolkit.Win32
 
 			WindowsIdentity.RunImpersonated(CurrentIdentity.AccessToken, action);
 		}
+
+
+#if NET5_0_OR_GREATER
+
 		//
 		// Summary:
 		//     Runs the specified asynchronous action as the impersonated Windows identity.
@@ -177,6 +185,7 @@ namespace cmdwtf.Toolkit.Win32
 		//     A task that represents the asynchronous operation of func.
 		public async Task<T> RunImpersonatedAsync<T>(Func<Task<T>> func)
 		{
+
 			if (LoggedOn == false)
 			{
 				throw new UnauthorizedAccessException("You are not logged on as a user to impersonate!");
@@ -184,6 +193,7 @@ namespace cmdwtf.Toolkit.Win32
 
 			return await WindowsIdentity.RunImpersonatedAsync(CurrentIdentity.AccessToken, func).ConfigureAwait(false);
 		}
+
 		//
 		// Summary:
 		//     Runs the specified asynchronous action as the impersonated Windows identity.
@@ -196,6 +206,7 @@ namespace cmdwtf.Toolkit.Win32
 		//     A task that represents the asynchronous operation of the provided System.Func`1.
 		public async Task RunImpersonatedAsync(Func<Task> func)
 		{
+
 			if (LoggedOn == false)
 			{
 				throw new UnauthorizedAccessException("You are not logged on as a user to impersonate!");
@@ -203,6 +214,18 @@ namespace cmdwtf.Toolkit.Win32
 
 			await WindowsIdentity.RunImpersonatedAsync(CurrentIdentity.AccessToken, func).ConfigureAwait(false);
 		}
+
+#else
+
+		// these functions are not supported before .NET 5... And the attribute I have to get compile time errors, is called "Obsolete" 🤷🏻‍♀️
+
+		[Obsolete($"{nameof(RunImpersonatedAsync)} is not supported on .NET versions before .NET 5. Please use the {nameof(RunImpersonated)} instead.", error: true)]
+		public Task<T> RunImpersonatedAsync<T>(Func<Task<T>> func) => throw new NotSupportedException($"{nameof(RunImpersonatedAsync)} is not supported!");
+
+		[Obsolete($"{nameof(RunImpersonatedAsync)} is not supported on .NET versions before .NET 5. Please use the {nameof(RunImpersonated)} instead.", error: true)]
+		public Task RunImpersonatedAsync(Func<Task> func) => throw new NotSupportedException($"{nameof(RunImpersonatedAsync)} is not supported!");
+
+#endif // NET5_0_OR_GREATER
 
 		#region IDisposable
 

@@ -8,7 +8,7 @@ namespace cmdwtf.Toolkit
 	public static class Math
 	{
 		// Math.Clamp wasn't there til .NET Standard 2.1... (.NET 5/.NET Core 3.0)
-#if !NETCOREAPP3_0_OR_GREATER
+#if !NETSTANDARD2_1_OR_GREATER
 		/// <summary>
 		/// Clamps a value between min and max, inclusive.
 		/// </summary>
@@ -74,7 +74,7 @@ namespace cmdwtf.Toolkit
 
 			return i;
 		}
-#endif // !NETCOREAPP3_0_OR_GREATER
+#endif // !NETSTANDARD2_1_OR_GREATER
 
 		/// <summary>
 		/// Linearly interpolates between by the amount specified. The result is unclamped.

@@ -11,7 +11,15 @@ namespace cmdwtf.Toolkit
 	/// </summary>
 	static class Windows
 	{
-		public static bool IsWindows => RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+		public static bool IsWindows =>
+#if NET471_OR_GREATER || NETSTANDARD1_0 || NET5_0_OR_GREATER
+			RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+#elif NET47_OR_GREATER
+			true;
+#else
+			throw new System.NotSupportedException($"{nameof(IsWindows)} depends on RuntimeInformation.IsOSPlatform, which isn't available until .NET 4.7.1");
+#endif // NET471_OR_GREATER
+
 
 		/// <summary>
 		/// #TODO: This should be a record, whenever records get released.
