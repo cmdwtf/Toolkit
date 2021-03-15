@@ -18,7 +18,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  'build & deploy':
+  build-and-deploy:
     if: contains(toJson(github.event.commits), '***NO_CI***') == false
     name: Build & Deploy Toolkit
     
