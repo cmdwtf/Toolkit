@@ -1,22 +1,29 @@
-name: .NET Build
+name: .NET Build & Publish
 
 on:
   push:
     branches: [ main ]
-    paths-ignore: 
+    paths-ignore:
       - '**/*.md'
       - '**/*.gitignore'
       - '**/*.gitattributes'
+      - '**/*.editorconfig'
   pull_request:
     branches: [ main ]
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.gitignore'
+      - '**/*.gitattributes'
+      - '**/*.editorconfig'
   workflow_dispatch:
-    branches: [ main ]
 
 jobs:
   build:
-    if: contains(toJson(github.event.commits), '***NO_CI***') == false && contains(toJson(github.event.commits), '[ci skip]') == false && contains(toJson(github.event.commits), '[skip ci]') == false
+    if: contains(toJson(github.event.commits), '***NO_CI***') == false
+    name: Build Toolkit
     
     runs-on: windows-latest
+    
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -27,28 +34,28 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
+
     - name: Setup .NET 5.0
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    
+
     - name: Setup .NET Core 3.1
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.x
-        
+
     # packages don't like to restore if you don't clean first?
     # see: https://github.com/actions/setup-dotnet/issues/155
     - name: Clean (Restore Workaround)
       run: dotnet clean --configuration Release && dotnet nuget locals all --clear
-        
+
     - name: Restore dependencies
       run: dotnet restore
-      
+
     - name: Build
       run: dotnet build --no-restore --verbosity normal --configuration Release  -property:ContinuousIntegrationBuild=true
-      
+
     - name: Store Package Artifacts
       uses: actions/upload-artifact@v2.2.2
       with:
@@ -56,6 +63,66 @@ jobs:
         path: |
           **/*.nupkg
           **/*.snupkg
-      
+        retention-days: 7
+
+    - name: Store Binary Artifacts
+      uses: actions/upload-artifact@v2.2.2
+      with:
+        name: Library Binaries
+        path: |
+          **/bin/**
+          **/
+        retention-days: 7
+
     - name: Test
       run: dotnet test --no-build --no-restore --verbosity normal
+  publish:
+    needs: build
+    if: github.event_name == 'push'
+    name: Publish to NuGet
+    
+    runs-on: windows-latest
+
+    env:
+      # PROJECT_FILE_PATH: <will set per step>
+      # PACKAGE_NAME: <do not need, will default to project name>
+      VERSION_FILE_PATH: .meta/Version.props
+      VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+      TAG_COMMIT: false # first step will tag, others need not
+      TAG_FORMAT: v*
+      NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+      NUGET_SOURCE: https://api.nuget.org
+      INCLUDE_SYMBOLS: true
+
+    steps:
+      - name: Publish Meta Package & Tag
+        uses: brandedoutcast/publish-nuget@v2.5.5
+        with:
+          PROJECT_FILE_PATH: Toolkit.csproj
+          TAG_COMMIT: true # we will make our tag here!
+
+      - name: Publish Toolkit.Core
+        uses: brandedoutcast/publish-nuget@v2.5.5
+        with:
+          PROJECT_FILE_PATH: Toolkit.Core/Toolkit.Core.csproj
+
+      - name: Publish Toolkit.History
+        uses: brandedoutcast/publish-nuget@v2.5.5
+        with:
+          PROJECT_FILE_PATH: Toolkit.History/Toolkit.History.csproj
+
+      - name: Publish Toolkit.Win32
+        uses: brandedoutcast/publish-nuget@v2.5.5
+        with:
+          PROJECT_FILE_PATH: Toolkit.Win32/Toolkit.Win32.csproj
+
+      - name: Publish Toolkit.WinForms
+        uses: brandedoutcast/publish-nuget@v2.5.5
+        with:
+          PROJECT_FILE_PATH: Toolkit.WinForms/Toolkit.WinForms.csproj
+
+      - name: Publish Toolkit.WinForms.Dialogs
+        uses: brandedoutcast/publish-nuget@v2.5.5
+        with:
+          PROJECT_FILE_PATH: Toolkit.WinForms.Dialogs/Toolkit.WinForms.Dialogs.csproj
+
