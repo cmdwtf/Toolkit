@@ -87,7 +87,7 @@ jobs:
       ####################################### PUBLISH #######################################
 
     - name: Publish Meta Package & Tag
-      uses: brandedoutcast/publish-nuget@v2.5.5
+      uses: nitz/publish-nuget@e19c45c3f73c49284c07620388ea1b8482cffbd7
       with:
         PROJECT_FILE_PATH: Toolkit.csproj
         TAG_COMMIT: true # we will make our tag here!
@@ -96,10 +96,9 @@ jobs:
         TAG_FORMAT: v*
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
         NUGET_SOURCE: https://api.nuget.org
-        INCLUDE_SYMBOLS: true
 
     - name: Publish Toolkit.Core
-      uses: brandedoutcast/publish-nuget@v2.5.5
+      uses: nitz/publish-nuget@e19c45c3f73c49284c07620388ea1b8482cffbd7
       with:
         PROJECT_FILE_PATH: Toolkit.Core/Toolkit.Core.csproj
         TAG_COMMIT: false
@@ -108,10 +107,9 @@ jobs:
         TAG_FORMAT: v*
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
         NUGET_SOURCE: https://api.nuget.org
-        INCLUDE_SYMBOLS: true
 
     - name: Publish Toolkit.History
-      uses: brandedoutcast/publish-nuget@v2.5.5
+      uses: nitz/publish-nuget@e19c45c3f73c49284c07620388ea1b8482cffbd7
       with:
         PROJECT_FILE_PATH: Toolkit.History/Toolkit.History.csproj
         TAG_COMMIT: false
@@ -120,10 +118,9 @@ jobs:
         TAG_FORMAT: v*
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
         NUGET_SOURCE: https://api.nuget.org
-        INCLUDE_SYMBOLS: true
 
     - name: Publish Toolkit.Win32
-      uses: brandedoutcast/publish-nuget@v2.5.5
+      uses: nitz/publish-nuget@e19c45c3f73c49284c07620388ea1b8482cffbd7
       with:
         PROJECT_FILE_PATH: Toolkit.Win32/Toolkit.Win32.csproj
         TAG_COMMIT: false
@@ -132,10 +129,9 @@ jobs:
         TAG_FORMAT: v*
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
         NUGET_SOURCE: https://api.nuget.org
-        INCLUDE_SYMBOLS: true
 
     - name: Publish Toolkit.WinForms
-      uses: brandedoutcast/publish-nuget@v2.5.5
+      uses: nitz/publish-nuget@e19c45c3f73c49284c07620388ea1b8482cffbd7
       with:
         PROJECT_FILE_PATH: Toolkit.WinForms/Toolkit.WinForms.csproj
         TAG_COMMIT: false
@@ -144,10 +140,9 @@ jobs:
         TAG_FORMAT: v*
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
         NUGET_SOURCE: https://api.nuget.org
-        INCLUDE_SYMBOLS: true
 
     - name: Publish Toolkit.WinForms.Dialogs
-      uses: brandedoutcast/publish-nuget@v2.5.5
+      uses: nitz/publish-nuget@e19c45c3f73c49284c07620388ea1b8482cffbd7
       with:
         PROJECT_FILE_PATH: Toolkit.WinForms.Dialogs/Toolkit.WinForms.Dialogs.csproj
         TAG_COMMIT: false
@@ -156,4 +151,3 @@ jobs:
         TAG_FORMAT: v*
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
         NUGET_SOURCE: https://api.nuget.org
-        INCLUDE_SYMBOLS: true
