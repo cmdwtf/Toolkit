@@ -1,12 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(LibraryFrameworksWindows)</TargetFrameworks>
+    <TargetFrameworks>$(TargetFrameworksWindows)</TargetFrameworks>
     <UseWindowsForms>true</UseWindowsForms>
-    <RootNamespace>$(BaseRootNamespace).WinForms</RootNamespace>
-    <AssemblyName>$(BaseRootNamespace).Winforms</AssemblyName>
-    <PackageId>$(BasePackageId).WinForms</PackageId>
-    <Product>cmd.wtf WinForms Toolkit</Product>
+    <RootNamespace>$(RootNamespace).WinForms</RootNamespace>
+    <AssemblyName>$(AssemblyName).Winforms</AssemblyName>
+    <PackageId>$(PackageId).WinForms</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

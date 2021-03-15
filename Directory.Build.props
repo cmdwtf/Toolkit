@@ -1,7 +1,8 @@
 <Project>
   <Import Project=".meta\TargetFrameworks.props" />
-  <Import Project=".meta\Defaults.props" />
+  <Import Project=".meta\BuildSettings.props" />
   <Import Project=".meta\Version.props" />
   <Import Project=".meta\References.props" />
   <Import Project=".meta\PackageStrings.props" />
+  <Import Project=".meta\PackageCommon.props" />
 </Project>

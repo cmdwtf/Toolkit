@@ -1,11 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(LibraryFrameworks)</TargetFrameworks>
-    <RootNamespace>$(BaseRootNamespace).History</RootNamespace>
-    <AssemblyName>$(BaseRootNamespace).History</AssemblyName>
-    <PackageId>$(BasePackageId).History</PackageId>
-    <Product>cmd.wtf History Toolkit</Product>
+    <RootNamespace>$(RootNamespace).History</RootNamespace>
+    <AssemblyName>$(AssemblyName).History</AssemblyName>
+    <PackageId>$(PackageId).History</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

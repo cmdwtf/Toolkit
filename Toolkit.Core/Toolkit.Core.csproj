@@ -1,11 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(LibraryFrameworks)</TargetFrameworks>
-    <RootNamespace>$(BaseRootNamespace)</RootNamespace>
-    <AssemblyName>$(BaseRootNamespace)</AssemblyName>
-    <PackageId>$(BasePackageId).Core</PackageId>
-    <Product>cmd.wtf Toolkit Core</Product>
+    <PackageId>$(PackageId).Core</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

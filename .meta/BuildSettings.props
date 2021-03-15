@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <RootNamespace>cmdwtf.Toolkit</RootNamespace>
+    <AssemblyName>$(RootNamespace)</AssemblyName>
+    <Deterministic>true</Deterministic>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
+</Project>

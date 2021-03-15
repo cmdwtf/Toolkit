@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <IncludeSymbols>false</IncludeSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Toolkit.Core\Toolkit.Core.csproj" />
+    <ProjectReference Include="..\Toolkit.History\Toolkit.History.csproj" />
+    <ProjectReference Include="..\Toolkit.Win32\Toolkit.Win32.csproj" />
+    <ProjectReference Include="..\Toolkit.WinForms.Dialogs\Toolkit.WinForms.Dialogs.csproj" />
+    <ProjectReference Include="..\Toolkit.WinForms\Toolkit.WinForms.csproj" />
+    <Content
+      Include="../LICENSE; ../copyright; ../*.md"
+      />
+  </ItemGroup>
+</Project>

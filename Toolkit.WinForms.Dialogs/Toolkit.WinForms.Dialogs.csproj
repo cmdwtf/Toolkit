@@ -1,12 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(LibraryFrameworksWindows)</TargetFrameworks>
+    <TargetFrameworks>$(TargetFrameworksWindows)</TargetFrameworks>
     <UseWindowsForms>true</UseWindowsForms>
-    <RootNamespace>$(BaseRootNamespace).WinForms.Dialogs</RootNamespace>
-    <AssemblyName>$(BaseRootNamespace).Winforms.Dialogs</AssemblyName>
-    <PackageId>$(BasePackageId).WinForms.Dialogs</PackageId>
-    <Product>cmd.wtf WinForms Dialog Toolkit</Product>
+    <RootNamespace>$(RootNamespace).WinForms.Dialogs</RootNamespace>
+    <AssemblyName>$(AssemblyName).Winforms.Dialogs</AssemblyName>
+    <PackageId>$(PackageId).WinForms.Dialogs</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

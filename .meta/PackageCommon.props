@@ -1,0 +1,29 @@
+<Project>
+  <PropertyGroup>
+    <Authors>Chris Marc Dailey (nitz)</Authors>
+    <PackageId>cmdwtf.Toolkit</PackageId>
+    <Company>cmd.wtf</Company>
+    <Copyright>© 2021 Chris Marc Dailey</Copyright>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <PackageIcon>PackageIcon.png</PackageIcon>
+    <!-- Icon by Freepik -->
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>https://cmd.wtf/projects/toolkit</PackageProjectUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/cmdwtf/Toolkit</RepositoryUrl>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Title>$(Product)</Title>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content
+      Include="$(MSBuildStartupDirectory)\.meta\$(PackageIcon)"
+      Visible="false"
+      >
+      <PackagePath>.</PackagePath>
+    </Content>
+  </ItemGroup>
+</Project>

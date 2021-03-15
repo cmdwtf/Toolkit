@@ -4,42 +4,48 @@
       <PropertyGroup>
         <PackageReleaseNotes>Multi-framework targeting — $(LibraryFrameworksWindows). Cleanup and refactoring. Added `FillRectangleRadialGradient()` to `WinForms`.</PackageReleaseNotes>
         <Description>A small collection of utility functions and tools created over the years, bundled up in a single package for easy inclusion and management. This is a meta package containing all the various bits of the toolkit.</Description>
-        <PackageTags>win32, windows, dialogs, winforms, history, undo, redo, utilities, extensions, helpers</PackageTags>
+        <PackageTags>win32;windows;dialogs;winforms;history;undo;redo;utilities;extensions;helpers</PackageTags>
+        <Product>cmd.wtf Toolkit</Product>
       </PropertyGroup>
     </When>
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.Core'">
       <PropertyGroup>
-        <PackageReleaseNotes>Multi-framework targeting — $(LibraryFrameworks). Cleanup and refactoring.</PackageReleaseNotes>
         <Description>A small collection of utility functions and tools created over the years, bundled up in a single package for easy inclusion and management.</Description>
-        <PackageTags>utilities, extensions, helpers</PackageTags>
+        <PackageReleaseNotes>Multi-framework targeting — $(LibraryFrameworks). Cleanup and refactoring.</PackageReleaseNotes>
+        <PackageTags>utilities;extensions;helpers</PackageTags>
+        <Product>cmd.wtf Toolkit Core</Product>
       </PropertyGroup>
     </When>
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.History'">
       <PropertyGroup>
-        <PackageReleaseNotes>Multi-framework targeting — $(LibraryFrameworks). Cleanup and refactoring.</PackageReleaseNotes>
         <Description>A small history toolkit. Supports saving states, undo, and redo. States are saved as serialized JSON objects, via the Newtonsoft.Json library.</Description>
-        <PackageTags>history, undo, redo</PackageTags>
+        <PackageReleaseNotes>Multi-framework targeting — $(LibraryFrameworks). Cleanup and refactoring.</PackageReleaseNotes>
+        <PackageTags>history;undo;redo</PackageTags>
+        <Product>cmd.wtf History Toolkit</Product>
       </PropertyGroup>
     </When>
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.Win32'">
       <PropertyGroup>
-        <PackageReleaseNotes>Multi-framework targeting — $(LibraryFrameworksWindows). Cleanup and refactoring.</PackageReleaseNotes>
         <Description>A small collection of Windows specific utility functions and tools.</Description>
-        <PackageTags>win32, windows, utilities, extensions, helpers</PackageTags>
+        <PackageReleaseNotes>Multi-framework targeting — $(LibraryFrameworksWindows). Cleanup and refactoring.</PackageReleaseNotes>
+        <PackageTags>win32;windows;utilities;extensions;helpers</PackageTags>
+        <Product>cmd.wtf Win32 Toolkit</Product>
       </PropertyGroup>
     </When>
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.WinForms'">
       <PropertyGroup>
-        <PackageReleaseNotes>Merged `Drawing` and `DrawingMath`, as it felt odd to have it seperate..</PackageReleaseNotes>
         <Description>A collection of tools, extensions, and helpers to get a little more out of WinForms that isn't provided by the system components.</Description>
-        <PackageTags>winforms, utilities, extensions, helpers</PackageTags>
+        <PackageReleaseNotes>Merged `Drawing` and `DrawingMath`, as it felt odd to have it seperate.</PackageReleaseNotes>
+        <PackageTags>winforms;utilities;extensions;helpers</PackageTags>
+        <Product>cmd.wtf WinForms Toolkit</Product>
       </PropertyGroup>
     </When>
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.WinForms.Dialogs'">
       <PropertyGroup>
-        <PackageReleaseNotes>Multi-framework targeting — $(LibraryFrameworksWindows). Cleanup and refactoring.</PackageReleaseNotes>
         <Description>A small toolkit that provides easy-to-use Ookii.Dialogs functionality through MessageBox-style APIs.</Description>
-        <PackageTags>dialogs, winforms, utilities, extensions, helpers</PackageTags>
+        <PackageReleaseNotes>Multi-framework targeting — $(LibraryFrameworksWindows). Cleanup and refactoring.</PackageReleaseNotes>
+        <PackageTags>dialogs;winforms;utilities;extensions;helpers</PackageTags>
+        <Product>cmd.wtf WinForms Dialog Toolkit</Product>
       </PropertyGroup>
     </When>
   </Choose>
