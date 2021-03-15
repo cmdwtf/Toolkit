@@ -18,19 +18,31 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  'build & deploy':
     if: contains(toJson(github.event.commits), '***NO_CI***') == false
-    name: Build Toolkit
+    name: Build & Deploy Toolkit
     
     runs-on: windows-latest
     
     env:
+      # .NET Settings
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
       DOTNET_NOLOGO: true
       DOTNET_GENERATE_ASPNET_CERTIFICATE: false
       DOTNET_ADD_GLOBAL_TOOLS_TO_PATH: false
       DOTNET_MULTILEVEL_LOOKUP: 0
+      
+      # NuGet Publishing Settings
+      # PROJECT_FILE_PATH: <will set per step>
+      # PACKAGE_NAME: <do not need, will default to project name>
+      VERSION_FILE_PATH: .meta/Version.props
+      VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+      TAG_COMMIT: false # first step will tag, others need not
+      TAG_FORMAT: v*
+      NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+      NUGET_SOURCE: https://api.nuget.org
+      INCLUDE_SYMBOLS: true
 
     steps:
     - uses: actions/checkout@v2
@@ -52,6 +64,8 @@ jobs:
 
     - name: Restore dependencies
       run: dotnet restore
+      
+      ####################################### BUILD #######################################
 
     - name: Build
       run: dotnet build --no-restore --verbosity normal --configuration Release  -property:ContinuousIntegrationBuild=true
@@ -64,6 +78,8 @@ jobs:
           **/*.nupkg
           **/*.snupkg
         retention-days: 7
+      
+      ####################################### STORE #######################################
 
     - name: Store Binary Artifacts
       uses: actions/upload-artifact@v2.2.2
@@ -74,55 +90,49 @@ jobs:
           **/
         retention-days: 7
 
+    - name: Store Binary Artifacts
+      uses: actions/upload-artifact@v2.2.2
+      with:
+        name: Library Binaries
+        path: |
+          **/bin/Release/**
+          copyright
+          LICENSE
+          *.md
+        retention-days: 7
+
     - name: Test
       run: dotnet test --no-build --no-restore --verbosity normal
-  publish:
-    needs: build
-    if: github.event_name == 'push'
-    name: Publish to NuGet
-    
-    runs-on: windows-latest
+      
+      ####################################### PUBLISH #######################################
 
-    env:
-      # PROJECT_FILE_PATH: <will set per step>
-      # PACKAGE_NAME: <do not need, will default to project name>
-      VERSION_FILE_PATH: .meta/Version.props
-      VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
-      TAG_COMMIT: false # first step will tag, others need not
-      TAG_FORMAT: v*
-      NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-      NUGET_SOURCE: https://api.nuget.org
-      INCLUDE_SYMBOLS: true
+    - name: Publish Meta Package & Tag
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
+        PROJECT_FILE_PATH: Toolkit.csproj
+        TAG_COMMIT: true # we will make our tag here!
 
-    steps:
-      - name: Publish Meta Package & Tag
-        uses: brandedoutcast/publish-nuget@v2.5.5
-        with:
-          PROJECT_FILE_PATH: Toolkit.csproj
-          TAG_COMMIT: true # we will make our tag here!
+    - name: Publish Toolkit.Core
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
+        PROJECT_FILE_PATH: Toolkit.Core/Toolkit.Core.csproj
 
-      - name: Publish Toolkit.Core
-        uses: brandedoutcast/publish-nuget@v2.5.5
-        with:
-          PROJECT_FILE_PATH: Toolkit.Core/Toolkit.Core.csproj
+    - name: Publish Toolkit.History
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
+        PROJECT_FILE_PATH: Toolkit.History/Toolkit.History.csproj
 
-      - name: Publish Toolkit.History
-        uses: brandedoutcast/publish-nuget@v2.5.5
-        with:
-          PROJECT_FILE_PATH: Toolkit.History/Toolkit.History.csproj
+    - name: Publish Toolkit.Win32
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
+        PROJECT_FILE_PATH: Toolkit.Win32/Toolkit.Win32.csproj
 
-      - name: Publish Toolkit.Win32
-        uses: brandedoutcast/publish-nuget@v2.5.5
-        with:
-          PROJECT_FILE_PATH: Toolkit.Win32/Toolkit.Win32.csproj
+    - name: Publish Toolkit.WinForms
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
+        PROJECT_FILE_PATH: Toolkit.WinForms/Toolkit.WinForms.csproj
 
-      - name: Publish Toolkit.WinForms
-        uses: brandedoutcast/publish-nuget@v2.5.5
-        with:
-          PROJECT_FILE_PATH: Toolkit.WinForms/Toolkit.WinForms.csproj
-
-      - name: Publish Toolkit.WinForms.Dialogs
-        uses: brandedoutcast/publish-nuget@v2.5.5
-        with:
-          PROJECT_FILE_PATH: Toolkit.WinForms.Dialogs/Toolkit.WinForms.Dialogs.csproj
-
+    - name: Publish Toolkit.WinForms.Dialogs
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
+        PROJECT_FILE_PATH: Toolkit.WinForms.Dialogs/Toolkit.WinForms.Dialogs.csproj
