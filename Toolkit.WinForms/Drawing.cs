@@ -13,7 +13,7 @@ namespace cmdwtf.Toolkit.WinForms
 	/// that will help leverage far more out of GDI+ graphics, particularly if you're
 	/// drawing custom controls.
 	/// </summary>
-	public static class Drawing
+	public static partial class Drawing
 	{
 		#region Colored Images
 

@@ -9,7 +9,7 @@ namespace cmdwtf.Toolkit.WinForms
 	/// Math tools for tasks related to drawing, and the structs in the
 	/// <see cref="System.Drawing"/> namespace.
 	/// </summary>
-	public static class DrawingMath
+	public static partial class Drawing
 	{
 		/// <summary>
 		/// Creates a rectangle based on two points.
@@ -119,11 +119,11 @@ namespace cmdwtf.Toolkit.WinForms
 		/// </summary>
 		/// <param name="rect">The rectangle to check.</param>
 		/// <returns>A float representing the length of the shortest side.</returns>
-		public static float ShortestSide(RectangleF rect)
+		public static float ShortestSide(this RectangleF rect)
 			=> Min(rect.Width, rect.Height);
 
 		/// <inheritdoc cref="ShortestSide(RectangleF)"/>
-		public static int ShortestSide(Rectangle rect)
+		public static int ShortestSide(this Rectangle rect)
 			=> Min(rect.Width, rect.Height);
 
 		/// <summary>
