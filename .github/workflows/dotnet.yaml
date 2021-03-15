@@ -69,6 +69,8 @@ jobs:
 
     - name: Build
       run: dotnet build --no-restore --verbosity normal --configuration Release  -property:ContinuousIntegrationBuild=true
+      
+      ####################################### STORE #######################################
 
     - name: Store Package Artifacts
       uses: actions/upload-artifact@v2.2.2
@@ -77,17 +79,6 @@ jobs:
         path: |
           **/*.nupkg
           **/*.snupkg
-        retention-days: 7
-      
-      ####################################### STORE #######################################
-
-    - name: Store Binary Artifacts
-      uses: actions/upload-artifact@v2.2.2
-      with:
-        name: Library Binaries
-        path: |
-          **/bin/**
-          **/
         retention-days: 7
 
     - name: Store Binary Artifacts
