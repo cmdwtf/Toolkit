@@ -32,17 +32,6 @@ jobs:
       DOTNET_GENERATE_ASPNET_CERTIFICATE: false
       DOTNET_ADD_GLOBAL_TOOLS_TO_PATH: false
       DOTNET_MULTILEVEL_LOOKUP: 0
-      
-      # NuGet Publishing Settings
-      # PROJECT_FILE_PATH: <will set per step>
-      # PACKAGE_NAME: <do not need, will default to project name>
-      VERSION_FILE_PATH: .meta/Version.props
-      VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
-      TAG_COMMIT: false # first step will tag, others need not
-      TAG_FORMAT: v*
-      NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-      NUGET_SOURCE: https://api.nuget.org
-      INCLUDE_SYMBOLS: true
 
     steps:
     - uses: actions/checkout@v2
@@ -102,28 +91,69 @@ jobs:
       with:
         PROJECT_FILE_PATH: Toolkit.csproj
         TAG_COMMIT: true # we will make our tag here!
+        VERSION_FILE_PATH: .meta/Version.props
+        VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+        TAG_FORMAT: v*
+        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+        NUGET_SOURCE: https://api.nuget.org
+        INCLUDE_SYMBOLS: true
 
     - name: Publish Toolkit.Core
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
         PROJECT_FILE_PATH: Toolkit.Core/Toolkit.Core.csproj
+        TAG_COMMIT: false
+        VERSION_FILE_PATH: .meta/Version.props
+        VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+        TAG_FORMAT: v*
+        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+        NUGET_SOURCE: https://api.nuget.org
+        INCLUDE_SYMBOLS: true
 
     - name: Publish Toolkit.History
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
         PROJECT_FILE_PATH: Toolkit.History/Toolkit.History.csproj
+        TAG_COMMIT: false
+        VERSION_FILE_PATH: .meta/Version.props
+        VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+        TAG_FORMAT: v*
+        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+        NUGET_SOURCE: https://api.nuget.org
+        INCLUDE_SYMBOLS: true
 
     - name: Publish Toolkit.Win32
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
         PROJECT_FILE_PATH: Toolkit.Win32/Toolkit.Win32.csproj
+        TAG_COMMIT: false
+        VERSION_FILE_PATH: .meta/Version.props
+        VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+        TAG_FORMAT: v*
+        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+        NUGET_SOURCE: https://api.nuget.org
+        INCLUDE_SYMBOLS: true
 
     - name: Publish Toolkit.WinForms
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
         PROJECT_FILE_PATH: Toolkit.WinForms/Toolkit.WinForms.csproj
+        TAG_COMMIT: false
+        VERSION_FILE_PATH: .meta/Version.props
+        VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+        TAG_FORMAT: v*
+        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+        NUGET_SOURCE: https://api.nuget.org
+        INCLUDE_SYMBOLS: true
 
     - name: Publish Toolkit.WinForms.Dialogs
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
         PROJECT_FILE_PATH: Toolkit.WinForms.Dialogs/Toolkit.WinForms.Dialogs.csproj
+        TAG_COMMIT: false
+        VERSION_FILE_PATH: .meta/Version.props
+        VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+        TAG_FORMAT: v*
+        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+        NUGET_SOURCE: https://api.nuget.org
+        INCLUDE_SYMBOLS: true
