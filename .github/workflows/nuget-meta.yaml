@@ -44,7 +44,7 @@ jobs:
       with:
         name: NuGet Meta Package
         path: |
-          .meta/**.nupkg
+          **/*.nupkg
         retention-days: 7
       
       ####################################### PUBLISH #######################################
