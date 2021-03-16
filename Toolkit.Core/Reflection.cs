@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace cmdwtf.Toolkit.WinForms
+namespace cmdwtf.Toolkit
 {
 	/// <summary>
 	/// Reflection tools. Mostly just shorthand for regularly done things that aren't

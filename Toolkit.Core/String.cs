@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 
-namespace cmdwtf.Toolkit.WinForms
+namespace cmdwtf.Toolkit
 {
 	/// <summary>
 	/// Tools for manipulating or formating strings.
