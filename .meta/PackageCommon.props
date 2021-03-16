@@ -5,7 +5,7 @@
     <Company>cmd.wtf</Company>
     <Copyright>© 2021 Chris Marc Dailey</Copyright>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
     <PackageIcon>PackageIcon.png</PackageIcon>
     <!-- Icon by Freepik -->
@@ -18,9 +18,18 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Title>$(Product)</Title>
   </PropertyGroup>
+  <PropertyGroup>
+    <cd>$(MSBuildThisFileDirectory)</cd>
+  </PropertyGroup>
   <ItemGroup>
     <Content
-      Include="$(MSBuildThisFileDirectory)$(PackageIcon)"
+      Include="$(cd)$(PackageIcon)"
+      Visible="false"
+      >
+      <PackagePath>.\</PackagePath>
+    </Content>
+    <Content
+      Include="$(cd)..\LICENSE; $(cd)..\copyright; $(cd)..\*.md; $(cd)\*.md"
       Visible="false"
       >
       <PackagePath>.\</PackagePath>
