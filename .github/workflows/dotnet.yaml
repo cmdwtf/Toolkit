@@ -52,9 +52,9 @@ jobs:
     - id: cache-dotnet-toolchain-hit-reset-paths
       if: steps.cache-dotnet-toolchain.outputs.cache-hit == 'true'
       run: |
-        echo "Setting %GITHUB_PATH% to..."
-        echo "%LocalAppData%\Microsoft\dotnet;%UserProfile%\.dotnet\tools;%PATH%"
-        echo "%LocalAppData%\Microsoft\dotnet;%UserProfile%\.dotnet\tools;%PATH%" > %GITHUB_PATH%
+        echo "Setting env:GITHUB_PATH to..."
+        echo "$env:LocalAppData\Microsoft\dotnet;$env:UserProfile\.dotnet\tools;$env:PATH"
+        echo $env:GITHUB_PATH="$env:LocalAppData\Microsoft\dotnet;$env:UserProfile\.dotnet\tools;$env:PATH"
 
     - name: Setup .NET 5.0
       if: steps.cache-dotnet-toolchain.outputs.cache-hit != 'true'
@@ -128,7 +128,7 @@ jobs:
     
     ### Publish Meta, Tag Repo
     - name: Publish Meta Package & Tag
-      uses: nitz/publish-nuget@54c54ec6990edf666f887657e5981ecc1589b3ba
+      uses: nitz/publish-nuget@13cf3a0ec3840b62a0fd20d559ab1e2a63b0d75a
       with:
         PROJECT_FILE_PATH: .meta/Meta.csproj
         PACKAGE_NAME: cmdwtf.Toolkit
@@ -145,7 +145,7 @@ jobs:
 
     ### Publish Core
     - name: Publish Toolkit.Core
-      uses: nitz/publish-nuget@54c54ec6990edf666f887657e5981ecc1589b3ba
+      uses: nitz/publish-nuget@13cf3a0ec3840b62a0fd20d559ab1e2a63b0d75a
       with:
         PROJECT_FILE_PATH: Toolkit.Core/Toolkit.Core.csproj
         PACKAGE_NAME: cmdwtf.Toolkit.Core
@@ -160,7 +160,7 @@ jobs:
 
     ### Publish History
     - name: Publish Toolkit.History
-      uses: nitz/publish-nuget@54c54ec6990edf666f887657e5981ecc1589b3ba
+      uses: nitz/publish-nuget@13cf3a0ec3840b62a0fd20d559ab1e2a63b0d75a
       with:
         PROJECT_FILE_PATH: Toolkit.History/Toolkit.History.csproj
         PACKAGE_NAME: cmdwtf.Toolkit.History
@@ -175,7 +175,7 @@ jobs:
 
     ### Publish Win32
     - name: Publish Toolkit.Win32
-      uses: nitz/publish-nuget@54c54ec6990edf666f887657e5981ecc1589b3ba
+      uses: nitz/publish-nuget@13cf3a0ec3840b62a0fd20d559ab1e2a63b0d75a
       with:
         PROJECT_FILE_PATH: Toolkit.Win32/Toolkit.Win32.csproj
         PACKAGE_NAME: cmdwtf.Toolkit.Win32
@@ -190,7 +190,7 @@ jobs:
 
     ### Publish WinForms
     - name: Publish Toolkit.WinForms
-      uses: nitz/publish-nuget@54c54ec6990edf666f887657e5981ecc1589b3ba
+      uses: nitz/publish-nuget@13cf3a0ec3840b62a0fd20d559ab1e2a63b0d75a
       with:
         PROJECT_FILE_PATH: Toolkit.WinForms/Toolkit.WinForms.csproj
         PACKAGE_NAME: cmdwtf.Toolkit.WinForms
@@ -205,7 +205,7 @@ jobs:
 
     ### Publish WinForms.Dialogs
     - name: Publish Toolkit.WinForms.Dialogs
-      uses: nitz/publish-nuget@54c54ec6990edf666f887657e5981ecc1589b3ba
+      uses: nitz/publish-nuget@13cf3a0ec3840b62a0fd20d559ab1e2a63b0d75a
       with:
         PROJECT_FILE_PATH: Toolkit.WinForms.Dialogs/Toolkit.WinForms.Dialogs.csproj
         PACKAGE_NAME: cmdwtf.Toolkit.WinForms.Dialogs
