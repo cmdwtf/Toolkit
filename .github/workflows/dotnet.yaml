@@ -131,6 +131,7 @@ jobs:
       uses: nitz/publish-nuget@54c54ec6990edf666f887657e5981ecc1589b3ba
       with:
         PROJECT_FILE_PATH: .meta/Meta.csproj
+        PACKAGE_NAME: cmdwtf.Toolkit
         # we will make our tag here!
         TAG_COMMIT: true
         VERSION_FILE_PATH: .meta/Version.props
@@ -147,6 +148,7 @@ jobs:
       uses: nitz/publish-nuget@54c54ec6990edf666f887657e5981ecc1589b3ba
       with:
         PROJECT_FILE_PATH: Toolkit.Core/Toolkit.Core.csproj
+        PACKAGE_NAME: cmdwtf.Toolkit.Core
         TAG_COMMIT: false
         VERSION_FILE_PATH: .meta/Version.props
         VERSION_REGEX: ^\s*<VersionPrefix>(.*)<\/VersionPrefix>\s*$
@@ -161,6 +163,7 @@ jobs:
       uses: nitz/publish-nuget@54c54ec6990edf666f887657e5981ecc1589b3ba
       with:
         PROJECT_FILE_PATH: Toolkit.History/Toolkit.History.csproj
+        PACKAGE_NAME: cmdwtf.Toolkit.History
         TAG_COMMIT: false
         VERSION_FILE_PATH: .meta/Version.props
         VERSION_REGEX: ^\s*<VersionPrefix>(.*)<\/VersionPrefix>\s*$
@@ -175,6 +178,7 @@ jobs:
       uses: nitz/publish-nuget@54c54ec6990edf666f887657e5981ecc1589b3ba
       with:
         PROJECT_FILE_PATH: Toolkit.Win32/Toolkit.Win32.csproj
+        PACKAGE_NAME: cmdwtf.Toolkit.Win32
         TAG_COMMIT: false
         VERSION_FILE_PATH: .meta/Version.props
         VERSION_REGEX: ^\s*<VersionPrefix>(.*)<\/VersionPrefix>\s*$
@@ -189,6 +193,7 @@ jobs:
       uses: nitz/publish-nuget@54c54ec6990edf666f887657e5981ecc1589b3ba
       with:
         PROJECT_FILE_PATH: Toolkit.WinForms/Toolkit.WinForms.csproj
+        PACKAGE_NAME: cmdwtf.Toolkit.WinForms
         TAG_COMMIT: false
         VERSION_FILE_PATH: .meta/Version.props
         VERSION_REGEX: ^\s*<VersionPrefix>(.*)<\/VersionPrefix>\s*$
@@ -203,6 +208,7 @@ jobs:
       uses: nitz/publish-nuget@54c54ec6990edf666f887657e5981ecc1589b3ba
       with:
         PROJECT_FILE_PATH: Toolkit.WinForms.Dialogs/Toolkit.WinForms.Dialogs.csproj
+        PACKAGE_NAME: cmdwtf.Toolkit.WinForms.Dialogs
         TAG_COMMIT: false
         VERSION_FILE_PATH: .meta/Version.props
         VERSION_REGEX: ^\s*<VersionPrefix>(.*)<\/VersionPrefix>\s*$
