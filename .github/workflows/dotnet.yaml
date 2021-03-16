@@ -94,7 +94,7 @@ jobs:
       ####################################### PUBLISH #######################################
 
     - name: Publish Toolkit.Core
-      uses: brandedoutcast/publish-nuget@v2.5.5
+      uses: nitz/publish-nuget@00981473330a1276f33eb582b03a2d7b7c441a6e
       with:
         PROJECT_FILE_PATH: Toolkit.Core/Toolkit.Core.csproj
         TAG_COMMIT: false
@@ -104,9 +104,10 @@ jobs:
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
         NUGET_SOURCE: https://api.nuget.org
         INCLUDE_SYMBOLS: true
+        SKIP_BUILD: true
 
     - name: Publish Toolkit.History
-      uses: brandedoutcast/publish-nuget@v2.5.5
+      uses: nitz/publish-nuget@00981473330a1276f33eb582b03a2d7b7c441a6e
       with:
         PROJECT_FILE_PATH: Toolkit.History/Toolkit.History.csproj
         TAG_COMMIT: false
@@ -116,9 +117,10 @@ jobs:
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
         NUGET_SOURCE: https://api.nuget.org
         INCLUDE_SYMBOLS: true
+        SKIP_BUILD: true
 
     - name: Publish Toolkit.Win32
-      uses: brandedoutcast/publish-nuget@v2.5.5
+      uses: nitz/publish-nuget@00981473330a1276f33eb582b03a2d7b7c441a6e
       with:
         PROJECT_FILE_PATH: Toolkit.Win32/Toolkit.Win32.csproj
         TAG_COMMIT: false
@@ -128,9 +130,10 @@ jobs:
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
         NUGET_SOURCE: https://api.nuget.org
         INCLUDE_SYMBOLS: true
+        SKIP_BUILD: true
 
     - name: Publish Toolkit.WinForms
-      uses: brandedoutcast/publish-nuget@v2.5.5
+      uses: nitz/publish-nuget@00981473330a1276f33eb582b03a2d7b7c441a6e
       with:
         PROJECT_FILE_PATH: Toolkit.WinForms/Toolkit.WinForms.csproj
         TAG_COMMIT: false
@@ -140,9 +143,10 @@ jobs:
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
         NUGET_SOURCE: https://api.nuget.org
         INCLUDE_SYMBOLS: true
+        SKIP_BUILD: true
 
     - name: Publish Toolkit.WinForms.Dialogs
-      uses: brandedoutcast/publish-nuget@v2.5.5
+      uses: nitz/publish-nuget@00981473330a1276f33eb582b03a2d7b7c441a6e
       with:
         PROJECT_FILE_PATH: Toolkit.WinForms.Dialogs/Toolkit.WinForms.Dialogs.csproj
         TAG_COMMIT: false
@@ -152,6 +156,7 @@ jobs:
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
         NUGET_SOURCE: https://api.nuget.org
         INCLUDE_SYMBOLS: true
+        SKIP_BUILD: true
 
       
       ####################################### META PACKAGE #######################################
@@ -161,7 +166,7 @@ jobs:
       # the meta project defaults to the targets 'Restore' and 'Pack', so build takes care of everything.
 
     - name: Publish Meta Package & Tag
-      uses: brandedoutcast/publish-nuget@v2.5.5
+      uses: nitz/publish-nuget@00981473330a1276f33eb582b03a2d7b7c441a6e
       with:
         PROJECT_FILE_PATH: .meta/Toolkit.csproj
         # we will make our tag here!
@@ -173,6 +178,7 @@ jobs:
         NUGET_SOURCE: https://api.nuget.org
         # meta has no symbols.
         INCLUDE_SYMBOLS: false
+        SKIP_BUILD: true
 
     - name: Store Meta Artifacts
       uses: actions/upload-artifact@v2.2.2
