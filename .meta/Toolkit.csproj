@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk" DefaultTargets="Restore;Pack">
   <PropertyGroup>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <IncludeSymbols>false</IncludeSymbols>
@@ -9,8 +9,6 @@
     <PackageReference Include="cmdwtf.Toolkit.Win32" Version="[$(Version),)" />
     <PackageReference Include="cmdwtf.Toolkit.WinForms" Version="[$(Version),)" />
     <PackageReference Include="cmdwtf.Toolkit.WinForms.Dialogs" Version="[$(Version),)" />
-    <Content
-      Include="../LICENSE; ../copyright; ../*.md"
-      />
+    <Content Include="../LICENSE; ../copyright; ../*.md" />
   </ItemGroup>
 </Project>
