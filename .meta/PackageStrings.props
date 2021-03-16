@@ -2,7 +2,7 @@
   <Choose>
     <When Condition="'$(MSBuildProjectName)' == 'Meta'">
       <PropertyGroup>
-        <PackageReleaseNotes>Multi-framework targeting — $(LibraryFrameworksWindows). Cleanup and refactoring. Added `FillRectangleRadialGradient()` to `WinForms`.</PackageReleaseNotes>
+        <PackageReleaseNotes>Some Toolkit.Core components still had the improper namespace of `cmdwtf.Toolkit.WinForms`.</PackageReleaseNotes>
         <Description>A small collection of utility functions and tools created over the years, bundled up in a single package for easy inclusion and management. This is a meta package containing all the various bits of the toolkit.</Description>
         <PackageTags>win32;windows;dialogs;winforms;history;undo;redo;utilities;extensions;helpers</PackageTags>
         <Product>cmd.wtf Toolkit</Product>
@@ -11,7 +11,7 @@
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.Core'">
       <PropertyGroup>
         <Description>A small collection of utility functions and tools created over the years, bundled up in a single package for easy inclusion and management.</Description>
-        <PackageReleaseNotes>Multi-framework targeting — $(LibraryFrameworks). Cleanup and refactoring.</PackageReleaseNotes>
+        <PackageReleaseNotes>Fix namespaces that were improperly `cmdwtf.Toolkit.WinForms`.</PackageReleaseNotes>
         <PackageTags>utilities;extensions;helpers</PackageTags>
         <Product>cmd.wtf Toolkit Core</Product>
       </PropertyGroup>
