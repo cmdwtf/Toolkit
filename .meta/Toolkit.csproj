@@ -4,11 +4,11 @@
     <IncludeSymbols>false</IncludeSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Toolkit.Core\Toolkit.Core.csproj" />
-    <ProjectReference Include="..\Toolkit.History\Toolkit.History.csproj" />
-    <ProjectReference Include="..\Toolkit.Win32\Toolkit.Win32.csproj" />
-    <ProjectReference Include="..\Toolkit.WinForms.Dialogs\Toolkit.WinForms.Dialogs.csproj" />
-    <ProjectReference Include="..\Toolkit.WinForms\Toolkit.WinForms.csproj" />
+    <PackageReference Include="cmdwtf.Toolkit.Core" Version="[$(Version),)" />
+    <PackageReference Include="cmdwtf.Toolkit.History" Version="[$(Version),)" />
+    <PackageReference Include="cmdwtf.Toolkit.Win32" Version="[$(Version),)" />
+    <PackageReference Include="cmdwtf.Toolkit.WinForms" Version="[$(Version),)" />
+    <PackageReference Include="cmdwtf.Toolkit.WinForms.Dialogs" Version="[$(Version),)" />
     <Content
       Include="../LICENSE; ../copyright; ../*.md"
       />
