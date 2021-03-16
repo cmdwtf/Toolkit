@@ -94,7 +94,7 @@ jobs:
       ####################################### PUBLISH #######################################
 
     - name: Publish Toolkit.Core
-      uses: nitz/publish-nuget@00981473330a1276f33eb582b03a2d7b7c441a6e
+      uses: nitz/publish-nuget@1a1ef3b003e768def4adf3bdc9e1abd18255365d
       with:
         PROJECT_FILE_PATH: Toolkit.Core/Toolkit.Core.csproj
         TAG_COMMIT: false
@@ -107,7 +107,7 @@ jobs:
         SKIP_BUILD: true
 
     - name: Publish Toolkit.History
-      uses: nitz/publish-nuget@00981473330a1276f33eb582b03a2d7b7c441a6e
+      uses: nitz/publish-nuget@1a1ef3b003e768def4adf3bdc9e1abd18255365d
       with:
         PROJECT_FILE_PATH: Toolkit.History/Toolkit.History.csproj
         TAG_COMMIT: false
@@ -120,7 +120,7 @@ jobs:
         SKIP_BUILD: true
 
     - name: Publish Toolkit.Win32
-      uses: nitz/publish-nuget@00981473330a1276f33eb582b03a2d7b7c441a6e
+      uses: nitz/publish-nuget@1a1ef3b003e768def4adf3bdc9e1abd18255365d
       with:
         PROJECT_FILE_PATH: Toolkit.Win32/Toolkit.Win32.csproj
         TAG_COMMIT: false
@@ -133,7 +133,7 @@ jobs:
         SKIP_BUILD: true
 
     - name: Publish Toolkit.WinForms
-      uses: nitz/publish-nuget@00981473330a1276f33eb582b03a2d7b7c441a6e
+      uses: nitz/publish-nuget@1a1ef3b003e768def4adf3bdc9e1abd18255365d
       with:
         PROJECT_FILE_PATH: Toolkit.WinForms/Toolkit.WinForms.csproj
         TAG_COMMIT: false
@@ -146,7 +146,7 @@ jobs:
         SKIP_BUILD: true
 
     - name: Publish Toolkit.WinForms.Dialogs
-      uses: nitz/publish-nuget@00981473330a1276f33eb582b03a2d7b7c441a6e
+      uses: nitz/publish-nuget@1a1ef3b003e768def4adf3bdc9e1abd18255365d
       with:
         PROJECT_FILE_PATH: Toolkit.WinForms.Dialogs/Toolkit.WinForms.Dialogs.csproj
         TAG_COMMIT: false
@@ -158,32 +158,3 @@ jobs:
         INCLUDE_SYMBOLS: true
         SKIP_BUILD: true
 
-      
-      ####################################### META PACKAGE #######################################
-    
-    - name: Build Meta Package
-      run: dotnet build .meta\Toolkit.csproj --nologo --configuration Release
-      # the meta project defaults to the targets 'Restore' and 'Pack', so build takes care of everything.
-
-    - name: Publish Meta Package & Tag
-      uses: nitz/publish-nuget@00981473330a1276f33eb582b03a2d7b7c441a6e
-      with:
-        PROJECT_FILE_PATH: .meta/Toolkit.csproj
-        # we will make our tag here!
-        TAG_COMMIT: true
-        VERSION_FILE_PATH: .meta/Version.props
-        VERSION_REGEX: ^\s*<VersionPrefix>(.*)<\/VersionPrefix>\s*$
-        TAG_FORMAT: v*
-        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-        NUGET_SOURCE: https://api.nuget.org
-        # meta has no symbols.
-        INCLUDE_SYMBOLS: false
-        SKIP_BUILD: true
-
-    - name: Store Meta Artifacts
-      uses: actions/upload-artifact@v2.2.2
-      with:
-        name: NuGet Meta Package
-        path: |
-          .meta/**.nupkg
-        retention-days: 7
