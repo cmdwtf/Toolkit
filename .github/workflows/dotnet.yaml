@@ -17,7 +17,7 @@ on:
       - '**/*.editorconfig'
   workflow_dispatch:
     inputs:
-      versionSuffix:
+      version_suffix:
         description: 'The post-dash text to append to the build version.'
         required: false
         default: 'forced'
@@ -63,10 +63,6 @@ jobs:
 
     - name: Build
       run: dotnet build --nologo --no-restore --verbosity normal --configuration Release  -property:ContinuousIntegrationBuild=true
-    
-    - name: Build Meta Package
-      run: dotnet build .meta\Toolkit.csproj --nologo --configuration Release
-      # the meta project defaults to the targets 'Restore' and 'Pack', so build takes care of everything.
       
       ####################################### STORE #######################################
 
@@ -89,74 +85,99 @@ jobs:
           LICENSE
           *.md
         retention-days: 7
+      
+      ####################################### TEST #######################################
 
     - name: Test
       run: dotnet test --no-build --no-restore --verbosity normal
       
       ####################################### PUBLISH #######################################
 
-    - name: Publish Meta Package & Tag
-      uses: nitz/publish-nuget@e19c45c3f73c49284c07620388ea1b8482cffbd7
-      with:
-        PROJECT_FILE_PATH: Toolkit.csproj
-        TAG_COMMIT: true # we will make our tag here!
-        VERSION_FILE_PATH: .meta/Version.props
-        VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
-        TAG_FORMAT: v*
-        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-        NUGET_SOURCE: https://api.nuget.org
-
     - name: Publish Toolkit.Core
-      uses: nitz/publish-nuget@e19c45c3f73c49284c07620388ea1b8482cffbd7
+      uses: brandedoutcast/publish-nuget@v2.5.5
       with:
         PROJECT_FILE_PATH: Toolkit.Core/Toolkit.Core.csproj
         TAG_COMMIT: false
         VERSION_FILE_PATH: .meta/Version.props
-        VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+        VERSION_REGEX: ^\s*<VersionPrefix>(.*)<\/VersionPrefix>\s*$
         TAG_FORMAT: v*
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
         NUGET_SOURCE: https://api.nuget.org
+        INCLUDE_SYMBOLS: true
 
     - name: Publish Toolkit.History
-      uses: nitz/publish-nuget@e19c45c3f73c49284c07620388ea1b8482cffbd7
+      uses: brandedoutcast/publish-nuget@v2.5.5
       with:
         PROJECT_FILE_PATH: Toolkit.History/Toolkit.History.csproj
         TAG_COMMIT: false
         VERSION_FILE_PATH: .meta/Version.props
-        VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+        VERSION_REGEX: ^\s*<VersionPrefix>(.*)<\/VersionPrefix>\s*$
         TAG_FORMAT: v*
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
         NUGET_SOURCE: https://api.nuget.org
+        INCLUDE_SYMBOLS: true
 
     - name: Publish Toolkit.Win32
-      uses: nitz/publish-nuget@e19c45c3f73c49284c07620388ea1b8482cffbd7
+      uses: brandedoutcast/publish-nuget@v2.5.5
       with:
         PROJECT_FILE_PATH: Toolkit.Win32/Toolkit.Win32.csproj
         TAG_COMMIT: false
         VERSION_FILE_PATH: .meta/Version.props
-        VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+        VERSION_REGEX: ^\s*<VersionPrefix>(.*)<\/VersionPrefix>\s*$
         TAG_FORMAT: v*
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
         NUGET_SOURCE: https://api.nuget.org
+        INCLUDE_SYMBOLS: true
 
     - name: Publish Toolkit.WinForms
-      uses: nitz/publish-nuget@e19c45c3f73c49284c07620388ea1b8482cffbd7
+      uses: brandedoutcast/publish-nuget@v2.5.5
       with:
         PROJECT_FILE_PATH: Toolkit.WinForms/Toolkit.WinForms.csproj
         TAG_COMMIT: false
         VERSION_FILE_PATH: .meta/Version.props
-        VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+        VERSION_REGEX: ^\s*<VersionPrefix>(.*)<\/VersionPrefix>\s*$
         TAG_FORMAT: v*
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
         NUGET_SOURCE: https://api.nuget.org
+        INCLUDE_SYMBOLS: true
 
     - name: Publish Toolkit.WinForms.Dialogs
-      uses: nitz/publish-nuget@e19c45c3f73c49284c07620388ea1b8482cffbd7
+      uses: brandedoutcast/publish-nuget@v2.5.5
       with:
         PROJECT_FILE_PATH: Toolkit.WinForms.Dialogs/Toolkit.WinForms.Dialogs.csproj
         TAG_COMMIT: false
         VERSION_FILE_PATH: .meta/Version.props
-        VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+        VERSION_REGEX: ^\s*<VersionPrefix>(.*)<\/VersionPrefix>\s*$
         TAG_FORMAT: v*
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
         NUGET_SOURCE: https://api.nuget.org
+        INCLUDE_SYMBOLS: true
+
+      
+      ####################################### META PACKAGE #######################################
+    
+    - name: Build Meta Package
+      run: dotnet build .meta\Toolkit.csproj --nologo --configuration Release
+      # the meta project defaults to the targets 'Restore' and 'Pack', so build takes care of everything.
+
+    - name: Publish Meta Package & Tag
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
+        PROJECT_FILE_PATH: .meta/Toolkit.csproj
+        # we will make our tag here!
+        TAG_COMMIT: true
+        VERSION_FILE_PATH: .meta/Version.props
+        VERSION_REGEX: ^\s*<VersionPrefix>(.*)<\/VersionPrefix>\s*$
+        TAG_FORMAT: v*
+        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+        NUGET_SOURCE: https://api.nuget.org
+        # meta has no symbols.
+        INCLUDE_SYMBOLS: false
+
+    - name: Store Meta Artifacts
+      uses: actions/upload-artifact@v2.2.2
+      with:
+        name: NuGet Meta Package
+        path: |
+          .meta/**.nupkg
+        retention-days: 7
