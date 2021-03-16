@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" DefaultTargets="Restore;Pack">
+  <PropertyGroup>
+    <Configurations>Pack</Configurations>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <IncludeSymbols>false</IncludeSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Toolkit.Core/Toolkit.Core.csproj" Version="[$(Version),)" />
+    <ProjectReference Include="../Toolkit.History/Toolkit.History.csproj" Version="[$(Version),)" />
+    <ProjectReference Include="../Toolkit.Win32/Toolkit.Win32.csproj" Version="[$(Version),)" />
+    <ProjectReference Include="../Toolkit.WinForms/Toolkit.WinForms.csproj" Version="[$(Version),)" />
+    <ProjectReference Include="../Toolkit.WinForms.Dialogs/Toolkit.WinForms.Dialogs.csproj" Version="[$(Version),)" />
+  </ItemGroup>
+</Project>

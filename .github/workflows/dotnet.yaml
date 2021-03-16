@@ -1,4 +1,4 @@
-name: .NET Build & Publish
+name: .NET Build & NuGet Publish
 
 on:
   push:
@@ -54,17 +54,17 @@ jobs:
     # packages don't like to restore if you don't clean first?
     # see: https://github.com/actions/setup-dotnet/issues/155
     - name: Clean (Restore Workaround)
-      run: dotnet clean --configuration Release && dotnet nuget locals all --clear
+      run: dotnet clean --nologo --configuration Release && dotnet nuget locals all --clear
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore --nologo
       
-      ####################################### BUILD #######################################
+    ####################################### BUILD #######################################
 
     - name: Build
       run: dotnet build --nologo --no-restore --verbosity normal --configuration Release  -property:ContinuousIntegrationBuild=true
       
-      ####################################### STORE #######################################
+    ####################################### STORE #######################################
 
     - name: Store Package Artifacts
       uses: actions/upload-artifact@v2.2.2
@@ -85,14 +85,47 @@ jobs:
           LICENSE
           *.md
         retention-days: 7
-      
-      ####################################### TEST #######################################
+              
+    ####################################### TEST #######################################
 
     - name: Test
-      run: dotnet test --no-build --no-restore --verbosity normal
+      run: dotnet test --nologo --no-build --no-restore --verbosity normal
       
-      ####################################### PUBLISH #######################################
+    ####################################### META #######################################
 
+    - name: Restore Meta Package
+      run: dotnet restore .meta/Meta.csproj --nologo
+      
+    - name: Pack Meta Package
+      run: dotnet pack .meta/Meta.csproj --nologo --no-build --configuration Release -o .
+      
+    - name: Store Meta Artifacts
+      uses: actions/upload-artifact@v2.2.2
+      with:
+        name: NuGet Meta Package
+        path: |
+          *.nupkg
+        retention-days: 7
+      
+    ####################################### PUBLISH #######################################
+    
+    ### Publish Meta, Tag Repo
+    - name: Publish Meta Package & Tag
+      uses: nitz/publish-nuget@1a1ef3b003e768def4adf3bdc9e1abd18255365d
+      with:
+        PROJECT_FILE_PATH: .meta/Toolkit.csproj
+        # we will make our tag here!
+        TAG_COMMIT: true
+        VERSION_FILE_PATH: .meta/Version.props
+        VERSION_REGEX: ^\s*<VersionPrefix>(.*)<\/VersionPrefix>\s*$
+        TAG_FORMAT: v*
+        NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+        NUGET_SOURCE: https://api.nuget.org
+        # meta has no symbols to publish!
+        INCLUDE_SYMBOLS: false
+        SKIP_BUILD: true
+
+    ### Publish Core
     - name: Publish Toolkit.Core
       uses: nitz/publish-nuget@1a1ef3b003e768def4adf3bdc9e1abd18255365d
       with:
@@ -106,6 +139,7 @@ jobs:
         INCLUDE_SYMBOLS: true
         SKIP_BUILD: true
 
+    ### Publish History
     - name: Publish Toolkit.History
       uses: nitz/publish-nuget@1a1ef3b003e768def4adf3bdc9e1abd18255365d
       with:
@@ -119,6 +153,7 @@ jobs:
         INCLUDE_SYMBOLS: true
         SKIP_BUILD: true
 
+    ### Publish Win32
     - name: Publish Toolkit.Win32
       uses: nitz/publish-nuget@1a1ef3b003e768def4adf3bdc9e1abd18255365d
       with:
@@ -132,6 +167,7 @@ jobs:
         INCLUDE_SYMBOLS: true
         SKIP_BUILD: true
 
+    ### Publish WinForms
     - name: Publish Toolkit.WinForms
       uses: nitz/publish-nuget@1a1ef3b003e768def4adf3bdc9e1abd18255365d
       with:
@@ -145,6 +181,7 @@ jobs:
         INCLUDE_SYMBOLS: true
         SKIP_BUILD: true
 
+    ### Publish WinForms.Dialogs
     - name: Publish Toolkit.WinForms.Dialogs
       uses: nitz/publish-nuget@1a1ef3b003e768def4adf3bdc9e1abd18255365d
       with:
