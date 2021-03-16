@@ -57,7 +57,11 @@ jobs:
       ####################################### BUILD #######################################
 
     - name: Build
-      run: dotnet build --no-restore --verbosity normal --configuration Release  -property:ContinuousIntegrationBuild=true
+      run: dotnet build --nologo --no-restore --verbosity normal --configuration Release  -property:ContinuousIntegrationBuild=true
+    
+    - name: Build Meta Package
+      run: dotnet build .meta\Toolkit.csproj --nologo --configuration Release
+      # the meta project defaults to the targets 'Restore' and 'Pack', so build takes care of everything.
       
       ####################################### STORE #######################################
 
