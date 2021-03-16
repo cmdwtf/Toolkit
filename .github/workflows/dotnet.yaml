@@ -16,6 +16,11 @@ on:
       - '**/*.gitattributes'
       - '**/*.editorconfig'
   workflow_dispatch:
+    inputs:
+      versionSuffix:
+        description: 'The post-dash text to append to the build version.'
+        required: false
+        default: 'forced'
 
 jobs:
   build-and-deploy:
