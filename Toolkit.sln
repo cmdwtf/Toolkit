@@ -32,8 +32,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Properties", "Properties", 
 		.meta\PackageStrings.props = .meta\PackageStrings.props
 		.meta\References.props = .meta\References.props
 		.meta\TargetFrameworks.props = .meta\TargetFrameworks.props
-		.meta\Toolkit.nuspec = .meta\Toolkit.nuspec
 		.meta\Version.props = .meta\Version.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Meta Package", "Meta Package", "{61572379-C48A-410D-8254-E8BBF3FD587C}"
+	ProjectSection(SolutionItems) = preProject
+		.meta\PackageIcon.png = .meta\PackageIcon.png
+		.meta\Toolkit.csproj = .meta\Toolkit.csproj
 	EndProjectSection
 EndProject
 Global
@@ -68,6 +73,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A8512AED-60C6-4D96-9428-B803C089F01E} = {C85D3415-0BE7-41A1-8A2F-133BA092EECA}
+		{61572379-C48A-410D-8254-E8BBF3FD587C} = {C85D3415-0BE7-41A1-8A2F-133BA092EECA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {115CE4FB-3404-408B-A50B-53C7CC46C8FC}
