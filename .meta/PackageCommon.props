@@ -20,10 +20,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Content
-      Include="$(MSBuildStartupDirectory)\.meta\$(PackageIcon)"
+      Include="$(MSBuildThisFileDirectory)$(PackageIcon)"
       Visible="false"
       >
-      <PackagePath>.</PackagePath>
+      <PackagePath>.\</PackagePath>
     </Content>
   </ItemGroup>
 </Project>
