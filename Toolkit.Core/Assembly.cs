@@ -11,21 +11,26 @@ namespace cmdwtf.Toolkit
 	public static class Assembly
 	{
 		/// <summary>
-		/// Gets the executing assembly.
+		/// Gets the calling assembly.
 		/// </summary>
-		/// <value>The executing assembly.</value>
-		public static SRAssembly ExecutingAssembly => _executingAssembly ??= SRAssembly.GetExecutingAssembly();
-		private static SRAssembly _executingAssembly;
+		/// <value>The calling assembly.</value>
+		public static SRAssembly CallingAssembly => SRAssembly.GetCallingAssembly();
+
+		/// <summary>
+		/// Gets the calling assembly version.
+		/// </summary>
+		/// <value>The executing assembly version.</value>
+		public static Version CallingAssemblyVersion => CallingAssembly.GetName().Version;
 
 		/// <summary>
 		/// Gets the executing assembly version.
 		/// </summary>
 		/// <value>The executing assembly version.</value>
-		public static Version ExecutingAssemblyVersion => _executingAssemblyVersion ??= ExecutingAssembly.GetName().Version;
+		public static Version ExecutingAssemblyVersion => _executingAssemblyVersion ??= CallingAssembly.GetName().Version;
 		private static Version _executingAssemblyVersion;
 
 		/// <summary>
-		/// Gets the compile date of the currently executing assembly.
+		/// Gets the compile date of the currently calling assembly.
 		/// </summary>
 		/// <value>The compile date.</value>
 		public static DateTime CompileDate
@@ -34,7 +39,7 @@ namespace cmdwtf.Toolkit
 			{
 				if (!_compileDate.HasValue)
 				{
-					_compileDate = ExecutingAssembly.RetrieveLinkerTimestamp();
+					_compileDate = CallingAssembly.RetrieveLinkerTimestamp();
 				}
 
 				return _compileDate ?? new DateTime();
@@ -42,14 +47,14 @@ namespace cmdwtf.Toolkit
 		}
 
 		/// <summary>
-		/// Retrieves the executing assembly's full name.
+		/// Retrieves the calling assembly's full name.
 		/// </summary>
-		public static string FullName => ExecutingAssembly.FullName;
+		public static string FullName => CallingAssembly.FullName;
 
 		/// <summary>
-		/// Retrieves the executing assembly's short name.
+		/// Retrieves the calling assembly's short name.
 		/// </summary>
-		public static string ShortName => ExecutingAssembly.GetName().Name;
+		public static string ShortName => CallingAssembly.GetName().Name;
 
 		private static DateTime? _compileDate;
 
@@ -60,7 +65,7 @@ namespace cmdwtf.Toolkit
 		/// <returns>A string in the format: AssemblyName x.x.x.x\nCopyright Information\nBuilt on: M/D/Y H:M:S</returns>
 		public static string GetBuildAndCopyrightString<T>()
 		{
-			var assembly = SRAssembly.GetExecutingAssembly();
+			var assembly = CallingAssembly;
 			string name = GetAssemblyName<T>();
 			string version = assembly.GetName().Version.ToString();
 			var configAttrib = assembly.GetCustomAttributes(typeof(AssemblyConfigurationAttribute), true)[0] as AssemblyConfigurationAttribute;
