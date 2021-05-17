@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -9,6 +10,49 @@ namespace cmdwtf.Toolkit
 {
 	public static class Assembly
 	{
+		/// <summary>
+		/// Gets the executing assembly.
+		/// </summary>
+		/// <value>The executing assembly.</value>
+		public static SRAssembly ExecutingAssembly => _executingAssembly ??= SRAssembly.GetExecutingAssembly();
+		private static SRAssembly _executingAssembly;
+
+		/// <summary>
+		/// Gets the executing assembly version.
+		/// </summary>
+		/// <value>The executing assembly version.</value>
+		public static Version ExecutingAssemblyVersion => _executingAssemblyVersion ??= ExecutingAssembly.GetName().Version;
+		private static Version _executingAssemblyVersion;
+
+		/// <summary>
+		/// Gets the compile date of the currently executing assembly.
+		/// </summary>
+		/// <value>The compile date.</value>
+		public static DateTime CompileDate
+		{
+			get
+			{
+				if (!_compileDate.HasValue)
+				{
+					_compileDate = ExecutingAssembly.RetrieveLinkerTimestamp();
+				}
+
+				return _compileDate ?? new DateTime();
+			}
+		}
+
+		/// <summary>
+		/// Retrieves the executing assembly's full name.
+		/// </summary>
+		public static string FullName => ExecutingAssembly.FullName;
+
+		/// <summary>
+		/// Retrieves the executing assembly's short name.
+		/// </summary>
+		public static string ShortName => ExecutingAssembly.GetName().Name;
+
+		private static DateTime? _compileDate;
+
 		/// <summary>
 		/// Gets a formatted, printable string that includes the assembly name, copyright, and build time.
 		/// </summary>
@@ -103,13 +147,17 @@ namespace cmdwtf.Toolkit
 		/// </summary>
 		/// <returns>A DateTime object based on the linker timestamp in the file.</returns>
 		/// <remarks>Based on: https://stackoverflow.com/a/1600990/944605</remarks>
-		public static DateTime RetrieveLinkerTimestampFromFile(TimeZoneInfo timeZoneInfo = null)
+		public static DateTime RetrieveLinkerTimestampFromFile(string filePath, TimeZoneInfo timeZoneInfo = null)
 		{
 			const int PEHeaderOffset = 60;
 			const int LinkerTimestampOffset = 8;
 			const int BufferSize = 2048;
 
-			string filePath = SRAssembly.GetCallingAssembly().Location;
+			if (File.Exists(filePath) == false)
+			{
+				throw new FileNotFoundException($"{filePath} does not exist or couldn't not be read.");
+			}
+
 			byte[] buffer = new byte[BufferSize];
 
 			try
@@ -139,14 +187,14 @@ namespace cmdwtf.Toolkit
 		/// </summary>
 		/// <returns>A DateTime object based on the linker timestamp in the file.</returns>
 		/// <remarks>Based on: https://stackoverflow.com/a/44511677/944605</remarks>
-		public static DateTime RetrieveLinkerTimestamp(this System.Reflection.Assembly assembly, TimeZoneInfo timeZoneInfo = null)
+		public static DateTime RetrieveLinkerTimestamp(this SRAssembly assembly, TimeZoneInfo timeZoneInfo = null)
 		{
 			const int PEHeaderOffset = 60;
 			const int LinkerTimestampOffset = 8;
 
 			// Discover the base memory address where our assembly is loaded
 			Module module = assembly.ManifestModule;
-			System.IntPtr hModule = Marshal.GetHINSTANCE(module);
+			IntPtr hModule = Marshal.GetHINSTANCE(module);
 
 			if (hModule == Pointers.IntPtr.MinusOne)
 			{
@@ -163,6 +211,61 @@ namespace cmdwtf.Toolkit
 			DateTime result = TimeZoneInfo.ConvertTimeFromUtc(linkTimeUtc, timeZoneInfo ?? TimeZoneInfo.Local);
 
 			return result;
+		}
+
+		/// <summary>
+		/// Returns true if the given assembly was built withou anyt debuggable attribute.
+		/// </summary>
+		/// <param name="assembly">The assembly to inspect</param>
+		/// <returns>true, if release</returns>
+		public static bool IsRelease(this SRAssembly assembly)
+		{
+			if (assembly is null)
+			{
+				throw new ArgumentNullException(nameof(assembly));
+			}
+
+			object[] attributes = assembly.GetCustomAttributes(typeof(DebuggableAttribute), true);
+			if (attributes == null || attributes.Length == 0)
+			{
+				return true;
+			}
+
+			var d = (DebuggableAttribute)attributes[0];
+			if ((d.DebuggingFlags & DebuggableAttribute.DebuggingModes.Default) == DebuggableAttribute.DebuggingModes.None)
+			{
+				return true;
+			}
+
+			return false;
+		}
+
+
+		/// <summary>
+		/// Returns true if the given assembly was built with a debuggable attribute, or if JITTracking is enabled.
+		/// </summary>
+		/// <param name="assembly">The assembly to inspect</param>
+		/// <returns>true, if debug</returns>
+		public static bool IsDebug(this SRAssembly assembly)
+		{
+			if (assembly is null)
+			{
+				throw new ArgumentNullException(nameof(assembly));
+			}
+
+			object[] attributes = assembly.GetCustomAttributes(typeof(DebuggableAttribute), true);
+			if (attributes == null || attributes.Length == 0)
+			{
+				return true;
+			}
+
+			var d = (DebuggableAttribute)attributes[0];
+			if (d.IsJITTrackingEnabled)
+			{
+				return true;
+			}
+
+			return false;
 		}
 	}
 }
