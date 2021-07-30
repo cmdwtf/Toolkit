@@ -46,6 +46,9 @@ namespace cmdwtf.Toolkit.WinForms.Native
 		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
 		public static extern int SendMessage(IntPtr hWnd, WM wMsg, bool wParam, int lParam);
 
+		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
+		public static extern int SendMessage(IntPtr hWnd, ComboxBox.CB wMsg, int wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
+
 		[DllImport(NativeLibrary, EntryPoint = "SetClassLong", CharSet = CharSet.Auto, SetLastError = true)]
 		public static extern IntPtr SetClassLongPtr32(IntPtr hWnd, int nIndex, uint dwNewLong);
 
