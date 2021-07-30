@@ -237,5 +237,56 @@ namespace cmdwtf.Toolkit
 		/// <returns>The distance between the two points.</returns>
 		public static double Distance(double x1, double y1, double x2, double y2)
 			=> Sqrt(Pow(x2 - x1, 2) + Pow(y2 - y1, 2));
+
+		/// <summary>
+		/// Calculate the RMS (Root Mean Square or quadratic mean) of a list of values.
+		/// </summary>
+		/// <param name="values">The values to calculate the RMS of.</param>
+		/// <returns>The RMS.</returns>
+		public static double RootMeanSquare(this IList<double> values)
+			=> values.RootMeanSquare(0, values.Count);
+
+		/// <summary>
+		/// Calculate the RMS (Root Mean Square or quadratic mean) of a list of values, with a
+		/// specified start and end point in the list.
+		/// </summary>
+		/// <param name="values">The values to calculate the RMS of.</param>
+		/// <param name="start">Where in the list to start looking at values to include in the calculation.</param>
+		/// <param name="end">Where in the list to finish looking at values to include in the calculation.</param>
+		/// <returns>The RMS.</returns>
+		public static double RootMeanSquare(this IList<double> values, int start, int end)
+		{
+			int range = end - start;
+			int count = values.Count;
+
+			if (start < 0)
+			{
+				throw new ArgumentException("Start must be equal to or greater than 0.", nameof(start));
+			}
+
+			if (end >= count)
+			{
+				throw new ArgumentException("End must be less than the count of items in the list.", nameof(end));
+			}
+
+			if (range <= 0)
+			{
+				throw new ArgumentException("The range of start and end must be greater than zero.");
+			}
+
+			if (values.Count < range)
+			{
+				throw new ArgumentException("The amount of items in the list must be equal to or larger than the specified range.", nameof(values));
+			}
+
+			double sum = 0;
+
+			for (int scan = start; scan < end; ++scan)
+			{
+				sum += Pow(values[scan], 2);
+			}
+
+			return Sqrt(sum / range);
+		}
 	}
 }

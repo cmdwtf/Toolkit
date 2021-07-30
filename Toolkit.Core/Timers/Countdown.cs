@@ -1,6 +1,4 @@
-﻿using static System.Math;
-using static cmdwtf.Toolkit.Math;
-
+﻿
 using Stopwatch = System.Diagnostics.Stopwatch;
 
 namespace cmdwtf.Toolkit.Timers
