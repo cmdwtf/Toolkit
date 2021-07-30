@@ -1,4 +1,7 @@
-﻿using static System.Math;
+﻿using System;
+using System.Collections.Generic;
+
+using static System.Math;
 
 namespace cmdwtf.Toolkit
 {
@@ -8,7 +11,7 @@ namespace cmdwtf.Toolkit
 	public static class Math
 	{
 		// Math.Clamp wasn't there til .NET Standard 2.1... (.NET 5/.NET Core 3.0)
-#if !NETSTANDARD2_1_OR_GREATER
+#if !NET5_0_OR_GREATER || !NETCOREAPP3_0_OR_GREATER || !NET471_OR_GREATER
 		/// <summary>
 		/// Clamps a value between min and max, inclusive.
 		/// </summary>
