@@ -11,12 +11,12 @@ namespace cmdwtf.Toolkit.WinForms
 	{
 		protected override void OnHandleCreated(EventArgs e)
 		{
-			Native.User32.SendMessage(Handle, TVM_SETEXTENDEDSTYLE, (IntPtr)TVS_EX_DOUBLEBUFFER, (IntPtr)TVS_EX_DOUBLEBUFFER);
+			_ = Native.User32.SendMessage(Handle, TVM_SETEXTENDEDSTYLE, (IntPtr)TVS_EX_DOUBLEBUFFER, (IntPtr)TVS_EX_DOUBLEBUFFER);
 			base.OnHandleCreated(e);
 		}
 
 		private const int TVM_SETEXTENDEDSTYLE = 0x1100 + 44;
-		private const int TVM_GETEXTENDEDSTYLE = 0x1100 + 45;
+		//private const int TVM_GETEXTENDEDSTYLE = 0x1100 + 45;
 		private const int TVS_EX_DOUBLEBUFFER = 0x0004;
 	}
 }

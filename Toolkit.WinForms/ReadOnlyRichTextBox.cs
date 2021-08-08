@@ -14,7 +14,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// This hides <see cref="RichTextBox.ReadOnly"/>.
 		/// </summary>
 		[DefaultValue(true)]
-		public new bool ReadOnly
+		public new static bool ReadOnly
 		{
 			get { return true; }
 			set { }
@@ -25,7 +25,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// This hides <see cref="RichTextBox.TabStop"/>.
 		/// </summary>
 		[DefaultValue(false)]
-		public new bool TabStop
+		public new static bool TabStop
 		{
 			get { return false; }
 			set { }
@@ -41,31 +41,22 @@ namespace cmdwtf.Toolkit.WinForms
 			MouseMove += new MouseEventHandler(ReadOnlyRichTextBox_Mouse);
 			base.ReadOnly = true;
 			base.TabStop = false;
-			Native.User32.HideCaret(Handle);
+			_ = Native.User32.HideCaret(Handle);
 		}
 
 		private void ReadOnlyRichTextBox_Mouse(object sender, MouseEventArgs e)
 		{
 			SelectionLength = 0;
-			Native.User32.HideCaret(Handle);
+			_ = Native.User32.HideCaret(Handle);
 		}
 
-		private void ReadOnlyRichTextBox_Resize(object sender, EventArgs e)
-		{
-			Native.User32.HideCaret(Handle);
-		}
+		private void ReadOnlyRichTextBox_Resize(object sender, EventArgs e) => Native.User32.HideCaret(Handle);
 
 		#region RichTextBox overrides
 
-		protected override void OnGotFocus(EventArgs e)
-		{
-			Native.User32.HideCaret(Handle);
-		}
+		protected override void OnGotFocus(EventArgs e) => Native.User32.HideCaret(Handle);
 
-		protected override void OnEnter(EventArgs e)
-		{
-			Native.User32.HideCaret(Handle);
-		}
+		protected override void OnEnter(EventArgs e) => Native.User32.HideCaret(Handle);
 
 		#endregion RichTextBox overrides
 	}

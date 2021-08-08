@@ -22,7 +22,7 @@ namespace cmdwtf.Toolkit.WinForms
 
 		public void OnCompleted(Action continuation) => _context.Post(_postCallback, continuation);
 
-		public void GetResult() { }
+		public static void GetResult() { }
 	}
 
 	/// <summary>
@@ -31,6 +31,6 @@ namespace cmdwtf.Toolkit.WinForms
 	public static class SynchronizationContextAwaiterExtensions
 	{
 		public static SynchronizationContextAwaiter GetAwaiter(this SynchronizationContext context)
-			=> new SynchronizationContextAwaiter(context);
+			=> new(context);
 	}
 }
