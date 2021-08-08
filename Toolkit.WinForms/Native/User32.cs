@@ -41,6 +41,9 @@ namespace cmdwtf.Toolkit.WinForms.Native
 		public static extern IntPtr GetSysColorBrush(int nIndex);
 
 		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
+		public static extern int HideCaret(IntPtr hwnd);
+
+		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
 		public static extern int SendMessage(HandleRef hWnd, WM wMsg, IntPtr wParam, IntPtr lParam);
 
 		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
