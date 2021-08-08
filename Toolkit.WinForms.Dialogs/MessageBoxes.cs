@@ -14,7 +14,7 @@ namespace cmdwtf.Toolkit.WinForms.Dialogs
 	/// A collection of shortcuts to use <see cref="Ookii.Dialogs.WinForms.TaskDialog"/> with the ease of
 	/// <see cref="System.Windows.Forms.MessageBox"/>.
 	/// </summary>
-	internal static class MessageBoxes
+	public static class MessageBoxes
 	{
 		internal static DialogResult Show(IWin32Window owner, string text, string caption,
 			MessageBoxButtons buttons = MessageBoxButtons.OK,

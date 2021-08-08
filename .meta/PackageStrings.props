@@ -43,7 +43,7 @@
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.WinForms.Dialogs'">
       <PropertyGroup>
         <Description>A small toolkit that provides easy-to-use Ookii.Dialogs functionality through MessageBox-style APIs.</Description>
-        <PackageReleaseNotes>Multi-framework targeting — $(LibraryFrameworksWindows). Cleanup and refactoring.</PackageReleaseNotes>
+        <PackageReleaseNotes>Actually made the class public.</PackageReleaseNotes>
         <PackageTags>dialogs;winforms;utilities;extensions;helpers</PackageTags>
         <Product>cmd.wtf WinForms Dialog Toolkit</Product>
       </PropertyGroup>
