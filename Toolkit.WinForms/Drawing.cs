@@ -6,6 +6,8 @@ using System.Drawing.Imaging;
 using static cmdwtf.Toolkit.WinForms.Native.Gdi32;
 using static cmdwtf.Toolkit.WinForms.Native.GdiPlus;
 
+using SDColor = System.Drawing.Color;
+
 namespace cmdwtf.Toolkit.WinForms
 {
 	/// <summary>
@@ -28,7 +30,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="srcY">The source y of the image to draw from. Defaults to 0 (top).</param>
 		/// <param name="srcWidth">The source width of the image to draw from. Defaults to -1 (will use Image.Width).</param>
 		/// <param name="srcHeight">The source height of the image to draw from. Defaults to -1 (will use Image.Width).</param>
-		public static void DrawImageTinted(this Graphics g, Image image, Rectangle destRect, System.Drawing.Color tintColor,
+		public static void DrawImageTinted(this Graphics g, Image image, Rectangle destRect, SDColor tintColor,
 				int srcX = 0, int srcY = 0, int srcWidth = -1, int srcHeight = -1)
 		{
 			using var attribs = new ImageAttributes();
@@ -67,7 +69,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="srcY">The source y of the image to draw from. Defaults to 0 (top).</param>
 		/// <param name="srcWidth">The source width of the image to draw from. Defaults to -1 (will use Image.Width).</param>
 		/// <param name="srcHeight">The source height of the image to draw from. Defaults to -1 (will use Image.Width).</param>
-		public static void DrawImageHued(this Graphics g, Image image, Rectangle destRect, System.Drawing.Color hueColor, float intensity = 1.0f,
+		public static void DrawImageHued(this Graphics g, Image image, Rectangle destRect, SDColor hueColor, float intensity = 1.0f,
 				int srcX = 0, int srcY = 0, int srcWidth = -1, int srcHeight = -1)
 		{
 			using var attribs = new ImageAttributes();
@@ -150,13 +152,13 @@ namespace cmdwtf.Toolkit.WinForms
 			}
 		}
 
-		public static void FillRectangleRadialGradient(this Graphics g, System.Drawing.Color fillColor, Rectangle target, System.Drawing.Color? highlightColor = null)
+		public static void FillRectangleRadialGradient(this Graphics g, SDColor fillColor, Rectangle target, SDColor? highlightColor = null)
 			=> g.FillRectangleRadialGradient(fillColor, target, highlightColor);
 
 		// thanks, https://www.codeproject.com/Articles/20018/Gradients-made-easy
-		public static void FillRectangleRadialGradient(this Graphics g, System.Drawing.Color fillColor, RectangleF target, System.Drawing.Color? highlightColor = null)
+		public static void FillRectangleRadialGradient(this Graphics g, SDColor fillColor, RectangleF target, SDColor? highlightColor = null)
 		{
-			var path = new GraphicsPath();
+			using GraphicsPath path = new();
 			path.AddEllipse(target);
 
 			// Optional: create a blend for the gradient
@@ -164,30 +166,29 @@ namespace cmdwtf.Toolkit.WinForms
 
 			if (highlightColor == null)
 			{
-				highlightColor = System.Drawing.Color.White;
+				highlightColor = SDColor.White;
 			}
 
-			var brush = new PathGradientBrush(path)
+			using var pathBrush = new PathGradientBrush(path)
 			{
 				//CenterPoint = new PointF(target.Width / 2, target.Height / 2),
 				CenterColor = highlightColor.Value,
-				SurroundColors = new System.Drawing.Color[] { fillColor },
+				SurroundColors = new SDColor[] { fillColor },
 				WrapMode = WrapMode.Clamp
 				//Blend = blend
 			};
 
 			// for some reason, PathGradientBrush.GammaCorrection isn't in the API,
 			// so we have to call it natively ourselves.
-			SetPathGammaCorrection(brush, true);
+			pathBrush.SetPathGammaCorrection(true);
 
 			//pgb.SetSigmaBellShape(0);
 
-			//g.FillPath(pgb, gp);
-			g.FillRectangle(new SolidBrush(fillColor), target);
-			g.FillRectangle(brush, target);
+			using SolidBrush fillBrush = new(fillColor);
 
-			brush.Dispose();
-			path.Dispose();
+			//g.FillPath(pgb, gp);
+			g.FillRectangle(fillBrush, target);
+			g.FillRectangle(pathBrush, target);
 		}
 
 		/// <summary>
@@ -199,7 +200,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="_">Ignored. This is just so this function is an extension method on IntPtr.</param>
 		/// <param name="color">The color of the brush to create.</param>
 		/// <returns>The native brush handle.</returns>
-		public static Native.BrushHandle CreateSolidBrush(this IntPtr _, System.Drawing.Color color)
+		public static Native.BrushHandle CreateSolidBrush(this IntPtr _, SDColor color)
 			=> Native.Gdi32.CreateSolidBrush(ColorTranslator.ToWin32(color));
 
 		/// <summary>
@@ -221,7 +222,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="destination">Where the 'tip' end of the arrow should end.</param>
 		/// <param name="color">The color of the arrow.</param>
 		/// <param name="width">The width of the arrow.</param>
-		public static void DrawArrow2(this Graphics g, PointF origin, PointF destination, System.Drawing.Color color, float width = 1.0f)
+		public static void DrawArrow2(this Graphics g, PointF origin, PointF destination, SDColor color, float width = 1.0f)
 		{
 			using var pen = new Pen(color, width)
 			{
@@ -247,7 +248,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="width">The width of the arrow.</param>
 		/// <param name="multiplier">A multiplier to use arrow-wide.</param>
 		// Originally via William Winner: https://www.codeproject.com/Answers/125075/Draw-an-arrow-with-big-cap#answer2
-		public static void DrawArrow2(this Graphics g, PointF origin, PointF destination, System.Drawing.Color color, float width = 1.0f, float multiplier = 1.0f)
+		public static void DrawArrow2(this Graphics g, PointF origin, PointF destination, SDColor color, float width = 1.0f, float multiplier = 1.0f)
 		{
 			using var pen = new Pen(color, width);
 
@@ -376,7 +377,7 @@ namespace cmdwtf.Toolkit.WinForms
 
 		/// <summary>
 		/// Draws an fancy arrow from a given point rotated by the given angle, scaled by the length.
-		/// This, as opposed to <see cref="DrawArrow2(Graphics, PointF, PointF, System.Drawing.Color, float)"/>,
+		/// This, as opposed to <see cref="DrawArrow2(Graphics, PointF, PointF, SDColor, float)"/>,
 		/// is intended more as a use for drawing a tangent/normal/ray, rather than an arrow with a specific start/stop.
 		/// </summary>
 		/// <param name="g">The graphics device to draw with.</param>
@@ -384,7 +385,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="angle">The angle it should point.</param>
 		/// <param name="length">How long (in pixels) should the arrow be?</param>
 		/// <param name="color">The color to draw the arrow with.</param>
-		public static void DrawArrow(this Graphics g, PointF origin, float angle, float length, System.Drawing.Color color)
+		public static void DrawArrow(this Graphics g, PointF origin, float angle, float length, SDColor color)
 		{
 			using var pen = new Pen(color);
 			using var brush = new SolidBrush(color);

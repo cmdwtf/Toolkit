@@ -27,7 +27,7 @@ namespace cmdwtf.Toolkit.WinForms.Native
 		/// <param name="brush">The brush to adjust.</param>
 		/// <param name="useGammaCorrection">If true, to use gamma correction.</param>
 		/// <returns>true, on success.</returns>
-		public static bool SetPathGammaCorrection(PathGradientBrush brush, bool useGammaCorrection)
+		public static bool SetPathGammaCorrection(this PathGradientBrush brush, bool useGammaCorrection)
 		{
 			if (_pathGradientBrushNativeBrushProperty != null)
 			{
