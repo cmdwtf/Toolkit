@@ -50,13 +50,13 @@ namespace cmdwtf.Toolkit.WinForms
 			_ = Native.User32.HideCaret(Handle);
 		}
 
-		private void ReadOnlyRichTextBox_Resize(object sender, EventArgs e) => Native.User32.HideCaret(Handle);
+		private void ReadOnlyRichTextBox_Resize(object sender, EventArgs e) => _ = Native.User32.HideCaret(Handle);
 
 		#region RichTextBox overrides
 
-		protected override void OnGotFocus(EventArgs e) => Native.User32.HideCaret(Handle);
+		protected override void OnGotFocus(EventArgs e) => _ = Native.User32.HideCaret(Handle);
 
-		protected override void OnEnter(EventArgs e) => Native.User32.HideCaret(Handle);
+		protected override void OnEnter(EventArgs e) => _ = Native.User32.HideCaret(Handle);
 
 		#endregion RichTextBox overrides
 	}
