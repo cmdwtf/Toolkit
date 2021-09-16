@@ -192,6 +192,21 @@ namespace cmdwtf.Toolkit.WinForms
 		}
 
 		/// <summary>
+		/// Draws an 'error rectangle' (red outline with a red cross through it)
+		/// to the given <see cref="Graphics"/> instance.
+		/// </summary>
+		/// <param name="g">The graphics to draw to.</param>
+		/// <param name="target">The <see cref="Rectangle"/> dimensions to draw.</param>
+		/// <param name="penWidth">The width of the <see cref="Pen"/> to draw with.</param>
+		public static void DrawErrorRectangle(this Graphics g, Rectangle target, float penWidth = 2.0f)
+		{
+			using Pen redPen = new(SDColor.Red, penWidth);
+			g.DrawLine(redPen, target.TopLeft(), target.BottomRight());
+			g.DrawLine(redPen, target.TopRight(), target.BottomLeft());
+			g.DrawRectangle(redPen, target);
+		}
+
+		/// <summary>
 		/// Creates a SolidBrush, virtually identical to <see cref="SolidBrush"/>
 		/// However, it uses the native call so that it can pass it to the native function
 		/// <see cref="SetBackgroundBrush(IntPtr, Native.BrushHandle)"/>, which normal brushes

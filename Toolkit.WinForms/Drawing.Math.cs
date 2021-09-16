@@ -48,7 +48,73 @@ namespace cmdwtf.Toolkit.WinForms
 		}
 
 		/// <summary>
-		/// Adds two points together.
+		/// Gets a <see cref="Point"/> representing the top left corner of the
+		/// given <see cref="Rectangle"/>.
+		/// </summary>
+		/// <param name="rectangle">The rectangle to get the point from.</param>
+		/// <returns>A <see cref="Point"/> representing the top left of the <see cref="Rectangle"/></returns>
+		public static Point TopLeft(this Rectangle rectangle) => new Point(rectangle.Top, rectangle.Left);
+
+		/// <summary>
+		/// Gets a <see cref="Point"/> representing the top right corner of the
+		/// given <see cref="Rectangle"/>.
+		/// </summary>
+		/// <param name="rectangle">The rectangle to get the point from.</param>
+		/// <returns>A <see cref="Point"/> representing the top right of the <see cref="Rectangle"/></returns>
+		public static Point TopRight(this Rectangle rectangle) => new Point(rectangle.Top, rectangle.Right);
+
+		/// <summary>
+		/// Gets a <see cref="Point"/> representing the bottom left corner of the
+		/// given <see cref="Rectangle"/>.
+		/// </summary>
+		/// <param name="rectangle">The rectangle to get the point from.</param>
+		/// <returns>A <see cref="Point"/> representing the bottom left of the <see cref="Rectangle"/></returns>
+		public static Point BottomLeft(this Rectangle rectangle) => new Point(rectangle.Bottom, rectangle.Left);
+
+		/// <summary>
+		/// Gets a <see cref="Point"/> representing the bottom right corner of the
+		/// given <see cref="Rectangle"/>.
+		/// </summary>
+		/// <param name="rectangle">The rectangle to get the point from.</param>
+		/// <returns>A <see cref="Point"/> representing the bottom right of the <see cref="Rectangle"/></returns>
+		public static Point BottomRight(this Rectangle rectangle) => new Point(rectangle.Bottom, rectangle.Right);
+
+
+
+		/// <summary>
+		/// Gets a <see cref="PointF"/> representing the top left corner of the
+		/// given <see cref="RectangleF"/>.
+		/// </summary>
+		/// <param name="rectangle">The rectangle to get the point from.</param>
+		/// <returns>A <see cref="PointF"/> representing the top left of the <see cref="RectangleF"/></returns>
+		public static PointF TopLeft(this RectangleF rectangle) => new PointF(rectangle.Top, rectangle.Left);
+
+		/// <summary>
+		/// Gets a <see cref="PointF"/> representing the top right corner of the
+		/// given <see cref="RectangleF"/>.
+		/// </summary>
+		/// <param name="rectangle">The rectangle to get the point from.</param>
+		/// <returns>A <see cref="PointF"/> representing the top right of the <see cref="RectangleF"/></returns>
+		public static PointF TopRight(this RectangleF rectangle) => new PointF(rectangle.Top, rectangle.Right);
+
+		/// <summary>
+		/// Gets a <see cref="PointF"/> representing the bottom left corner of the
+		/// given <see cref="RectangleF"/>.
+		/// </summary>
+		/// <param name="rectangle">The rectangle to get the point from.</param>
+		/// <returns>A <see cref="PointF"/> representing the bottom left of the <see cref="RectangleF"/></returns>
+		public static PointF BottomLeft(this RectangleF rectangle) => new PointF(rectangle.Bottom, rectangle.Left);
+
+		/// <summary>
+		/// Gets a <see cref="PointF"/> representing the bottom right corner of the
+		/// given <see cref="RectangleF"/>.
+		/// </summary>
+		/// <param name="rectangle">The rectangle to get the point from.</param>
+		/// <returns>A <see cref="PointF"/> representing the bottom right of the <see cref="RectangleF"/></returns>
+		public static PointF BottomRight(this RectangleF rectangle) => new PointF(rectangle.Bottom, rectangle.Right);
+
+		/// <summary>
+		/// Adds two <see cref="Point"/>s together.
 		/// </summary>
 		/// <param name="point1">First point.</param>
 		/// <param name="point2">Second point.</param>
@@ -67,7 +133,7 @@ namespace cmdwtf.Toolkit.WinForms
 
 
 		/// <summary>
-		/// Gets the distance between two points.
+		/// Gets the distance between two <see cref="Point"/>s.
 		/// </summary>
 		/// <param name="point1">The first point.</param>
 		/// <param name="point2">The second point.</param>
