@@ -53,7 +53,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// </summary>
 		/// <param name="rectangle">The rectangle to get the point from.</param>
 		/// <returns>A <see cref="Point"/> representing the top left of the <see cref="Rectangle"/></returns>
-		public static Point TopLeft(this Rectangle rectangle) => new(rectangle.Top, rectangle.Left);
+		public static Point TopLeft(this Rectangle rectangle) => new(rectangle.Left, rectangle.Top);
 
 		/// <summary>
 		/// Gets a <see cref="Point"/> representing the top right corner of the
@@ -61,7 +61,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// </summary>
 		/// <param name="rectangle">The rectangle to get the point from.</param>
 		/// <returns>A <see cref="Point"/> representing the top right of the <see cref="Rectangle"/></returns>
-		public static Point TopRight(this Rectangle rectangle) => new(rectangle.Top, rectangle.Right);
+		public static Point TopRight(this Rectangle rectangle) => new(rectangle.Right, rectangle.Top);
 
 		/// <summary>
 		/// Gets a <see cref="Point"/> representing the bottom left corner of the
@@ -69,7 +69,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// </summary>
 		/// <param name="rectangle">The rectangle to get the point from.</param>
 		/// <returns>A <see cref="Point"/> representing the bottom left of the <see cref="Rectangle"/></returns>
-		public static Point BottomLeft(this Rectangle rectangle) => new(rectangle.Bottom, rectangle.Left);
+		public static Point BottomLeft(this Rectangle rectangle) => new(rectangle.Left, rectangle.Bottom);
 
 		/// <summary>
 		/// Gets a <see cref="Point"/> representing the bottom right corner of the
@@ -77,7 +77,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// </summary>
 		/// <param name="rectangle">The rectangle to get the point from.</param>
 		/// <returns>A <see cref="Point"/> representing the bottom right of the <see cref="Rectangle"/></returns>
-		public static Point BottomRight(this Rectangle rectangle) => new(rectangle.Bottom, rectangle.Right);
+		public static Point BottomRight(this Rectangle rectangle) => new(rectangle.Right, rectangle.Bottom);
 
 
 
@@ -87,7 +87,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// </summary>
 		/// <param name="rectangle">The rectangle to get the point from.</param>
 		/// <returns>A <see cref="PointF"/> representing the top left of the <see cref="RectangleF"/></returns>
-		public static PointF TopLeft(this RectangleF rectangle) => new(rectangle.Top, rectangle.Left);
+		public static PointF TopLeft(this RectangleF rectangle) => new(rectangle.Left, rectangle.Top);
 
 		/// <summary>
 		/// Gets a <see cref="PointF"/> representing the top right corner of the
@@ -95,7 +95,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// </summary>
 		/// <param name="rectangle">The rectangle to get the point from.</param>
 		/// <returns>A <see cref="PointF"/> representing the top right of the <see cref="RectangleF"/></returns>
-		public static PointF TopRight(this RectangleF rectangle) => new(rectangle.Top, rectangle.Right);
+		public static PointF TopRight(this RectangleF rectangle) => new(rectangle.Right, rectangle.Top);
 
 		/// <summary>
 		/// Gets a <see cref="PointF"/> representing the bottom left corner of the
@@ -103,7 +103,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// </summary>
 		/// <param name="rectangle">The rectangle to get the point from.</param>
 		/// <returns>A <see cref="PointF"/> representing the bottom left of the <see cref="RectangleF"/></returns>
-		public static PointF BottomLeft(this RectangleF rectangle) => new(rectangle.Bottom, rectangle.Left);
+		public static PointF BottomLeft(this RectangleF rectangle) => new(rectangle.Left, rectangle.Bottom);
 
 		/// <summary>
 		/// Gets a <see cref="PointF"/> representing the bottom right corner of the
@@ -111,7 +111,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// </summary>
 		/// <param name="rectangle">The rectangle to get the point from.</param>
 		/// <returns>A <see cref="PointF"/> representing the bottom right of the <see cref="RectangleF"/></returns>
-		public static PointF BottomRight(this RectangleF rectangle) => new(rectangle.Bottom, rectangle.Right);
+		public static PointF BottomRight(this RectangleF rectangle) => new(rectangle.Right, rectangle.Bottom);
 
 		/// <summary>
 		/// Adds two <see cref="Point"/>s together.

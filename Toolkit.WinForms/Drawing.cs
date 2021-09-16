@@ -152,14 +152,14 @@ namespace cmdwtf.Toolkit.WinForms
 			}
 		}
 
-		public static void FillRectangleRadialGradient(this Graphics g, SDColor fillColor, Rectangle target, SDColor? highlightColor = null)
-			=> g.FillRectangleRadialGradient(fillColor, target, highlightColor);
+		public static void FillRectangleRadialGradient(this Graphics g, SDColor fillColor, Rectangle rect, SDColor? highlightColor = null)
+			=> g.FillRectangleRadialGradient(fillColor, (RectangleF)rect, highlightColor);
 
 		// thanks, https://www.codeproject.com/Articles/20018/Gradients-made-easy
-		public static void FillRectangleRadialGradient(this Graphics g, SDColor fillColor, RectangleF target, SDColor? highlightColor = null)
+		public static void FillRectangleRadialGradient(this Graphics g, SDColor fillColor, RectangleF rect, SDColor? highlightColor = null)
 		{
 			using GraphicsPath path = new();
-			path.AddEllipse(target);
+			path.AddEllipse(rect);
 
 			// Optional: create a blend for the gradient
 			//Blend blend = new Blend();
@@ -187,8 +187,8 @@ namespace cmdwtf.Toolkit.WinForms
 			using SolidBrush fillBrush = new(fillColor);
 
 			//g.FillPath(pgb, gp);
-			g.FillRectangle(fillBrush, target);
-			g.FillRectangle(pathBrush, target);
+			g.FillRectangle(fillBrush, rect);
+			g.FillRectangle(pathBrush, rect);
 		}
 
 		/// <summary>
@@ -196,15 +196,35 @@ namespace cmdwtf.Toolkit.WinForms
 		/// to the given <see cref="Graphics"/> instance.
 		/// </summary>
 		/// <param name="g">The graphics to draw to.</param>
-		/// <param name="target">The <see cref="Rectangle"/> dimensions to draw.</param>
+		/// <param name="rect">The <see cref="Rectangle"/> dimensions to draw.</param>
 		/// <param name="penWidth">The width of the <see cref="Pen"/> to draw with.</param>
-		public static void DrawErrorRectangle(this Graphics g, Rectangle target, float penWidth = 2.0f)
+		public static void DrawErrorRectangle(this Graphics g, Rectangle rect, float penWidth = 2.0f)
+			=> g.DrawErrorRectangle((RectangleF)rect, penWidth);
+
+		/// <summary>
+		/// Draws an 'error rectangle' (red outline with a red cross through it)
+		/// to the given <see cref="Graphics"/> instance.
+		/// </summary>
+		/// <param name="g">The graphics to draw to.</param>
+		/// <param name="rect">The <see cref="Rectangle"/> dimensions to draw.</param>
+		/// <param name="penWidth">The width of the <see cref="Pen"/> to draw with.</param>
+		public static void DrawErrorRectangle(this Graphics g, RectangleF rect, float penWidth = 2.0f)
 		{
+			// deflate the rect so it doesn't draw out of the bounds if the width is thicker.
+			int rectDeflatePixels = (int)penWidth - 1;
+			rect = RectangleF.Inflate(rect, -rectDeflatePixels, -rectDeflatePixels);
+
 			using Pen redPen = new(SDColor.Red, penWidth);
-			g.DrawLine(redPen, target.TopLeft(), target.BottomRight());
-			g.DrawLine(redPen, target.TopRight(), target.BottomLeft());
-			g.DrawRectangle(redPen, target);
+
+			g.DrawLine(redPen, rect.TopLeft(), rect.BottomRight());
+			g.DrawLine(redPen, rect.TopRight(), rect.BottomLeft());
+
+			g.DrawRectangle(redPen, rect);
 		}
+
+		/// <inheritdoc cref="Graphics.DrawRectangle(Pen, Rectangle)"/>
+		public static void DrawRectangle(this Graphics g, Pen pen, RectangleF rect)
+			=> g.DrawRectangle(pen, rect.X, rect.Y, rect.Width, rect.Height);
 
 		/// <summary>
 		/// Creates a SolidBrush, virtually identical to <see cref="SolidBrush"/>
