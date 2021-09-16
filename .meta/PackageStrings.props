@@ -43,7 +43,7 @@
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.WinForms.Dialogs'">
       <PropertyGroup>
         <Description>A small toolkit that provides easy-to-use Ookii.Dialogs functionality through MessageBox-style APIs.</Description>
-        <PackageReleaseNotes>Actually made the class public.</PackageReleaseNotes>
+        <PackageReleaseNotes>Bumped Ookii.Dialog package to 3.0.0 for proper .NET 5.0 and .NET Core 3.1 support.</PackageReleaseNotes>
         <PackageTags>dialogs;winforms;utilities;extensions;helpers</PackageTags>
         <Product>cmd.wtf WinForms Dialog Toolkit</Product>
       </PropertyGroup>
