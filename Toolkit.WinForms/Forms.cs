@@ -65,5 +65,23 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <returns>True, if successful.</returns>
 		public static bool ShowWithNoFoucs(this IWin32Window window)
 			=> ShowWindow(new HandleRef(window, window.Handle), ShowWindowCommands.ShowNA);
+
+		/// <summary>
+		/// Applies a <see cref="Padding"/> to a <see cref="RectangleF"/>.
+		/// </summary>
+		/// <param name="rect">The rect to modify.</param>
+		/// <param name="padding">The amount to deflate the rect by.</param>
+		/// <returns>The modified <see cref="RectangleF"/></returns>
+		public static RectangleF ApplyPadding(this RectangleF rect, Padding padding)
+			=> RectangleF.Inflate(rect, -padding.Horizontal, -padding.Vertical);
+
+		/// <summary>
+		/// Applies a <see cref="Padding"/> to a <see cref="RectangleF"/>.
+		/// </summary>
+		/// <param name="rect">The rect to modify.</param>
+		/// <param name="padding">The amount to deflate the rect by.</param>
+		/// <returns>The modified <see cref="Rectangle"/></returns>
+		public static Rectangle ApplyPadding(this Rectangle rect, Padding padding)
+			=> Rectangle.Inflate(rect, -padding.Horizontal, -padding.Vertical);
 	}
 }

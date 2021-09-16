@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -444,5 +445,69 @@ namespace cmdwtf.Toolkit.WinForms
 		}
 
 		#endregion Arrow Drawing
+
+		#region String Format
+
+		/// <summary>
+		/// Converts a <see cref="ContentAlignment"/> into a pair of <see cref="StringAlignment"/>s.
+		/// </summary>
+		/// <param name="alignment">The <see cref="ContentAlignment"/> to convert.</param>
+		/// <returns>A tuple representing the horizontal and vertical <see cref="StringAlignment"/>s</returns>
+		public static (StringAlignment Horizontal, StringAlignment Vertical) ToStringAlignments(this ContentAlignment alignment)
+		{
+			return alignment switch
+			{
+				ContentAlignment.TopLeft => (StringAlignment.Near, StringAlignment.Near),
+				ContentAlignment.TopCenter => (StringAlignment.Center, StringAlignment.Near),
+				ContentAlignment.TopRight => (StringAlignment.Far, StringAlignment.Near),
+				ContentAlignment.MiddleLeft => (StringAlignment.Near, StringAlignment.Center),
+				ContentAlignment.MiddleCenter => (StringAlignment.Center, StringAlignment.Center),
+				ContentAlignment.MiddleRight => (StringAlignment.Far, StringAlignment.Center),
+				ContentAlignment.BottomLeft => (StringAlignment.Near, StringAlignment.Far),
+				ContentAlignment.BottomCenter => (StringAlignment.Center, StringAlignment.Far),
+				ContentAlignment.BottomRight => (StringAlignment.Far, StringAlignment.Far),
+				_ => throw new InvalidEnumArgumentException($"Unexpected {nameof(ContentAlignment)} value: {alignment}."),
+			};
+		}
+
+		/// <summary>
+		/// Converts a <see cref="StringFormat"/> into a <see cref="ContentAlignment"/>
+		/// </summary>
+		/// <param name="format">The <see cref="StringFormat"/> to convert.</param>
+		/// <returns>
+		/// A <see cref="ContentAlignment"/> representing the <see cref="StringFormat.Alignment"/>
+		/// and <see cref="StringFormat.LineAlignment"/> values.
+		/// </returns>
+		public static ContentAlignment GetContentAlignment(this StringFormat format)
+		{
+			return format.Alignment switch
+			{
+				StringAlignment.Near when format.LineAlignment == StringAlignment.Near => ContentAlignment.TopLeft,
+				StringAlignment.Center when format.LineAlignment == StringAlignment.Near => ContentAlignment.TopCenter,
+				StringAlignment.Far when format.LineAlignment == StringAlignment.Near => ContentAlignment.TopRight,
+				StringAlignment.Near when format.LineAlignment == StringAlignment.Center => ContentAlignment.MiddleLeft,
+				StringAlignment.Center when format.LineAlignment == StringAlignment.Center => ContentAlignment.MiddleCenter,
+				StringAlignment.Far when format.LineAlignment == StringAlignment.Center => ContentAlignment.MiddleRight,
+				StringAlignment.Near when format.LineAlignment == StringAlignment.Far => ContentAlignment.BottomLeft,
+				StringAlignment.Center when format.LineAlignment == StringAlignment.Far => ContentAlignment.BottomCenter,
+				StringAlignment.Far when format.LineAlignment == StringAlignment.Far => ContentAlignment.BottomRight,
+				_ => throw new InvalidEnumArgumentException($"{nameof(format)} had unexpected alignment enum values."),
+			};
+		}
+
+		/// <summary>
+		/// Applies a <see cref="ContentAlignment"/> value to the <see cref="StringFormat.Alignment"/>
+		/// and <see cref="StringFormat.LineAlignment"/> properties.
+		/// </summary>
+		/// <param name="format">The <see cref="StringFormat"/> to modify.</param>
+		/// <param name="alignment">The <see cref="ContentAlignment"/> to apply.</param>
+		/// <returns>The same, but modified <see cref="StringFormat"/></returns>
+		public static StringFormat SetAlignments(this StringFormat format, ContentAlignment alignment)
+		{
+			(format.Alignment, format.LineAlignment) = alignment.ToStringAlignments();
+			return format;
+		}
+
+		#endregion
 	}
 }
