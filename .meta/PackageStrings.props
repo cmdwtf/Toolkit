@@ -35,7 +35,7 @@
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.WinForms'">
       <PropertyGroup>
         <Description>A collection of tools, extensions, and helpers to get a little more out of WinForms that isn't provided by the system components.</Description>
-        <PackageReleaseNotes>Added string format extensions, and `Padding` application extensions.</PackageReleaseNotes>
+        <PackageReleaseNotes>Added CheckState to CheckBoxState conversion extensions.</PackageReleaseNotes>
         <PackageTags>winforms;utilities;extensions;helpers</PackageTags>
         <Product>cmd.wtf WinForms Toolkit</Product>
       </PropertyGroup>
