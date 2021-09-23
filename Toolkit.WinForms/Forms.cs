@@ -73,7 +73,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="padding">The amount to deflate the rect by.</param>
 		/// <returns>The modified <see cref="RectangleF"/></returns>
 		public static RectangleF ApplyPadding(this RectangleF rect, Padding padding)
-			=> RectangleF.Inflate(rect, -padding.Horizontal, -padding.Vertical);
+			=> RectangleF.Inflate(rect, -padding.Horizontal / 2.0f, -padding.Vertical / 2.0f);
 
 		/// <summary>
 		/// Applies a <see cref="Padding"/> to a <see cref="RectangleF"/>.
@@ -82,6 +82,6 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="padding">The amount to deflate the rect by.</param>
 		/// <returns>The modified <see cref="Rectangle"/></returns>
 		public static Rectangle ApplyPadding(this Rectangle rect, Padding padding)
-			=> Rectangle.Inflate(rect, -padding.Horizontal, -padding.Vertical);
+			=> Rectangle.Inflate(rect, -padding.Horizontal / 2, -padding.Vertical / 2);
 	}
 }
