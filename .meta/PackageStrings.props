@@ -35,7 +35,7 @@
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.WinForms'">
       <PropertyGroup>
         <Description>A collection of tools, extensions, and helpers to get a little more out of WinForms that isn't provided by the system components.</Description>
-        <PackageReleaseNotes>Fixed `ApplyPadding` from applying double the padding.</PackageReleaseNotes>
+        <PackageReleaseNotes>Add `LParamToXY` and `LParamToPoint`.</PackageReleaseNotes>
         <PackageTags>winforms;utilities;extensions;helpers</PackageTags>
         <Product>cmd.wtf WinForms Toolkit</Product>
       </PropertyGroup>

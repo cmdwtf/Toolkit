@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
+
 using static cmdwtf.Toolkit.WinForms.Native.Gdi32;
 using static cmdwtf.Toolkit.WinForms.Native.User32;
 using static cmdwtf.Toolkit.WinForms.Native.Windows;
@@ -65,6 +66,31 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <returns>True, if successful.</returns>
 		public static bool ShowWithNoFoucs(this IWin32Window window)
 			=> ShowWindow(new HandleRef(window, window.Handle), ShowWindowCommands.ShowNA);
+
+
+		/// <summary>
+		/// Converts a <see cref="Message.LParam"/> to an X and Y,
+		/// for use with mouse Windows Messages.
+		/// </summary>
+		/// <param name="m">The message to inspect.</param>
+		/// <returns>A tuple representing the X and Y positions pulled from <see cref="Message.LParam"/></returns>
+		public static (int X, int Y) LParamToXY(this Message m)
+		{
+			return (Native.Param.SignedLOWORD(m.LParam),
+					Native.Param.SignedHIWORD(m.LParam));
+		}
+
+		/// <summary>
+		/// Converts a <see cref="Message.LParam"/> to a <see cref="Point"/>,
+		/// for use with mouse Windows Messages.
+		/// </summary>
+		/// <param name="m">The message to inspect.</param>
+		/// <returns>A <see cref="Point"/> positions pulled from <see cref="Message.LParam"/></returns>
+		public static Point LParamToPoint(this Message m)
+		{
+			(int x, int y) = m.LParamToXY();
+			return new Point(x, y);
+		}
 
 		/// <summary>
 		/// Applies a <see cref="Padding"/> to a <see cref="RectangleF"/>.
