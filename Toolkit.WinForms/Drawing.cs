@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -226,6 +226,36 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <inheritdoc cref="Graphics.DrawRectangle(Pen, Rectangle)"/>
 		public static void DrawRectangle(this Graphics g, Pen pen, RectangleF rect)
 			=> g.DrawRectangle(pen, rect.X, rect.Y, rect.Width, rect.Height);
+
+		/// <summary>
+		/// Draws an image into the specified <see cref="Graphics"/> instance,
+		/// using the given <paramref name="rect"/> as it's target area, but determining
+		/// position based on <paramref name="alignment"/> and size from <paramref name="image"/>
+		/// </summary>
+		/// <param name="g">The graphics to draw to.</param>
+		/// <param name="image">The <see cref="Image"/> to draw.</param>
+		/// <param name="rect">The <see cref="RectangleF"/> area to draw into.</param>
+		/// <param name="alignment">The <see cref="ContentAlignment"/> to draw the image at.</param>
+		/// <returns>The calculated <see cref="Rectangle"/> that was used to draw the image.</returns>
+		public static RectangleF DrawImage(this Graphics g, Image image, RectangleF rect, ContentAlignment alignment)
+			=> g.DrawImage(image, Rectangle.Truncate(rect), alignment);
+
+		/// <summary>
+		/// Draws an image into the specified <see cref="Graphics"/> instance,
+		/// using the given <paramref name="rect"/> as it's target area, but determining
+		/// position based on <paramref name="alignment"/> and size from <paramref name="image"/>
+		/// </summary>
+		/// <param name="g">The graphics to draw to.</param>
+		/// <param name="image">The <see cref="Image"/> to draw.</param>
+		/// <param name="rect">The <see cref="Rectangle"/> area to draw into.</param>
+		/// <param name="alignment">The <see cref="ContentAlignment"/> to draw the image at.</param>
+		/// <returns>The calculated <see cref="Rectangle"/> that was used to draw the image.</returns>
+		public static Rectangle DrawImage(this Graphics g, Image image, Rectangle rect, ContentAlignment alignment)
+		{
+			rect = image.CalcImageRenderBounds(rect, alignment);
+			g.DrawImage(image, rect.X, rect.Y, image.Width, image.Height);
+			return rect;
+		}
 
 		/// <summary>
 		/// Creates a SolidBrush, virtually identical to <see cref="SolidBrush"/>

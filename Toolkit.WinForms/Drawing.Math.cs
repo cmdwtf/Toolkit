@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+using System.Drawing;
 
 using static System.Math;
 using static cmdwtf.Toolkit.Math;
@@ -206,5 +206,60 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <inheritdoc cref="IsValidSize(SizeF)"/>
 		public static bool IsValidSize(this Size size)
 			=> !size.IsEmpty;
+
+		/// <summary>
+		/// Determines the size and location of an image drawn within the <see cref="Rectangle"/> based on the alignment.
+		/// </summary>
+		/// <param name="image">The <see cref="Image"/> used to determine size and location when drawn within the rectangle.</param>
+		/// <param name="r">A <see cref="Rectangle"/> that represents the area to draw the image in.</param>
+		/// <param name="align">The alignment of content within the rectangle.</param>
+		/// <returns>A <see cref="Rectangle"/> that represents the size and location of the specified image should draw into.</returns>
+		/// <remarks>
+		/// Licensed under the MIT license.
+		/// Copyright ©️ 2021 Chris Marc Dailey (nitz)
+		/// Copyright (c) .NET Foundation and Contributors
+		/// <see href="https://github.com/dotnet/winforms/blob/441b19a3bf7ede62c103250fd698f5c2490c4006/src/System.Windows.Forms/src/System/Windows/Forms/Label.cs">Label.cs</see>
+		/// </remarks>
+		public static Rectangle CalcImageRenderBounds(this Image image, Rectangle r, ContentAlignment align)
+		{
+			Size size = image.Size;
+			int x = r.X + 2;
+
+			if ((align & ContentAlignmentMasks.AnyRightAlign) != 0)
+			{
+				x = r.X + r.Width - 4 - size.Width;
+			}
+			else if ((align & ContentAlignmentMasks.AnyCenterAlign) != 0)
+			{
+				x = r.X + ((r.Width - size.Width) / 2);
+			}
+
+			int y = (align & ContentAlignmentMasks.AnyBottomAlign) == 0
+				? ((align & ContentAlignmentMasks.AnyTopAlign) == 0
+					? r.Y + ((r.Height - size.Height) / 2)
+					: r.Y + 2)
+				: r.Y + r.Height - 4 - size.Height;
+
+			return new Rectangle(x, y, size.Width, size.Height);
+		}
+
+		/// <summary>
+		/// A few shorthands for <see cref="ContentAlignment"/> flag sets.
+		/// </summary>
+		/// <remarks>
+		/// Licensed under the MIT license.
+		/// Copyright ©️ 2021 Chris Marc Dailey (nitz)
+		/// Copyright (c) .NET Foundation and Contributors
+		/// <see href="https://github.com/dotnet/winforms/blob/441b19a3bf7ede62c103250fd698f5c2490c4006/src/System.Windows.Forms/src/System/Windows/Forms/WinFormsUtils.cs">WinFormsUtils.cs</see>
+		/// </remarks>
+		public static class ContentAlignmentMasks
+		{
+			public const ContentAlignment AnyRightAlign = ContentAlignment.TopRight | ContentAlignment.MiddleRight | ContentAlignment.BottomRight;
+			public const ContentAlignment AnyLeftAlign = ContentAlignment.TopLeft | ContentAlignment.MiddleLeft | ContentAlignment.BottomLeft;
+			public const ContentAlignment AnyTopAlign = ContentAlignment.TopLeft | ContentAlignment.TopCenter | ContentAlignment.TopRight;
+			public const ContentAlignment AnyBottomAlign = ContentAlignment.BottomLeft | ContentAlignment.BottomCenter | ContentAlignment.BottomRight;
+			public const ContentAlignment AnyMiddleAlign = ContentAlignment.MiddleLeft | ContentAlignment.MiddleCenter | ContentAlignment.MiddleRight;
+			public const ContentAlignment AnyCenterAlign = ContentAlignment.TopCenter | ContentAlignment.MiddleCenter | ContentAlignment.BottomCenter;
+		}
 	}
 }
