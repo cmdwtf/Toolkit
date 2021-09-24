@@ -1,6 +1,20 @@
 # Remove the line below if you want to inherit .editorconfig settings from higher directories
 root = true
 
+# All Files
+[*]
+charset = utf-8
+
+# Indentation and spacing
+indent_size = 4
+indent_style = tab
+tab_width = 4
+trim_trailing_whitespace = true
+
+# New line preferences
+end_of_line = crlf
+insert_final_newline = true
+
 # C# files
 [*.cs]
 
@@ -13,7 +27,7 @@ tab_width = 4
 
 # New line preferences
 end_of_line = crlf
-insert_final_newline = false
+insert_final_newline = true
 
 #### .NET Coding Conventions ####
 
@@ -45,6 +59,7 @@ dotnet_style_require_accessibility_modifiers = for_non_interface_members
 dotnet_style_coalesce_expression = true:warning
 dotnet_style_collection_initializer = true
 dotnet_style_explicit_tuple_names = true:warning
+dotnet_style_namespace_match_folder = true
 dotnet_style_null_propagation = true:warning
 dotnet_style_object_initializer = true
 dotnet_style_operator_placement_when_wrapping = beginning_of_line
@@ -67,6 +82,10 @@ dotnet_code_quality_unused_parameters = all
 # Suppression preferences
 dotnet_remove_unnecessary_suppression_exclusions = none
 
+# New line preferences
+dotnet_style_allow_multiple_blank_lines_experimental = false
+dotnet_style_allow_statement_immediately_after_block_experimental = false
+
 #### C# Coding Conventions ####
 
 # var preferences
@@ -81,7 +100,7 @@ csharp_style_expression_bodied_indexers = true
 csharp_style_expression_bodied_lambdas = true
 csharp_style_expression_bodied_local_functions = when_on_single_line:suggestion
 csharp_style_expression_bodied_methods = when_on_single_line:suggestion
-csharp_style_expression_bodied_operators = false:warning
+csharp_style_expression_bodied_operators = false:suggestion
 csharp_style_expression_bodied_properties = true
 
 # Pattern matching preferences
@@ -103,9 +122,9 @@ csharp_prefer_braces = true:warning
 csharp_prefer_simple_using_statement = true
 
 # Expression-level preferences
-csharp_prefer_simple_default_expression = true
+csharp_prefer_simple_default_expression = true:warning
 csharp_style_deconstructed_variable_declaration = true
-csharp_style_implicit_object_creation_when_type_is_apparent = true
+csharp_style_implicit_object_creation_when_type_is_apparent = true:warning
 csharp_style_inlined_variable_declaration = true
 csharp_style_pattern_local_over_anonymous_function = true
 csharp_style_prefer_index_operator = true
@@ -116,6 +135,11 @@ csharp_style_unused_value_expression_statement_preference = discard_variable
 
 # 'using' directive preferences
 csharp_using_directive_placement = outside_namespace:warning
+
+# New line preferences
+csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = true
+csharp_style_allow_blank_lines_between_consecutive_braces_experimental = false
+csharp_style_allow_embedded_statements_on_same_line_experimental = true
 
 #### C# Formatting Rules ####
 
@@ -192,11 +216,11 @@ dotnet_naming_rule.private_or_internal_static_field_should_be_leading_underscore
 
 dotnet_naming_symbols.interface.applicable_kinds = interface
 dotnet_naming_symbols.interface.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
-dotnet_naming_symbols.interface.required_modifiers = 
+dotnet_naming_symbols.interface.required_modifiers =
 
 dotnet_naming_symbols.private_or_internal_field.applicable_kinds = field
 dotnet_naming_symbols.private_or_internal_field.applicable_accessibilities = internal, private, private_protected
-dotnet_naming_symbols.private_or_internal_field.required_modifiers = 
+dotnet_naming_symbols.private_or_internal_field.required_modifiers =
 
 dotnet_naming_symbols.private_or_internal_static_field.applicable_kinds = field
 dotnet_naming_symbols.private_or_internal_static_field.applicable_accessibilities = internal, private, private_protected
@@ -204,25 +228,36 @@ dotnet_naming_symbols.private_or_internal_static_field.required_modifiers = stat
 
 dotnet_naming_symbols.types.applicable_kinds = class, struct, interface, enum
 dotnet_naming_symbols.types.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
-dotnet_naming_symbols.types.required_modifiers = 
+dotnet_naming_symbols.types.required_modifiers =
 
 dotnet_naming_symbols.non_field_members.applicable_kinds = property, event, method
 dotnet_naming_symbols.non_field_members.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
-dotnet_naming_symbols.non_field_members.required_modifiers = 
+dotnet_naming_symbols.non_field_members.required_modifiers =
 
 # Naming styles
 
-dotnet_naming_style.pascal_case.required_prefix = 
-dotnet_naming_style.pascal_case.required_suffix = 
-dotnet_naming_style.pascal_case.word_separator = 
+dotnet_naming_style.pascal_case.required_prefix =
+dotnet_naming_style.pascal_case.required_suffix =
+dotnet_naming_style.pascal_case.word_separator =
 dotnet_naming_style.pascal_case.capitalization = pascal_case
 
 dotnet_naming_style.begins_with_i.required_prefix = I
-dotnet_naming_style.begins_with_i.required_suffix = 
-dotnet_naming_style.begins_with_i.word_separator = 
+dotnet_naming_style.begins_with_i.required_suffix =
+dotnet_naming_style.begins_with_i.word_separator =
 dotnet_naming_style.begins_with_i.capitalization = pascal_case
 
 dotnet_naming_style.leading_underscore_camel_case.required_prefix = _
-dotnet_naming_style.leading_underscore_camel_case.required_suffix = 
-dotnet_naming_style.leading_underscore_camel_case.word_separator = 
+dotnet_naming_style.leading_underscore_camel_case.required_suffix =
+dotnet_naming_style.leading_underscore_camel_case.word_separator =
 dotnet_naming_style.leading_underscore_camel_case.capitalization = camel_case
+
+# XML Files
+[*.{csproj,props,xml}]
+
+# Indentation and spacing
+indent_size = 2
+indent_style = space
+
+# New line preferences
+end_of_line = crlf
+insert_final_newline = true
