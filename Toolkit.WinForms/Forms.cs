@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-
+using static System.Math;
 using static cmdwtf.Toolkit.WinForms.Native.Gdi32;
 using static cmdwtf.Toolkit.WinForms.Native.User32;
 using static cmdwtf.Toolkit.WinForms.Native.Windows;
@@ -16,6 +16,63 @@ namespace cmdwtf.Toolkit.WinForms
 	/// </summary>
 	public static partial class Forms
 	{
+		#region Control
+
+		/// <summary>
+		/// A shortcut to convert a <see cref="float"/> from logical to
+		/// device units (for DPI awareness), first rounding the value
+		/// given before passing it to the given control.
+		/// </summary>
+		/// <param name="c">The <see cref="Control"/> to use to convert units.</param>
+		/// <param name="value">The <see cref="float"/> to convert.</param>
+		/// <returns>An <see cref="int"/> that represents the converted device units.</returns>
+		public static int LogicalToDeviceUnits(this Control c, float value)
+			=> c.LogicalToDeviceUnits((int)Round(value));
+
+		/// <summary>
+		/// A shortcut to convert a <see cref="SizeF"/> from logical to
+		/// device units (for DPI awareness), first rounding the components
+		/// of the size before passing it to the given control.
+		/// </summary>
+		/// <param name="c">The <see cref="Control"/> to use to convert units.</param>
+		/// <param name="value">The <see cref="SizeF"/> to convert.</param>
+		/// <returns>A new <see cref="Size"/> with units converted to device units.</returns>
+		public static Size LogicalToDeviceUnits(this Control c, SizeF value)
+		{
+			Size rounded = new((int)Round(value.Width), (int)Round(value.Height));
+			return c.LogicalToDeviceUnits(rounded);
+		}
+
+		/// <summary>
+		/// Invalidates the specified region of the control (adds it to the control's update
+		/// region, which is the area that will be repainted at the next paint operation),
+		/// and causes a paint message to be sent to the control. This is functionally identical to
+		/// <see cref="Control.Invalidate(Rectangle)"/>, but calls
+		/// <see cref="Rectangle.Round(RectangleF)"/> on the <see cref="RectangleF"/> first.
+		/// </summary>
+		/// <param name="c">The <see cref="Control"/> to invalidate.</param>
+		/// <param name="rc">A <see cref="RectangleF"/> that represents the region to invalidate.</param>
+		public static void Invalidate(this Control c, RectangleF rc)
+			=> c.Invalidate(Rectangle.Round(rc));
+
+		/// <summary>
+		/// Invalidates the specified region of the control (adds it to the control's update
+		/// region, which is the area that will be repainted at the next paint operation),
+		/// and causes a paint message to be sent to the control. Optionally, invalidates
+		/// the child controls assigned to the control. This is functionally identical to
+		/// <see cref="Control.Invalidate(Rectangle, bool)"/>, but calls
+		/// <see cref="Rectangle.Round(RectangleF)"/> on the <see cref="RectangleF"/> first.
+		/// </summary>
+		/// <param name="c">The <see cref="Control"/> to invalidate.</param>
+		/// <param name="rc">A <see cref="RectangleF"/> that represents the region to invalidate.</param>
+		/// <param name="invalidateChildren">true to invalidate the control's child controls; otherwise, false.</param>
+		public static void Invalidate(this Control c, RectangleF rc, bool invalidateChildren)
+		{
+			c.Invalidate(Rectangle.Round(rc), invalidateChildren);
+		}
+
+		#endregion Control
+
 		/// <summary>
 		/// The ValidateRect function validates the client area within a rectangle
 		/// by removing the rectangle from the update region of the specified window.
