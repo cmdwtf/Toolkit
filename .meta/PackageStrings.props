@@ -11,7 +11,7 @@
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.Core'">
       <PropertyGroup>
         <Description>A small collection of utility functions and tools created over the years, bundled up in a single package for easy inclusion and management.</Description>
-        <PackageReleaseNotes>Fix namespaces that were improperly `cmdwtf.Toolkit.WinForms`.</PackageReleaseNotes>
+        <PackageReleaseNotes>Add `StateFlags` for .NET 5.0+</PackageReleaseNotes>
         <PackageTags>utilities;extensions;helpers</PackageTags>
         <Product>cmd.wtf Toolkit Core</Product>
       </PropertyGroup>
