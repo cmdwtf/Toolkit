@@ -220,10 +220,10 @@ namespace cmdwtf.Toolkit.WinForms
 		/// Copyright (c) .NET Foundation and Contributors
 		/// <see href="https://github.com/dotnet/winforms/blob/441b19a3bf7ede62c103250fd698f5c2490c4006/src/System.Windows.Forms/src/System/Windows/Forms/Label.cs">Label.cs</see>
 		/// </remarks>
-		public static Rectangle CalcImageRenderBounds(this Image image, Rectangle r, ContentAlignment align)
+		public static RectangleF CalcImageRenderBounds(this Image image, RectangleF r, ContentAlignment align)
 		{
-			Size size = image.Size;
-			int x = r.X + 2;
+			SizeF size = image.Size;
+			float x = r.X + 2;
 
 			if ((align & ContentAlignmentMasks.AnyRightAlign) != 0)
 			{
@@ -234,14 +234,18 @@ namespace cmdwtf.Toolkit.WinForms
 				x = r.X + ((r.Width - size.Width) / 2);
 			}
 
-			int y = (align & ContentAlignmentMasks.AnyBottomAlign) == 0
+			float y = (align & ContentAlignmentMasks.AnyBottomAlign) == 0
 				? ((align & ContentAlignmentMasks.AnyTopAlign) == 0
 					? r.Y + ((r.Height - size.Height) / 2)
 					: r.Y + 2)
 				: r.Y + r.Height - 4 - size.Height;
 
-			return new Rectangle(x, y, size.Width, size.Height);
+			return new RectangleF(x, y, size.Width, size.Height);
 		}
+
+		/// <inheritdoc cref="CalcImageRenderBounds(Image, RectangleF, ContentAlignment)"/>
+		public static Rectangle CalcImageRenderBounds(this Image image, Rectangle r, ContentAlignment align)
+			=> Rectangle.Round(image.CalcImageRenderBounds((RectangleF)r, align));
 
 		/// <summary>
 		/// A few shorthands for <see cref="ContentAlignment"/> flag sets.
