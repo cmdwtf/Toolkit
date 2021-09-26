@@ -3,10 +3,12 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Windows.Forms;
 
 using static cmdwtf.Toolkit.WinForms.Native.Gdi32;
 using static cmdwtf.Toolkit.WinForms.Native.GdiPlus;
 
+using ControlPaint = System.Windows.Forms.ControlPaint;
 using SDColor = System.Drawing.Color;
 
 namespace cmdwtf.Toolkit.WinForms
@@ -153,11 +155,19 @@ namespace cmdwtf.Toolkit.WinForms
 			}
 		}
 
-		public static void FillRectangleRadialGradient(this Graphics g, SDColor fillColor, Rectangle rect, SDColor? highlightColor = null)
-			=> g.FillRectangleRadialGradient(fillColor, (RectangleF)rect, highlightColor);
+		/// <summary>
+		/// Fills a rectangle with a radial gradient.
+		/// </summary>
+		/// <param name="g">The <see cref="Graphics"/> to draw into.</param>
+		/// <param name="fillColor">The color to start the gradient with.</param>
+		/// <param name="rect">The rectangle to fill.</param>
+		/// <param name="highlightColor">An optional color to end the gradient with. If null, will use <see cref="ControlPaint.Light(SDColor)"/> to calculate one.</param>
+		public static void FillRectangleRadialGradient(this Graphics g, SDColor fillColor, Rectangle rect, SDColor? highlightColor = null, Point? centerPoint = null)
+			=> g.FillRectangleRadialGradient(fillColor, (RectangleF)rect, highlightColor, centerPoint);
 
+		/// <inheritdoc cref="FillRectangleRadialGradient(Graphics, SDColor, Rectangle, SDColor?)"/>
 		// thanks, https://www.codeproject.com/Articles/20018/Gradients-made-easy
-		public static void FillRectangleRadialGradient(this Graphics g, SDColor fillColor, RectangleF rect, SDColor? highlightColor = null)
+		public static void FillRectangleRadialGradient(this Graphics g, SDColor fillColor, RectangleF rect, SDColor? highlightColor = null, PointF? centerPoint = null)
 		{
 			using GraphicsPath path = new();
 			path.AddEllipse(rect);
@@ -165,9 +175,9 @@ namespace cmdwtf.Toolkit.WinForms
 			// Optional: create a blend for the gradient
 			//Blend blend = new Blend();
 
-			if (highlightColor == null)
+			if (highlightColor is null)
 			{
-				highlightColor = SDColor.White;
+				highlightColor = ControlPaint.Light(fillColor);
 			}
 
 			using var pathBrush = new PathGradientBrush(path)
@@ -179,17 +189,41 @@ namespace cmdwtf.Toolkit.WinForms
 				//Blend = blend
 			};
 
+			if (centerPoint is not null)
+			{
+				pathBrush.CenterPoint = centerPoint.Value;
+			}
+
 			// for some reason, PathGradientBrush.GammaCorrection isn't in the API,
 			// so we have to call it natively ourselves.
 			pathBrush.SetPathGammaCorrection(true);
-
-			//pgb.SetSigmaBellShape(0);
+			//pathBrush.SetSigmaBellShape(0);
 
 			using SolidBrush fillBrush = new(fillColor);
 
-			//g.FillPath(pgb, gp);
 			g.FillRectangle(fillBrush, rect);
 			g.FillRectangle(pathBrush, rect);
+		}
+
+		/// <summary>
+		/// Fills a rectangle with a linear gradient.
+		/// </summary>
+		/// <param name="g">The <see cref="Graphics"/> to draw into.</param>
+		/// <param name="fillColor">The color to start the gradient with.</param>
+		/// <param name="rect">The rectangle to fill.</param>
+		/// <param name="highlightColor">An optional color to end the gradient with. If null, will use <see cref="ControlPaint.Light(SDColor)"/> to calculate one.</param>
+		/// <param name="angle">The angle of the gradient. 0 is horizontal from left to right. Should be between 0 and 360.</param>
+		public static void FillRectangleLinearGradient(this Graphics g, SDColor fillColor, RectangleF rect, SDColor? highlightColor = null, float angle = 0.0f)
+		{
+			SDColor highlight = highlightColor ?? ControlPaint.Light(fillColor);
+
+			angle = (angle is > 360 or < 0) ? 0 : angle;
+
+			using LinearGradientBrush brush = new(rect, fillColor, highlight, angle, true);
+
+			brush.GammaCorrection = true;
+
+			g.FillRectangle(brush, rect);
 		}
 
 		/// <summary>
@@ -536,6 +570,28 @@ namespace cmdwtf.Toolkit.WinForms
 		{
 			(format.Alignment, format.LineAlignment) = alignment.ToStringAlignments();
 			return format;
+		}
+
+		/// <summary>
+		/// Updates a <see cref="StringFormat"/>'s flags to properly reflect
+		/// the given <see cref="Control"/>'s <see cref="Control.RightToLeft"/> setting.
+		/// </summary>
+		/// <param name="format">The format to update.</param>
+		/// <param name="c">The control's setting to use.</param>
+		public static void UpdateRightToLeft(this StringFormat format, Control c)
+		{
+			switch (c.RightToLeft)
+			{
+				case RightToLeft.Yes:
+					format.FormatFlags |= StringFormatFlags.DirectionRightToLeft;
+					break;
+				case RightToLeft.No:
+					format.FormatFlags &= ~StringFormatFlags.DirectionRightToLeft;
+					break;
+				default:
+					format.UpdateRightToLeft(c.Parent);
+					break;
+			}
 		}
 
 		#endregion

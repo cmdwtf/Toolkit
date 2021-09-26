@@ -35,7 +35,7 @@
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.WinForms'">
       <PropertyGroup>
         <Description>A collection of tools, extensions, and helpers to get a little more out of WinForms that isn't provided by the system components.</Description>
-        <PackageReleaseNotes>Converted `CalcImageRenderBounds` to `RectangleF` and added a `Rectangle` overload to call it.</PackageReleaseNotes>
+        <PackageReleaseNotes>Added a linear gradient helper, and a `StringFormat` RTL adjuster helper.</PackageReleaseNotes>
         <PackageTags>winforms;utilities;extensions;helpers;drawing;gdi;gdip;bitmap;datagrid;icon;overlay;controls;cursor</PackageTags>
         <Product>cmd.wtf WinForms Toolkit</Product>
       </PropertyGroup>
