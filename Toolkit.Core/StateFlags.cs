@@ -1,4 +1,4 @@
-﻿#if NET5_0_OR_GREATER
+#if NET5_0_OR_GREATER || NET47_OR_GREATER
 using System;
 using System.Collections.Specialized;
 using System.Runtime.CompilerServices;
@@ -82,24 +82,31 @@ namespace cmdwtf.Toolkit
 		{
 			get
 			{
-				uint bitVal = Unsafe.As<T, uint>(ref bit);
+				uint bitVal =
+#if NET5_0_OR_GREATER
+					Unsafe.As<T, uint>(ref bit);
+#else
+					Convert.ToUInt32(bit);
+#endif // NET5_0_OR_GREATER
 				return (_data & bitVal) == unchecked(bitVal);
 			}
 			set
 			{
 				unchecked
 				{
-					unchecked
+					uint bitVal =
+#if NET5_0_OR_GREATER
+						Unsafe.As<T, uint>(ref bit);
+#else
+						Convert.ToUInt32(bit);
+#endif // NET5_0_OR_GREATER
+					if (value)
 					{
-						uint bitVal = Unsafe.As<T, uint>(ref bit);
-						if (value)
-						{
-							_data |= bitVal;
-						}
-						else
-						{
-							_data &= ~bitVal;
-						}
+						_data |= bitVal;
+					}
+					else
+					{
+						_data &= ~bitVal;
 					}
 				}
 			}

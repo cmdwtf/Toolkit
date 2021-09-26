@@ -11,7 +11,7 @@
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.Core'">
       <PropertyGroup>
         <Description>A small collection of utility functions and tools created over the years, bundled up in a single package for easy inclusion and management.</Description>
-        <PackageReleaseNotes>Add `StateFlags` for .NET 5.0+</PackageReleaseNotes>
+        <PackageReleaseNotes>Add `StateFlags` for .NET 5.0+, and .NET Framework 4.7+</PackageReleaseNotes>
         <PackageTags>utilities;extensions;helpers;xplat;crossplatform;wildcard;easing</PackageTags>
         <Product>cmd.wtf Toolkit Core</Product>
       </PropertyGroup>
