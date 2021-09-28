@@ -10,6 +10,11 @@ namespace cmdwtf.Toolkit.WinForms.Native
 	internal static class Windows
 	{
 		/// <summary>
+		/// A convinent uint for other values to reference for WM_USER's base value.
+		/// </summary>
+		public const uint WM_USER = (uint)WM.USER;
+
+		/// <summary>
 		/// Windows Messages
 		/// Defined in the windows SDK,
 		/// Documentation pulled from MSDN.

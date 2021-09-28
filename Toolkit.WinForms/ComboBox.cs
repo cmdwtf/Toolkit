@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
 
 namespace cmdwtf.Toolkit.WinForms
@@ -14,7 +14,7 @@ namespace cmdwtf.Toolkit.WinForms
 		}
 
 		public static int ComboBoxSetCueBanner(IntPtr handle, string cueBanner)
-			=> Native.User32.SendMessage(handle, CB.SETCUEBANNER, 0, cueBanner);
+			=> Native.User32.SendMessage(handle, CB.SETCUEBANNER, UIntPtr.Zero, cueBanner);
 
 		public static int SetCueBanner(this ComboBox comboBox, string cueBanner)
 			=> ComboBoxSetCueBanner(comboBox.Handle, cueBanner);

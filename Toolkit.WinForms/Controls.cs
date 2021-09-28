@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -114,15 +114,15 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="control">The control to stop painting.</param>
 		/// <returns>True, on success.</returns>
 		public static bool SuspendPainting(this Control control)
-			=> SendMessage(control.Handle, WM.SETREDRAW, false, 0) == 0;
+			=> SendMessage(control.Handle, WM.SETREDRAW, false, IntPtr.Zero) == 0;
 
 		/// <summary>
 		/// Resumes painting on the given control, if it was stopped via the WM_SETREDRAW message.
 		/// </summary>
 		/// <param name="control">The control to stop painting.</param>
 		/// <returns>True, on success.</returns>
-		public static int ResumePainting(this Control control)
-			=> SendMessage(control.Handle, WM.SETREDRAW, true, 0);
+		public static bool ResumePainting(this Control control)
+			=> SendMessage(control.Handle, WM.SETREDRAW, true, IntPtr.Zero) == 0;
 
 		#endregion Control Rendering
 

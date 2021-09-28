@@ -1,6 +1,9 @@
 using System;
 using System.ComponentModel;
 
+using TV = cmdwtf.Toolkit.WinForms.Native.ComCtl32.TreeView.TV;
+using TVS = cmdwtf.Toolkit.WinForms.Native.ComCtl32.TreeView.TVS;
+
 namespace cmdwtf.Toolkit.WinForms
 {
 	/// <summary>
@@ -21,13 +24,19 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="e">The <see cref="EventArgs"/> containing the event data.</param>
 		protected override void OnHandleCreated(EventArgs e)
 		{
-			_ = Native.User32.SendMessage(Handle, TVM_SETEXTENDEDSTYLE, (IntPtr)TVS_EX_DOUBLEBUFFER, (IntPtr)TVS_EX_DOUBLEBUFFER);
+			_ = Native.User32.SendMessage(Handle, TVM.SETEXTENDEDSTYLE, TVS.EX.DOUBLEBUFFER, TVS.EX.DOUBLEBUFFER);
 			base.OnHandleCreated(e);
 		}
 
-		private const int TVM_SETEXTENDEDSTYLE = 0x1100 + 44;
-		//private const int TVM_GETEXTENDEDSTYLE = 0x1100 + 45;
-		private const int TVS_EX_DOUBLEBUFFER = 0x0004;
+		/// <summary>
+		/// A subsection of Tree-View messages.
+		/// </summary>
+		private static class TVM
+		{
+			// many TVM_ skipped.
+			public const uint SETEXTENDEDSTYLE = TV.FIRST + 44;
+			public const uint GETEXTENDEDSTYLE = TV.FIRST + 45;
+		}
 	}
 }
 

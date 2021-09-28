@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -100,7 +100,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// call GetLastError.
 		/// </returns>
 		/// <seealso>https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setclasslonga</seealso>
-		public static IntPtr SetClassLong(this IntPtr hWnd, int nIndex, IntPtr dwNewLong)
+		public static UIntPtr SetClassLong(this IntPtr hWnd, int nIndex, IntPtr dwNewLong)
 		{
 			unchecked
 			{
@@ -111,7 +111,7 @@ namespace cmdwtf.Toolkit.WinForms
 				}
 				else
 				{
-					return SetClassLongPtr32(hWnd, nIndex, (uint)dwNewLong.ToInt32());
+					return (UIntPtr)SetClassLongPtr32(hWnd, nIndex, (uint)dwNewLong.ToInt32());
 				}
 			}
 		}
