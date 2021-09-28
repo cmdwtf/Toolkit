@@ -67,9 +67,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="rc">A <see cref="RectangleF"/> that represents the region to invalidate.</param>
 		/// <param name="invalidateChildren">true to invalidate the control's child controls; otherwise, false.</param>
 		public static void Invalidate(this Control c, RectangleF rc, bool invalidateChildren)
-		{
-			c.Invalidate(Rectangle.Round(rc), invalidateChildren);
-		}
+			=> c.Invalidate(Rectangle.Round(rc), invalidateChildren);
 
 		#endregion Control
 
