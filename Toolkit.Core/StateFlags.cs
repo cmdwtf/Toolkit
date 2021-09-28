@@ -140,16 +140,7 @@ namespace cmdwtf.Toolkit
 			return previous << 1;
 		}
 
-		public override bool Equals(object obj)
-			=> obj switch
-			{
-				StateFlags<T> other => _data == other._data,
-				BitVector32 other => _data == other.Data,
-				_ => false,
-			};
-
-		public override int GetHashCode() => _data.GetHashCode();
-
+		/// <inheritdoc cref="ToString"/>
 		public static string ToString(StateFlags<T> value)
 		{
 #if NET5_0_OR_GREATER
@@ -158,7 +149,7 @@ namespace cmdwtf.Toolkit
 			{
 				ReadOnlySpan<char> prefix = prefixStr;
 				prefix.CopyTo(dst);
-				dst[dst.Length - 1] = '}';
+				dst[^1] = '}';
 
 				int locdata = unchecked((int)v._data);
 				dst = dst.Slice(prefix.Length, 32);
@@ -189,7 +180,46 @@ namespace cmdwtf.Toolkit
 #endif // NET5_0_OR_GREATER
 		}
 
+		#region object Overrides
+
+		/// <inheritdoc cref="object.Equals(object?)"/>
+		public override bool Equals(object obj)
+			=> obj switch
+			{
+				StateFlags<T> other => _data == other._data,
+				BitVector32 other => _data == other.Data,
+				_ => false,
+			};
+
+		/// <inheritdoc cref="object.GetHashCode"/>
+		public override int GetHashCode() => _data.GetHashCode();
+
+		/// <inheritdoc cref="object.ToString"/>
 		public override string ToString() => ToString(this);
+
+		/// <summary>
+		/// Compares <paramref name="left"/> to <paramref name="right"/>.
+		/// </summary>
+		/// <param name="left">The lefthand <see cref="StateFlags{T}"/> operand to compare.</param>
+		/// <param name="right">The righthand <see cref="StateFlags{T}"/> operand to compare.</param>
+		/// <returns>true, if the flags are equal; otherwise, false.</returns>
+		public static bool operator ==(StateFlags<T> left, StateFlags<T> right)
+		{
+			return left.Equals(right);
+		}
+
+		/// <summary>
+		/// Compares <paramref name="left"/> to <paramref name="right"/>.
+		/// </summary>
+		/// <param name="left">The lefthand <see cref="StateFlags{T}"/> operand to compare.</param>
+		/// <param name="right">The righthand <see cref="StateFlags{T}"/> operand to compare.</param>
+		/// <returns>true, if the flags are not equal; otherwise, false.</returns>
+		public static bool operator !=(StateFlags<T> left, StateFlags<T> right)
+		{
+			return !(left == right);
+		}
+
+		#endregion Object Overrides
 
 		/// <summary>
 		/// Ensures that <see cref="StateFlags{T}"/> is wide enough to represent <see cref="T"/>.
