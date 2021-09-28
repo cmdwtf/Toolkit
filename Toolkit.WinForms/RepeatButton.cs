@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace cmdwtf.Toolkit.WinForms
@@ -14,6 +15,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// Raised when the button is no longer held down.
 		/// </summary>
 		[Category("Action")]
+		[Description("Raised when the left mouse button is released.")]
 		public event EventHandler<MouseEventArgs> ClickFinished = null;
 
 		/// <summary>
@@ -27,31 +29,41 @@ namespace cmdwtf.Toolkit.WinForms
 			}
 		}
 
+		private readonly System.Timers.Timer _repeatButtonTimer;
+		private bool _mousingUp = false;
+
 		/// <summary>
 		/// Creates a new instance of the <see cref="RepeatButton"/> class.
 		/// </summary>
 		public RepeatButton()
 		{
-			_repeatButtonTimer.Interval = 10;
+			_repeatButtonTimer = new System.Timers.Timer(interval: 10);
+			_repeatButtonTimer.Elapsed += RepeatButtonTimer_Elapsed;
 		}
-
-		private readonly Timer _repeatButtonTimer = new();
-		private bool _mousingUp = false;
 
 		#region Button overrides
 
+		/// <summary>
+		/// Raises the <see cref="MouseDown"/> event.
+		/// As well, starts the click repeating timer.
+		/// </summary>
+		/// <param name="e">The event data.</param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			base.OnMouseDown(e);
 
 			if (e.Button == MouseButtons.Left)
 			{
-				OnClick(EventArgs.Empty);
-				_repeatButtonTimer.Tick += new EventHandler(RepeatButtonTimer_Tick);
 				_repeatButtonTimer.Start();
 			}
 		}
 
+		/// <summary>
+		/// Raises the <see cref="Control.MouseUp"/> event.
+		/// As well, stops the repeat timer and raises
+		/// <see cref="ClickFinished"/> if the left button was released.
+		/// </summary>
+		/// <param name="e">The event data.</param>
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
 			_mousingUp = true;
@@ -61,7 +73,6 @@ namespace cmdwtf.Toolkit.WinForms
 			if (e.Button == MouseButtons.Left)
 			{
 				_repeatButtonTimer.Stop();
-				_repeatButtonTimer.Tick -= new EventHandler(RepeatButtonTimer_Tick);
 
 				ClickFinished?.Invoke(this, e);
 			}
@@ -69,6 +80,10 @@ namespace cmdwtf.Toolkit.WinForms
 			_mousingUp = false;
 		}
 
+		/// <summary>
+		/// Raises the <see cref="Click"/> event.
+		/// </summary>
+		/// <param name="e">The event data.</param>
 		protected override void OnClick(EventArgs e)
 		{
 			if (_mousingUp)
@@ -79,8 +94,28 @@ namespace cmdwtf.Toolkit.WinForms
 			base.OnClick(e);
 		}
 
-		private void RepeatButtonTimer_Tick(object sender, EventArgs e) => OnClick(EventArgs.Empty);
-
 		#endregion Button overrides
+
+		/// <summary>
+		/// Raises the <see cref="Click"/> and <see cref="MouseClick"/> events.
+		/// </summary>
+		/// <param name="sender">The origin of this event.</param>
+		/// <param name="e">The event data.</param>
+		private void RepeatButtonTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+		{
+			if (InvokeRequired)
+			{
+				Invoke(() =>
+				{
+					RepeatButtonTimer_Elapsed(sender, e);
+				});
+				return;
+			}
+
+			Point pos = System.Windows.Forms.Cursor.Position;
+			MouseEventArgs mea = new(MouseButtons.Left, 0, pos.X, pos.Y, 0);
+			OnClick(mea);
+			OnMouseClick(mea);
+		}
 	}
 }
