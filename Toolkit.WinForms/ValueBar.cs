@@ -109,11 +109,16 @@ namespace cmdwtf.Toolkit.WinForms
 		[Description("If true, the control will render using system progress bar rendering.")]
 		public bool UseNativeProgressBarStyle
 		{
-			get => GetStyle(userPaintStyles) == false;
+			get => _useNativeProgressBarStyle;
 			set
 			{
-				SetStyle(userPaintStyles, !value);
-				Invalidate();
+				if (value != _useNativeProgressBarStyle)
+				{
+					SetStyle(_userPaintStyles, !value);
+					Invalidate();
+				}
+
+				_useNativeProgressBarStyle = value;
 			}
 		}
 
@@ -141,16 +146,17 @@ namespace cmdwtf.Toolkit.WinForms
 		private Font _scaledFont = null;
 		private readonly StringFormat _stringFormat = new StringFormat().SetAlignments(ContentAlignment.MiddleLeft);
 		private Rectangle _valueBarRect = Rectangle.Empty;
-		private ControlStyles userPaintStyles = ControlStyles.UserPaint |
+		private ControlStyles _userPaintStyles = ControlStyles.UserPaint |
 			ControlStyles.AllPaintingInWmPaint |
 			ControlStyles.OptimizedDoubleBuffer;
+		private bool _useNativeProgressBarStyle = false;
 
 		/// <summary>
 		/// Creates a new instance of <see cref="ValueBar"/>.
 		/// </summary>
 		public ValueBar()
 		{
-
+			SetStyle(_userPaintStyles, !UseNativeProgressBarStyle);
 		}
 
 		/// <summary>
