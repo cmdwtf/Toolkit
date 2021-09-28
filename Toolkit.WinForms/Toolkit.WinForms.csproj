@@ -6,6 +6,7 @@
     <RootNamespace>$(RootNamespace).WinForms</RootNamespace>
     <AssemblyName>$(AssemblyName).WinForms</AssemblyName>
     <PackageId>$(PackageId).WinForms</PackageId>
+    <GenerateResourceUsePreserializedResources>True</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
 
   <ItemGroup>
