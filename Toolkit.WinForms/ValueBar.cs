@@ -124,7 +124,11 @@ namespace cmdwtf.Toolkit.WinForms
 		[Category("Appearance")]
 		[DefaultValue(ProgressBar.State.Normal)]
 		[Description("What state to draw the native progress bar in, if used.")]
-		public ProgressBar.State NativeProgressBarState { get; set; } = ProgressBar.State.Normal;
+		public ProgressBar.State NativeProgressBarState
+		{
+			get => this.GetState();
+			set => this.SetState(value);
+		}
 
 		/// <summary>
 		/// An event raised if a users's mouse click changes the bar's value.
@@ -190,12 +194,6 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="e">The event data.</param>
 		protected override void OnPaintBackground(PaintEventArgs e)
 		{
-			if (UseNativeProgressBarStyle)
-			{
-				base.OnPaintBackground(e);
-				return;
-			}
-
 			if (ProgressBarRenderer.IsSupported)
 			{
 				ProgressBarRenderer.DrawHorizontalBar(e.Graphics, e.ClipRectangle);
@@ -229,16 +227,6 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="e">The event data.</param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			if (UseNativeProgressBarStyle)
-			{
-				if (this.GetState() != NativeProgressBarState)
-				{
-					this.SetState(NativeProgressBarState);
-				}
-
-				base.OnPaint(e);
-			}
-
 			if (ShowValueText == false)
 			{
 				return;
