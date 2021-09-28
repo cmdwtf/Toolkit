@@ -5,6 +5,7 @@ using System.Windows.Forms;
 
 using static cmdwtf.Toolkit.WinForms.Native.Windows;
 
+using DBConstants = cmdwtf.Toolkit.WinForms.DoubleBuffered.Constants;
 using SDColor = System.Drawing.Color;
 using SWFProgressBar = System.Windows.Forms.ProgressBar;
 
@@ -114,7 +115,7 @@ namespace cmdwtf.Toolkit.WinForms
 			{
 				if (value != _useNativeProgressBarStyle)
 				{
-					SetStyle(_userPaintStyles, !value);
+					SetStyle(DBConstants.UserPaintStyles, !value);
 					Invalidate();
 				}
 
@@ -146,9 +147,6 @@ namespace cmdwtf.Toolkit.WinForms
 		private Font _scaledFont = null;
 		private readonly StringFormat _stringFormat = new StringFormat().SetAlignments(ContentAlignment.MiddleLeft);
 		private Rectangle _valueBarRect = Rectangle.Empty;
-		private ControlStyles _userPaintStyles = ControlStyles.UserPaint |
-			ControlStyles.AllPaintingInWmPaint |
-			ControlStyles.OptimizedDoubleBuffer;
 		private bool _useNativeProgressBarStyle = false;
 
 		/// <summary>
@@ -156,7 +154,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// </summary>
 		public ValueBar()
 		{
-			SetStyle(_userPaintStyles, !UseNativeProgressBarStyle);
+			SetStyle(DBConstants.UserPaintStyles, !UseNativeProgressBarStyle);
 		}
 
 		/// <summary>

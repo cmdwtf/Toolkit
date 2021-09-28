@@ -61,6 +61,73 @@ namespace cmdwtf.Toolkit.WinForms.Native
 					public const uint DRAWIMAGEASYNC = 0x0400;
 				}
 			}
+
+			#region Visual Styles
+
+			/// <summary>
+			/// Class names -- vsstyle.h
+			/// </summary>
+			public static class VSCLASS
+			{
+				public const string TREEVIEWSTYLE = "TREEVIEWSTYLE";
+				public const string TREEVIEW = "TREEVIEW";
+
+				public static class Undocumented
+				{
+					/// <remarks>
+					/// Thanks to <see href="https://stackoverflow.com/a/3026207">this StackOverflow user</see>
+					/// for tracking down this class name.
+					/// </remarks>
+					public static class Explorer
+					{
+						public const string ExplorerTreeView = "Explorer::TreeView";
+					}
+				}
+			}
+
+			/// <summary>
+			/// Tree View parts -- vsstyle.h as "TREEVIEWPARTS"
+			/// </summary>
+			public static class TVP
+			{
+				public const int TREEITEM = 1;
+				public const int GLYPH = 2;
+				public const int BRANCH = 3;
+				public const int HOTGLYPH = 4;
+			}
+
+			/// <summary>
+			/// Tree View item states -- vsstyle.h as "TREEITEMSTATES"
+			/// </summary>
+			public static class TREIS
+			{
+				public const int NORMAL = 1;
+				public const int HOT = 2;
+				public const int SELECTED = 3;
+				public const int DISABLED = 4;
+				public const int SELECTEDNOTFOCUS = 5;
+				public const int HOTSELECTED = 6;
+			}
+
+			/// <summary>
+			/// Tree View glyph states -- vsstyle.h as "GLYPHSTATES"
+			/// </summary>
+			public static class GLPS
+			{
+				public const int CLOSED = 1;
+				public const int OPENED = 2;
+			}
+
+			/// <summary>
+			/// Tree View hot glyph states -- vsstyle.h as "HOTGLYPHSTATES"
+			/// </summary>
+			public static class HGLPS
+			{
+				public const int CLOSED = 1;
+				public const int OPENED = 2;
+			}
+
+			#endregion Visual Styles
 		}
 	}
 }
