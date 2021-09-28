@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -7,6 +7,7 @@ namespace cmdwtf.Toolkit.WinForms
 	/// <summary>
 	/// A <see cref="Button"/> that handles being clicked repeatedly while it's held down.
 	/// </summary>
+	[ToolboxItem(true)]
 	public class RepeatButton : Button
 	{
 		/// <summary>

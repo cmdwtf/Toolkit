@@ -4,12 +4,27 @@
     <TargetFrameworks>$(TargetFrameworksWindows)</TargetFrameworks>
     <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>$(RootNamespace).WinForms</RootNamespace>
-    <AssemblyName>$(AssemblyName).Winforms</AssemblyName>
+    <AssemblyName>$(AssemblyName).WinForms</AssemblyName>
     <PackageId>$(PackageId).WinForms</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Toolkit.Core\Toolkit.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\Images.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Images.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Images.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Images.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -7,6 +7,7 @@ namespace cmdwtf.Toolkit.WinForms
 	/// <summary>
 	/// A RichTextBox that cannot be edited, with a hidden caret.
 	/// </summary>
+	[ToolboxItem(true)]
 	public class ReadOnlyRichTextBox : RichTextBox, IDisposable
 	{
 		/// <summary>
@@ -14,7 +15,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// This hides <see cref="RichTextBox.ReadOnly"/>.
 		/// </summary>
 		[DefaultValue(true)]
-		public new static bool ReadOnly
+		public static new bool ReadOnly
 		{
 			get { return true; }
 			set { }
@@ -25,7 +26,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// This hides <see cref="RichTextBox.TabStop"/>.
 		/// </summary>
 		[DefaultValue(false)]
-		public new static bool TabStop
+		public static new bool TabStop
 		{
 			get { return false; }
 			set { }
