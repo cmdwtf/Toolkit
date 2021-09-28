@@ -102,37 +102,58 @@ namespace cmdwtf.Toolkit.WinForms
 
 			public static class TreeItem
 			{
-				public VSE Normal = VSE.CreateElement(
+				/// <summary>
+				/// A normal tree item.
+				/// </summary>
+				public static VSE Normal = VSE.CreateElement(
 						TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
 						TV.TVP.TREEITEM,
 						TV.TREIS.NORMAL
 					);
 
-				public VSE Hot = VSE.CreateElement(
+
+				/// <summary>
+				/// A hot tree item.
+				/// </summary>
+				public static VSE Hot = VSE.CreateElement(
 						TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
 						TV.TVP.TREEITEM,
 						TV.TREIS.HOT
 					);
 
-				public VSE Selected = VSE.CreateElement(
+
+				/// <summary>
+				/// A selected tree item.
+				/// </summary>
+				public static VSE Selected = VSE.CreateElement(
 						TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
 						TV.TVP.TREEITEM,
 						TV.TREIS.SELECTED
 					);
 
-				public VSE Disabled = VSE.CreateElement(
+
+				/// <summary>
+				/// A disabled tree item.
+				/// </summary>
+				public static VSE Disabled = VSE.CreateElement(
 						TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
 						TV.TVP.TREEITEM,
 						TV.TREIS.DISABLED
 					);
 
-				public VSE SelectedNotFocus = VSE.CreateElement(
+				/// <summary>
+				/// A selected & unfocused tree item.
+				/// </summary>
+				public static VSE SelectedNotFocus = VSE.CreateElement(
 						TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
 						TV.TVP.TREEITEM,
 						TV.TREIS.SELECTEDNOTFOCUS
 					);
 
-				public VSE DoubleSelected = VSE.CreateElement(
+				/// <summary>
+				/// A hot & selected tree item.
+				/// </summary>
+				public static VSE HotSelected = VSE.CreateElement(
 						TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
 						TV.TVP.TREEITEM,
 						TV.TREIS.HOTSELECTED
@@ -142,40 +163,57 @@ namespace cmdwtf.Toolkit.WinForms
 
 		public static class ExplorerListView
 		{
-
 			public static class ListItem
 			{
-				public VSE Normal = VSE.CreateElement(
+				/// <summary>
+				/// A normal list item.
+				/// </summary>
+				public static VSE Normal = VSE.CreateElement(
 						LV.VSCLASS.Undocumented.Explorer.ExplorerListView,
 						LV.LVP.LISTITEM,
 						LV.LISS.NORMAL
 					);
 
-				public VSE Hot = VSE.CreateElement(
+				/// <summary>
+				/// A hot list item.
+				/// </summary>
+				public static VSE Hot = VSE.CreateElement(
 						LV.VSCLASS.Undocumented.Explorer.ExplorerListView,
 						LV.LVP.LISTITEM,
 						LV.LISS.HOT
 					);
 
-				public VSE Selected = VSE.CreateElement(
+				/// <summary>
+				/// A selected list item.
+				/// </summary>
+				public static VSE Selected = VSE.CreateElement(
 						LV.VSCLASS.Undocumented.Explorer.ExplorerListView,
 						LV.LVP.LISTITEM,
 						LV.LISS.SELECTED
 					);
 
-				public VSE Disabled = VSE.CreateElement(
+				/// <summary>
+				/// A disabled list item.
+				/// </summary>
+				public static VSE Disabled = VSE.CreateElement(
 						LV.VSCLASS.Undocumented.Explorer.ExplorerListView,
 						LV.LVP.LISTITEM,
 						LV.LISS.DISABLED
 					);
 
-				public VSE SelectedNotFocus = VSE.CreateElement(
+				/// <summary>
+				/// A selected & unfocused list item.
+				/// </summary>
+				public static VSE SelectedNotFocus = VSE.CreateElement(
 						LV.VSCLASS.Undocumented.Explorer.ExplorerListView,
 						LV.LVP.LISTITEM,
 						LV.LISS.SELECTEDNOTFOCUS
 					);
 
-				public VSE HotSelected = VSE.CreateElement(
+				/// <summary>
+				/// A hot & selected list item.
+				/// </summary>
+				public static VSE HotSelected = VSE.CreateElement(
 						LV.VSCLASS.Undocumented.Explorer.ExplorerListView,
 						LV.LVP.LISTITEM,
 						LV.LISS.HOTSELECTED
