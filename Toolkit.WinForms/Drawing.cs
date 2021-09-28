@@ -215,6 +215,12 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="angle">The angle of the gradient. 0 is horizontal from left to right. Should be between 0 and 360.</param>
 		public static void FillRectangleLinearGradient(this Graphics g, SDColor fillColor, RectangleF rect, SDColor? highlightColor = null, float angle = 0.0f)
 		{
+			// if we have a rect with 0 area, there's nothing to fill.
+			if (rect.Width <= 0 || rect.Height <= 0)
+			{
+				return;
+			}
+
 			SDColor highlight = highlightColor ?? ControlPaint.Light(fillColor);
 
 			angle = (angle is > 360 or < 0) ? 0 : angle;
@@ -309,7 +315,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="hWnd">The handle to the window of the background to set.</param>
 		/// <param name="hBrush">The handle to the native brush.</param>
 		/// <returns>The handle of the previous background brush if successful, or Zero on error.</returns>
-		public static IntPtr SetBackgroundBrush(this IntPtr hWnd, Native.BrushHandle hBrush)
+		public static UIntPtr SetBackgroundBrush(this IntPtr hWnd, Native.BrushHandle hBrush)
 			=> hWnd.SetClassLong(GCL_HBRBACKGROUND, hBrush.DangerousGetHandle());
 
 		#region Arrow Drawing
