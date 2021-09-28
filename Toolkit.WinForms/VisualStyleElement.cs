@@ -1,4 +1,5 @@
 
+using LV = cmdwtf.Toolkit.WinForms.Native.ComCtl32.ListView;
 using PB = cmdwtf.Toolkit.WinForms.Native.ComCtl32.ProgressBar;
 using TV = cmdwtf.Toolkit.WinForms.Native.ComCtl32.TreeView;
 using VSE = System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -97,6 +98,88 @@ namespace cmdwtf.Toolkit.WinForms
 							TV.TVP.GLYPH,
 							TV.HGLPS.CLOSED);
 				}
+			}
+
+			public static class TreeItem
+			{
+				public VSE Normal = VSE.CreateElement(
+						TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
+						TV.TVP.TREEITEM,
+						TV.TREIS.NORMAL
+					);
+
+				public VSE Hot = VSE.CreateElement(
+						TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
+						TV.TVP.TREEITEM,
+						TV.TREIS.HOT
+					);
+
+				public VSE Selected = VSE.CreateElement(
+						TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
+						TV.TVP.TREEITEM,
+						TV.TREIS.SELECTED
+					);
+
+				public VSE Disabled = VSE.CreateElement(
+						TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
+						TV.TVP.TREEITEM,
+						TV.TREIS.DISABLED
+					);
+
+				public VSE SelectedNotFocus = VSE.CreateElement(
+						TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
+						TV.TVP.TREEITEM,
+						TV.TREIS.SELECTEDNOTFOCUS
+					);
+
+				public VSE DoubleSelected = VSE.CreateElement(
+						TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
+						TV.TVP.TREEITEM,
+						TV.TREIS.HOTSELECTED
+					);
+			}
+		}
+
+		public static class ExplorerListView
+		{
+
+			public static class ListItem
+			{
+				public VSE Normal = VSE.CreateElement(
+						LV.VSCLASS.Undocumented.Explorer.ExplorerListView,
+						LV.LVP.LISTITEM,
+						LV.LISS.NORMAL
+					);
+
+				public VSE Hot = VSE.CreateElement(
+						LV.VSCLASS.Undocumented.Explorer.ExplorerListView,
+						LV.LVP.LISTITEM,
+						LV.LISS.HOT
+					);
+
+				public VSE Selected = VSE.CreateElement(
+						LV.VSCLASS.Undocumented.Explorer.ExplorerListView,
+						LV.LVP.LISTITEM,
+						LV.LISS.SELECTED
+					);
+
+				public VSE Disabled = VSE.CreateElement(
+						LV.VSCLASS.Undocumented.Explorer.ExplorerListView,
+						LV.LVP.LISTITEM,
+						LV.LISS.DISABLED
+					);
+
+				public VSE SelectedNotFocus = VSE.CreateElement(
+						LV.VSCLASS.Undocumented.Explorer.ExplorerListView,
+						LV.LVP.LISTITEM,
+						LV.LISS.SELECTEDNOTFOCUS
+					);
+
+				public VSE HotSelected = VSE.CreateElement(
+						LV.VSCLASS.Undocumented.Explorer.ExplorerListView,
+						LV.LVP.LISTITEM,
+						LV.LISS.HOTSELECTED
+					);
 			}
 		}
 	}
