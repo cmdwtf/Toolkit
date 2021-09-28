@@ -19,7 +19,20 @@ namespace cmdwtf.Toolkit.WinForms
 		/// Gets or sets a color that will be used to tint
 		/// the image when drawn.
 		/// </summary>
-		public SDColor TintColor { get; set; } = SDColor.White;
+		[Category("Appearance")]
+		[DefaultValue(typeof(SDColor), nameof(SDColor.White))]
+		[Description("The color tint to draw the picture with.")]
+		public SDColor TintColor
+		{
+			get => _tintColor;
+			set
+			{
+				_tintColor = value;
+				Invalidate();
+			}
+		}
+
+		private SDColor _tintColor = SDColor.White;
 
 		/// <summary>
 		/// Handles the paint event, drawing the image tinted.
