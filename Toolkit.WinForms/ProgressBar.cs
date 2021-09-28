@@ -15,9 +15,16 @@ namespace cmdwtf.Toolkit.WinForms
 		/// </summary>
 		public enum State : uint
 		{
+			Unknown = 0,
 			Normal = Native.ProgressBar.PBST.NORMAL,
 			Error = Native.ProgressBar.PBST.ERROR,
 			Paused = Native.ProgressBar.PBST.PAUSED,
+		}
+
+		public static State GetState(this SWFProgressBar progressBar)
+		{
+			int state = Native.User32.SendMessage(progressBar.Handle, Native.ProgressBar.PBM.GETSTATE, UIntPtr.Zero, IntPtr.Zero);
+			return (State)state;
 		}
 
 		public static int SetState(this SWFProgressBar progressBar, State state)
