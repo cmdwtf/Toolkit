@@ -69,7 +69,7 @@ namespace cmdwtf.Toolkit.WinForms
 					public static VSE Closed { get; } = VSE.CreateElement(
 							TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
 							TV.TVP.GLYPH,
-							TV.GLPS.OPENED);
+							TV.GLPS.CLOSED);
 
 					/// <summary>
 					/// The explorer treeview closed expando glyph, no mouse over.
@@ -77,26 +77,26 @@ namespace cmdwtf.Toolkit.WinForms
 					public static VSE Opened { get; } = VSE.CreateElement(
 							TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
 							TV.TVP.GLYPH,
-							TV.GLPS.CLOSED);
+							TV.GLPS.OPENED);
 				}
 
-				public static class Hover
+				public static class Hot
 				{
 					/// <summary>
-					/// The explorer treeview opened expando glyph, no with mouse over.
+					/// The explorer treeview opened expando glyph, with mouse over.
 					/// </summary>
 					public static VSE Closed { get; } = VSE.CreateElement(
 							TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
-							TV.TVP.GLYPH,
+							TV.TVP.HOTGLYPH,
 							TV.HGLPS.CLOSED);
 
 					/// <summary>
-					/// The explorer treeview closed expando glyph, no with mouse over.
+					/// The explorer treeview closed expando glyph, with mouse over.
 					/// </summary>
 					public static VSE Opened { get; } = VSE.CreateElement(
 							TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
-							TV.TVP.GLYPH,
-							TV.HGLPS.CLOSED);
+							TV.TVP.HOTGLYPH,
+							TV.HGLPS.OPENED);
 				}
 			}
 
