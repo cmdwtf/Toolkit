@@ -55,9 +55,27 @@ namespace cmdwtf.Toolkit.WinForms
 
 		#region RichTextBox overrides
 
-		protected override void OnGotFocus(EventArgs e) => _ = Native.User32.HideCaret(Handle);
+		/// <summary>
+		/// Raises the <see cref="E:System.Windows.Forms.Control.GotFocus" /> event.
+		/// As well, hides the caret.
+		/// </summary>
+		/// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
+		protected override void OnGotFocus(EventArgs e)
+		{
+			_ = Native.User32.HideCaret(Handle);
+			base.OnGotFocus(e);
+		}
 
-		protected override void OnEnter(EventArgs e) => _ = Native.User32.HideCaret(Handle);
+		/// <summary>
+		/// Raises the <see cref="E:System.Windows.Forms.Control.Enter" /> event.
+		/// As well, hides the caret.
+		/// </summary>
+		/// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
+		protected override void OnEnter(EventArgs e)
+		{
+			_ = Native.User32.HideCaret(Handle);
+			base.OnEnter(e);
+		}
 
 		#endregion RichTextBox overrides
 	}
