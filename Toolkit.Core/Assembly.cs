@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -8,6 +8,9 @@ using SRAssembly = System.Reflection.Assembly;
 
 namespace cmdwtf.Toolkit
 {
+	/// <summary>
+	/// Extension methods and utilities for <see cref="SRAssembly"/>.
+	/// </summary>
 	public static class Assembly
 	{
 		/// <summary>
@@ -65,7 +68,7 @@ namespace cmdwtf.Toolkit
 		/// <returns>A string in the format: AssemblyName x.x.x.x\nCopyright Information\nBuilt on: M/D/Y H:M:S</returns>
 		public static string GetBuildAndCopyrightString<T>()
 		{
-			var assembly = CallingAssembly;
+			SRAssembly assembly = CallingAssembly;
 			string name = GetAssemblyName<T>();
 			string version = assembly.GetName().Version.ToString();
 			var configAttrib = assembly.GetCustomAttributes(typeof(AssemblyConfigurationAttribute), true)[0] as AssemblyConfigurationAttribute;
@@ -188,7 +191,7 @@ namespace cmdwtf.Toolkit
 
 		/// <summary>
 		/// Returns a DateTime based on when the calling assembly was linked. This functions similarly
-		/// to <see cref="RetrieveLinkerTimestampFromFile(TimeZoneInfo)"/>, but reads it from memory instead.
+		/// to <see cref="RetrieveLinkerTimestampFromFile(string, TimeZoneInfo)"/>, but reads it from memory instead.
 		/// </summary>
 		/// <returns>A DateTime object based on the linker timestamp in the file.</returns>
 		/// <remarks>Based on: https://stackoverflow.com/a/44511677/944605</remarks>

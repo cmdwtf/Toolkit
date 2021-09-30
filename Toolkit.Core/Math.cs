@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using static System.Math;
@@ -101,7 +101,7 @@ namespace cmdwtf.Toolkit
 		/// <summary>
 		/// Linearly interpolates between by the amount specified. The result is unclamped.
 		/// This method *does* guarantee result = value1 when t = 1. However, this method is
-		/// *only* monotonic when (value0 * value1 < 0). Lerping between the same values might not produce
+		/// *only* monotonic when (value0 * value1 &lt; 0). Lerping between the same values might not produce
 		/// the same result.
 		/// If you need the result to be monotonic, use  <see cref="LerpMonotonic(double, double, double)"/>
 		/// instead.
@@ -189,7 +189,7 @@ namespace cmdwtf.Toolkit
 		/// <param name="a">The value a.</param>
 		/// <param name="b">The value b.</param>
 		/// <param name="epsilon">The epsilon to compare with.</param>
-		/// <returns>True, if a > b</returns>
+		/// <returns>True, if a &gt; b</returns>
 		public static bool GreaterThanEpsilon(float a, float b, float epsilon)
 			=> a > b || a + epsilon > b || a - epsilon > b;
 
@@ -200,7 +200,7 @@ namespace cmdwtf.Toolkit
 		/// <param name="a">The value a.</param>
 		/// <param name="b">The value b.</param>
 		/// <param name="epsilon">The epsilon to compare with.</param>
-		/// <returns>True, if a < b</returns>
+		/// <returns>True, if a &lt; b</returns>
 		public static bool LessThanEpsilon(float a, float b, float epsilon)
 			=> a < b || a + epsilon < b || a - epsilon < b;
 
@@ -211,7 +211,7 @@ namespace cmdwtf.Toolkit
 		/// <param name="a">The value a.</param>
 		/// <param name="b">The value b.</param>
 		/// <param name="epsilon">The epsilon to compare with.</param>
-		/// <returns>True, if a >= b</returns>
+		/// <returns>True, if a &gt;= b</returns>
 		public static bool GreaterThanEqualEpsilon(float a, float b, float epsilon)
 			=> a >= b || a + epsilon >= b || a - epsilon >= b;
 
@@ -222,7 +222,7 @@ namespace cmdwtf.Toolkit
 		/// <param name="a">The value a.</param>
 		/// <param name="b">The value b.</param>
 		/// <param name="epsilon">The epsilon to compare with.</param>
-		/// <returns>True, if a <= b</returns>
+		/// <returns>True, if a &lt;= b</returns>
 		public static bool LessThanEqualEpsilon(float a, float b, float epsilon)
 			=> a <= b || a + epsilon <= b || a - epsilon <= b;
 

@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 
 using SRAssembly = System.Reflection.Assembly;
 
@@ -9,6 +9,9 @@ namespace cmdwtf.Toolkit.WinForms
 	/// </summary>
 	public static class Debug
 	{
+		/// <summary>
+		/// A constant value that is <c>true</c> if this is a debug build, otherwise <c>false</c>.
+		/// </summary>
 #if DEBUG
 		public const bool IsDebugBuild = true;
 #else

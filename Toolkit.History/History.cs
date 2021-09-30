@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using Newtonsoft.Json;
@@ -28,7 +28,7 @@ namespace cmdwtf.Toolkit.History
 		private int _currentState = -1;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="History`1"/> class.
+		/// Initializes a new instance of the <see cref="History{T}"/> class.
 		/// </summary>
 		/// <remarks>
 		/// Should not be called externally. Should be called by all other constructors.
@@ -44,7 +44,7 @@ namespace cmdwtf.Toolkit.History
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="History`1"/> class.
+		/// Initializes a new instance of the <see cref="History{T}"/> class.
 		/// </summary>
 		/// <param name='max_states'>
 		/// Max_states.

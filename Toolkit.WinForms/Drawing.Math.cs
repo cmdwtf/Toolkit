@@ -258,11 +258,29 @@ namespace cmdwtf.Toolkit.WinForms
 		/// </remarks>
 		public static class ContentAlignmentMasks
 		{
+			/// <summary>
+			/// Any right <see cref="ContentAlignment"/>.
+			/// </summary>
 			public const ContentAlignment AnyRightAlign = ContentAlignment.TopRight | ContentAlignment.MiddleRight | ContentAlignment.BottomRight;
+			/// <summary>
+			/// Any left <see cref="ContentAlignment"/>.
+			/// </summary>
 			public const ContentAlignment AnyLeftAlign = ContentAlignment.TopLeft | ContentAlignment.MiddleLeft | ContentAlignment.BottomLeft;
+			/// <summary>
+			/// Any top <see cref="ContentAlignment"/>.
+			/// </summary>
 			public const ContentAlignment AnyTopAlign = ContentAlignment.TopLeft | ContentAlignment.TopCenter | ContentAlignment.TopRight;
+			/// <summary>
+			/// Any bottom <see cref="ContentAlignment"/>.
+			/// </summary>
 			public const ContentAlignment AnyBottomAlign = ContentAlignment.BottomLeft | ContentAlignment.BottomCenter | ContentAlignment.BottomRight;
+			/// <summary>
+			/// Any middle <see cref="ContentAlignment"/>.
+			/// </summary>
 			public const ContentAlignment AnyMiddleAlign = ContentAlignment.MiddleLeft | ContentAlignment.MiddleCenter | ContentAlignment.MiddleRight;
+			/// <summary>
+			/// Any center <see cref="ContentAlignment"/>.
+			/// </summary>
 			public const ContentAlignment AnyCenterAlign = ContentAlignment.TopCenter | ContentAlignment.MiddleCenter | ContentAlignment.BottomCenter;
 		}
 	}

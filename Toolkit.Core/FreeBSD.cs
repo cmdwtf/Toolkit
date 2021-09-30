@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 
 
 namespace cmdwtf.Toolkit
@@ -8,11 +8,17 @@ namespace cmdwtf.Toolkit
 	/// </summary>
 	public static class FreeBSD
 	{
+		/// <summary>
+		/// Gets a value indicating whether this host is FreeBSD.
+		/// </summary>
+		/// <value>
+		///   <c>true</c> if this host is free BSD; otherwise, <c>false</c>.
+		/// </value>
 		public static bool IsFreeBSD =>
 #if NET5_0_OR_GREATER || NETCOREAPP3_0_OR_GREATER
 			RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD);
 #else
-			throw new System.NotSupportedException($"{nameof(IsFreeBSD)} depends on OSPlatform.FreeBSD, which isn't available until .NET 5.0. / .NET Core 3.0");
+			false;
 #endif // NET5_0_OR_GREATER
 	}
 }

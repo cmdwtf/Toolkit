@@ -1,29 +1,31 @@
-﻿
-/**
-* Easing
-* Animates the value of a double property between two target values using
-* Robert Penner's easing equations for interpolation over a specified Duration.
-*
-* Original Author:  Darren David darren-code@lookorfeel.com
-*
-* Ported to be easily used in Unity by Marco Mastropaolo
-*
-* Credit/Thanks:
-* Robert Penner - The easing equations we all know and love
-*   (http://robertpenner.com/easing/) [See License.txt for license info]
-*
-* Lee Brimelow - initial port of Penner's equations to WPF
-*   (http://thewpfblog.com/?p=12)
-*
-* Zeh Fernando - additional equations (out/in) from
-*   caurina.transitions.Tweener (http://code.google.com/p/tweener/)
-*   [See License.txt for license info]
-*/
+//Easing
+//Animates the value of a double property between two target values using
+//Robert Penner's easing equations for interpolation over a specified Duration.
+//
+//Original Author:  Darren David darren-code@lookorfeel.com
+//
+//Ported to be easily used in Unity by Marco Mastropaolo
+//
+//Credit/Thanks:
+//Robert Penner - The easing equations we all know and love
+//  (http://robertpenner.com/easing/) [See License.txt for license info]
+//
+//Lee Brimelow - initial port of Penner's equations to WPF
+//  (http://thewpfblog.com/?p=12)
+//
+//Zeh Fernando - additional equations (out/in) from
+//  caurina.transitions.Tweener (http://code.google.com/p/tweener/)
+//  [See License.txt for license info]
+
 
 using static System.Math;
 
 namespace cmdwtf.Toolkit
 {
+	/// <summary>
+	/// Easing operations based on Robert Penner's easing functions.
+	/// For visual examples of most functions, see <see href="https://easings.net"/>.
+	/// </summary>
 	public static class Easing
 	{
 		#region Helper
@@ -34,50 +36,227 @@ namespace cmdwtf.Toolkit
 		/// </summary>
 		public enum Function
 		{
+
+			/// <summary>
+			/// Easing equation function for a simple linear interpolation, with no easing.
+			/// </summary>
 			Linear,
-			ExpoEaseInOut,
+			/// <summary>
+			/// Easing equation function for an exponential (2^t) easing out:
+			/// decelerating from zero velocity.
+			/// </summary>
 			ExpoEaseOut,
+			/// <summary>
+			/// Easing equation function for an exponential (2^t) easing in:
+			/// accelerating from zero velocity.
+			/// </summary>
 			ExpoEaseIn,
+			/// <summary>
+			/// Easing equation function for an exponential (2^t) easing in/out:
+			/// acceleration until halfway, then deceleration.
+			/// </summary>
+			ExpoEaseInOut,
+			/// <summary>
+			/// Easing equation function for an exponential (2^t) easing out/in:
+			/// deceleration until halfway, then acceleration.
+			/// </summary>
 			ExpoEaseOutIn,
+			/// <summary>
+			/// Easing equation function for a circular (sqrt(1-t^2)) easing out:
+			/// decelerating from zero velocity.
+			/// </summary>
 			CircEaseOut,
+			/// <summary>
+			/// Easing equation function for a circular (sqrt(1-t^2)) easing in:
+			/// accelerating from zero velocity.
+			/// </summary>
 			CircEaseIn,
+			/// <summary>
+			/// Easing equation function for a circular (sqrt(1-t^2)) easing in/out:
+			/// acceleration until halfway, then deceleration.
+			/// </summary>
 			CircEaseInOut,
+			/// <summary>
+			/// Easing equation function for a circular (sqrt(1-t^2)) easing in/out:
+			/// acceleration until halfway, then deceleration.
+			/// </summary>
 			CircEaseOutIn,
+			/// <summary>
+			/// Easing equation function for a quadratic (t^2) easing out:
+			/// decelerating from zero velocity.
+			/// </summary>
 			QuadEaseOut,
+			/// <summary>
+			/// Easing equation function for a quadratic (t^2) easing in:
+			/// accelerating from zero velocity.
+			/// </summary>
 			QuadEaseIn,
+			/// <summary>
+			/// Easing equation function for a quadratic (t^2) easing in/out:
+			/// acceleration until halfway, then deceleration.
+			/// </summary>
 			QuadEaseInOut,
+			/// <summary>
+			/// Easing equation function for a quadratic (t^2) easing out/in:
+			/// deceleration until halfway, then acceleration.
+			/// </summary>
 			QuadEaseOutIn,
+			/// <summary>
+			/// Easing equation function for a sinusoidal (sin(t)) easing out:
+			/// decelerating from zero velocity.
+			/// </summary>
 			SineEaseOut,
+			/// <summary>
+			/// Easing equation function for a sinusoidal (sin(t)) easing in:
+			/// accelerating from zero velocity.
+			/// </summary>
 			SineEaseIn,
+			/// <summary>
+			/// Easing equation function for a sinusoidal (sin(t)) easing in/out:
+			/// acceleration until halfway, then deceleration.
+			/// </summary>
 			SineEaseInOut,
+			/// <summary>
+			/// Easing equation function for a sinusoidal (sin(t)) easing in/out:
+			/// deceleration until halfway, then acceleration.
+			/// </summary>
 			SineEaseOutIn,
+			/// <summary>
+			/// Easing equation function for a cubic (t^3) easing out:
+			/// decelerating from zero velocity.
+			/// </summary>
 			CubicEaseOut,
+			/// <summary>
+			/// Easing equation function for a cubic (t^3) easing in:
+			/// accelerating from zero velocity.
+			/// </summary>
 			CubicEaseIn,
+			/// <summary>
+			/// Easing equation function for a cubic (t^3) easing in/out:
+			/// acceleration until halfway, then deceleration.
+			/// </summary>
 			CubicEaseInOut,
+			/// <summary>
+			/// Easing equation function for a cubic (t^3) easing out/in:
+			/// deceleration until halfway, then acceleration.
+			/// </summary>
 			CubicEaseOutIn,
-			QuartEaseIn,
+			/// <summary>
+			/// Easing equation function for a quartic (t^4) easing out:
+			/// decelerating from zero velocity.
+			/// </summary>
 			QuartEaseOut,
+			/// <summary>
+			/// Easing equation function for a quartic (t^4) easing in:
+			/// accelerating from zero velocity.
+			/// </summary>
+			QuartEaseIn,
+			/// <summary>
+			/// Easing equation function for a quartic (t^4) easing in/out:
+			/// acceleration until halfway, then deceleration.
+			/// </summary>
 			QuartEaseInOut,
+			/// <summary>
+			/// Easing equation function for a quartic (t^4) easing out/in:
+			/// deceleration until halfway, then acceleration.
+			/// </summary>
 			QuartEaseOutIn,
-			QuintEaseIn,
+			/// <summary>
+			/// Easing equation function for a quintic (t^5) easing out:
+			/// decelerating from zero velocity.
+			/// </summary>
 			QuintEaseOut,
+			/// <summary>
+			/// Easing equation function for a quintic (t^5) easing in:
+			/// accelerating from zero velocity.
+			/// </summary>
+			QuintEaseIn,
+			/// <summary>
+			/// Easing equation function for a quintic (t^5) easing in/out:
+			/// acceleration until halfway, then deceleration.
+			/// </summary>
 			QuintEaseInOut,
+			/// <summary>
+			/// Easing equation function for a quintic (t^5) easing in/out:
+			/// acceleration until halfway, then deceleration.
+			/// </summary>
 			QuintEaseOutIn,
-			ElasticEaseIn,
+			/// <summary>
+			/// Easing equation function for an elastic (exponentially decaying sine wave) easing out:
+			/// decelerating from zero velocity.
+			/// </summary>
 			ElasticEaseOut,
+			/// <summary>
+			/// Easing equation function for an elastic (exponentially decaying sine wave) easing in:
+			/// accelerating from zero velocity.
+			/// </summary>
+			ElasticEaseIn,
+			/// <summary>
+			/// Easing equation function for an elastic (exponentially decaying sine wave) easing in/out:
+			/// acceleration until halfway, then deceleration.
+			/// </summary>
 			ElasticEaseInOut,
+			/// <summary>
+			/// Easing equation function for an elastic (exponentially decaying sine wave) easing out/in:
+			/// deceleration until halfway, then acceleration.
+			/// </summary>
 			ElasticEaseOutIn,
-			BounceEaseIn,
+			/// <summary>
+			/// Easing equation function for a bounce (exponentially decaying parabolic bounce) easing out:
+			/// decelerating from zero velocity.
+			/// </summary>
 			BounceEaseOut,
+			/// <summary>
+			/// Easing equation function for a bounce (exponentially decaying parabolic bounce) easing in:
+			/// accelerating from zero velocity.
+			/// </summary>
+			BounceEaseIn,
+			/// <summary>
+			/// Easing equation function for a bounce (exponentially decaying parabolic bounce) easing in/out:
+			/// acceleration until halfway, then deceleration.
+			/// </summary>
 			BounceEaseInOut,
+			/// <summary>
+			/// Easing equation function for a bounce (exponentially decaying parabolic bounce) easing out/in:
+			/// deceleration until halfway, then acceleration.
+			/// </summary>
 			BounceEaseOutIn,
-			BackEaseIn,
+			/// <summary>
+			/// Easing equation function for a back (overshooting cubic easing: (s+1)*t^3 - s*t^2) easing out:
+			/// decelerating from zero velocity.
+			/// </summary>
 			BackEaseOut,
+			/// <summary>
+			/// Easing equation function for a back (overshooting cubic easing: (s+1)*t^3 - s*t^2) easing in:
+			/// accelerating from zero velocity.
+			/// </summary>
+			BackEaseIn,
+			/// <summary>
+			/// Easing equation function for a back (overshooting cubic easing: (s+1)*t^3 - s*t^2) easing in/out:
+			/// acceleration until halfway, then deceleration.
+			/// </summary>
 			BackEaseInOut,
+			/// <summary>
+			/// Easing equation function for a back (overshooting cubic easing: (s+1)*t^3 - s*t^2) easing out/in:
+			/// deceleration until halfway, then acceleration.
+			/// </summary>
 			BackEaseOutIn,
-			SnapIn,
+			/// <summary>
+			/// "Easing" equation function for a snapping to the final value immediately.
+			/// </summary>
 			SnapOut,
+			/// <summary>
+			/// "Easing" equation function for a snapping to the start value immediately.
+			/// </summary>
+			SnapIn,
+			/// <summary>
+			/// "Easing" equation function for a snapping to the start or final value,
+			/// depending the time is before or after the half way point.
+			/// </summary>
 			SnapInOut,
+			/// <summary>
+			/// "Easing" equation function for a snapping to the start or final value, depending the time is before or after the half way point.
+			/// </summary>
 			SnapOutIn,
 		};
 
@@ -114,9 +293,9 @@ namespace cmdwtf.Toolkit
 			return function switch
 			{
 				Function.Linear => Linear(time, from, to, duration),
-				Function.ExpoEaseInOut => ExpoEaseInOut(time, from, to, duration),
 				Function.ExpoEaseOut => ExpoEaseOut(time, from, to, duration),
 				Function.ExpoEaseIn => ExpoEaseIn(time, from, to, duration),
+				Function.ExpoEaseInOut => ExpoEaseInOut(time, from, to, duration),
 				Function.ExpoEaseOutIn => ExpoEaseOutIn(time, from, to, duration),
 				Function.CircEaseOut => CircEaseOut(time, from, to, duration),
 				Function.CircEaseIn => CircEaseIn(time, from, to, duration),
@@ -134,28 +313,28 @@ namespace cmdwtf.Toolkit
 				Function.CubicEaseIn => CubicEaseIn(time, from, to, duration),
 				Function.CubicEaseInOut => CubicEaseInOut(time, from, to, duration),
 				Function.CubicEaseOutIn => CubicEaseOutIn(time, from, to, duration),
-				Function.QuartEaseIn => QuartEaseIn(time, from, to, duration),
 				Function.QuartEaseOut => QuartEaseOut(time, from, to, duration),
+				Function.QuartEaseIn => QuartEaseIn(time, from, to, duration),
 				Function.QuartEaseInOut => QuartEaseInOut(time, from, to, duration),
 				Function.QuartEaseOutIn => QuartEaseOutIn(time, from, to, duration),
-				Function.QuintEaseIn => QuintEaseIn(time, from, to, duration),
 				Function.QuintEaseOut => QuintEaseOut(time, from, to, duration),
+				Function.QuintEaseIn => QuintEaseIn(time, from, to, duration),
 				Function.QuintEaseInOut => QuintEaseInOut(time, from, to, duration),
 				Function.QuintEaseOutIn => QuintEaseOutIn(time, from, to, duration),
-				Function.ElasticEaseIn => ElasticEaseIn(time, from, to, duration),
 				Function.ElasticEaseOut => ElasticEaseOut(time, from, to, duration),
+				Function.ElasticEaseIn => ElasticEaseIn(time, from, to, duration),
 				Function.ElasticEaseInOut => ElasticEaseInOut(time, from, to, duration),
 				Function.ElasticEaseOutIn => ElasticEaseOutIn(time, from, to, duration),
-				Function.BounceEaseIn => BounceEaseIn(time, from, to, duration),
 				Function.BounceEaseOut => BounceEaseOut(time, from, to, duration),
+				Function.BounceEaseIn => BounceEaseIn(time, from, to, duration),
 				Function.BounceEaseInOut => BounceEaseInOut(time, from, to, duration),
 				Function.BounceEaseOutIn => BounceEaseOutIn(time, from, to, duration),
-				Function.BackEaseIn => BackEaseIn(time, from, to, duration),
 				Function.BackEaseOut => BackEaseOut(time, from, to, duration),
+				Function.BackEaseIn => BackEaseIn(time, from, to, duration),
 				Function.BackEaseInOut => BackEaseInOut(time, from, to, duration),
 				Function.BackEaseOutIn => BackEaseOutIn(time, from, to, duration),
-				Function.SnapIn => SnapIn(time, from, to, duration),
 				Function.SnapOut => SnapOut(time, from, to, duration),
+				Function.SnapIn => SnapIn(time, from, to, duration),
 				Function.SnapInOut => SnapInOut(time, from, to, duration),
 				Function.SnapOutIn => SnapOutIn(time, from, to, duration),
 				_ => throw new System.NotSupportedException($"Easing function {function} is not supported.")
@@ -169,7 +348,7 @@ namespace cmdwtf.Toolkit
 		#region Linear
 
 		/// <summary>
-		/// Easing equation function for a simple linear tweening, with no easing.
+		/// Easing equation function for a simple linear interpolation, with no easing.
 		/// </summary>
 		/// <param name="t">Current time in seconds.</param>
 		/// <param name="b">Starting value.</param>
@@ -900,18 +1079,6 @@ namespace cmdwtf.Toolkit
 		#region Snap
 
 		/// <summary>
-		/// "Easing" equation function for a snapping to the start value immediately.
-		/// </summary>
-		/// <param name="t">Current time in seconds.</param>
-		/// <param name="b">Starting value.</param>
-		/// <param name="c">Final value.</param>
-		/// <param name="d">Duration of animation.</param>
-		/// <returns>The correct value, b.</returns>
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Keep signature inline with other easing functions.")]
-		public static double SnapIn(double t, double b, double c, double d)
-			=> b;
-
-		/// <summary>
 		/// "Easing" equation function for a snapping to the final value immediately.
 		/// </summary>
 		/// <param name="t">Current time in seconds.</param>
@@ -924,7 +1091,20 @@ namespace cmdwtf.Toolkit
 			=> c;
 
 		/// <summary>
-		/// "Easing" equation function for a snapping to the start or final value, depending the time is before or after the half way point.
+		/// "Easing" equation function for a snapping to the start value immediately.
+		/// </summary>
+		/// <param name="t">Current time in seconds.</param>
+		/// <param name="b">Starting value.</param>
+		/// <param name="c">Final value.</param>
+		/// <param name="d">Duration of animation.</param>
+		/// <returns>The correct value, b.</returns>
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Keep signature inline with other easing functions.")]
+		public static double SnapIn(double t, double b, double c, double d)
+			=> b;
+
+		/// <summary>
+		/// "Easing" equation function for a snapping to the start or final value,
+		/// depending the time is before or after the half way point.
 		/// </summary>
 		/// <param name="t">Current time in seconds.</param>
 		/// <param name="b">Starting value.</param>

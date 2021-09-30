@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 
 using Ookii.Dialogs.WinForms;
@@ -75,37 +75,138 @@ namespace cmdwtf.Toolkit.WinForms.Dialogs
 			return pressed.ToDialogResult();
 		}
 
+		/// <summary>
+		/// Creates and shows a <see cref="TaskDialog"/> with an
+		/// error message box like appearance.
+		/// </summary>
+		/// <param name="owner">The owner of the dialog created.</param>
+		/// <param name="text">The text to show in the dialog. This is the 'Main instruction' of the task dialog.</param>
+		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog. It is optional.</param>
+		/// <param name="content">The content. This is the regular text shown below the main instruction. It is optional.</param>
+		/// <returns>The <see cref="DialogResult"/> from the option the user chose.</returns>
 		public static DialogResult Error(IWin32Window owner, string text, string caption = null, string content = null)
 			=> Show(owner, text, caption ?? "Error", image: MessageBoxIcon.Error, content: content);
+
+		/// <summary>
+		/// Creates and shows a <see cref="TaskDialog"/> with an
+		/// error message box like appearance.
+		/// </summary>
+		/// <param name="text">The text to show in the dialog. This is the 'Main instruction' of the task dialog.</param>
+		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog. It is optional.</param>
+		/// <param name="content">The content. This is the regular text shown below the main instruction. It is optional.</param>
+		/// <returns>The <see cref="DialogResult"/> from the option the user chose.</returns>
 		public static DialogResult Error(string text, string caption = null, string content = null)
 			=> Error(null, text, caption, content);
 
+
+		/// <summary>
+		/// Creates and shows a <see cref="TaskDialog"/> with an
+		/// information message box like appearance.
+		/// </summary>
+		/// <param name="owner">The owner of the dialog created.</param>
+		/// <param name="text">The text to show in the dialog. This is the 'Main instruction' of the task dialog.</param>
+		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog. It is optional.</param>
+		/// <param name="content">The content. This is the regular text shown below the main instruction. It is optional.</param>
+		/// <returns>The <see cref="DialogResult"/> from the option the user chose.</returns>
 		public static DialogResult Success(IWin32Window owner, string text, string caption = null, string content = null)
 			=> Show(owner, text, caption ?? "Success", image: MessageBoxIcon.Information, content: content);
+
+
+		/// <summary>
+		/// Creates and shows a <see cref="TaskDialog"/> with an
+		/// information message box like appearance.
+		/// </summary>
+		/// <param name="text">The text to show in the dialog. This is the 'Main instruction' of the task dialog.</param>
+		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog. It is optional.</param>
+		/// <param name="content">The content. This is the regular text shown below the main instruction. It is optional.</param>
+		/// <returns>The <see cref="DialogResult"/> from the option the user chose.</returns>
 		public static DialogResult Success(string text, string caption = null, string content = null)
 			=> Success(null, text, caption, content);
 
+		/// <summary>
+		/// Creates and shows a <see cref="TaskDialog"/> with an
+		/// information message box like appearance.
+		/// </summary>
+		/// <param name="owner">The owner of the dialog created.</param>
+		/// <param name="text">The text to show in the dialog. This is the 'Main instruction' of the task dialog.</param>
+		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog. It is optional.</param>
+		/// <param name="content">The content. This is the regular text shown below the main instruction. It is optional.</param>
+		/// <returns>The <see cref="DialogResult"/> from the option the user chose.</returns>
 		public static DialogResult Information(IWin32Window owner, string text, string caption = null, string content = null)
 			=> Show(owner, text, caption ?? "Information", image: MessageBoxIcon.Information, content: content);
+
+		/// <summary>
+		/// Creates and shows a <see cref="TaskDialog"/> with an
+		/// information message box like appearance.
+		/// </summary>
+		/// <param name="text">The text to show in the dialog. This is the 'Main instruction' of the task dialog.</param>
+		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog. It is optional.</param>
+		/// <param name="content">The content. This is the regular text shown below the main instruction. It is optional.</param>
+		/// <returns>The <see cref="DialogResult"/> from the option the user chose.</returns>
 		public static DialogResult Information(string text, string caption = null, string content = null)
 			=> Information(null, text, caption, content);
 
+		/// <summary>
+		/// Creates and shows a <see cref="TaskDialog"/> with a
+		/// warning message box like appearance.
+		/// </summary>
+		/// <param name="owner">The owner of the dialog created.</param>
+		/// <param name="text">The text to show in the dialog. This is the 'Main instruction' of the task dialog.</param>
+		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog. It is optional.</param>
+		/// <param name="content">The content. This is the regular text shown below the main instruction. It is optional.</param>
+		/// <returns>The <see cref="DialogResult"/> from the option the user chose.</returns>
 		public static DialogResult Warning(IWin32Window owner, string text, string caption = null, string content = null)
 			=> Show(owner, text, caption ?? "Warning", image: MessageBoxIcon.Warning, content: content);
+
+		/// <summary>
+		/// Creates and shows a <see cref="TaskDialog"/> with a
+		/// warning message box like appearance.
+		/// </summary>
+		/// <param name="text">The text to show in the dialog. This is the 'Main instruction' of the task dialog.</param>
+		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog. It is optional.</param>
+		/// <param name="content">The content. This is the regular text shown below the main instruction. It is optional.</param>
+		/// <returns>The <see cref="DialogResult"/> from the option the user chose.</returns>
 		public static DialogResult Warning(string text, string caption = null, string content = null)
 			=> Warning(null, text, caption, content);
 
+		/// <summary>
+		/// Creates and shows a <see cref="TaskDialog"/> with a
+		/// yes/no question, similar to a <see cref="MessageBoxButtons.YesNo"/> style box.
+		/// </summary>
+		/// <param name="owner">The owner of the dialog created.</param>
+		/// <param name="text">The text to show in the dialog. This is the 'Main instruction' of the task dialog.</param>
+		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog. It is optional.</param>
+		/// <param name="content">The content. This is the regular text shown below the main instruction. It is optional.</param>
+		/// <returns>The <see cref="DialogResult"/> from the option the user chose.</returns>
 		public static DialogResult YesNo(IWin32Window owner, string text, string caption = null, string content = null)
 			=> Show(owner, text, caption ?? "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question, content: content);
+
+		/// <summary>
+		/// Creates and shows a <see cref="TaskDialog"/> with a
+		/// yes/no question, similar to a <see cref="MessageBoxButtons.YesNo"/> style box.
+		/// </summary>
+		/// <param name="text">The text to show in the dialog. This is the 'Main instruction' of the task dialog.</param>
+		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog. It is optional.</param>
+		/// <param name="content">The content. This is the regular text shown below the main instruction. It is optional.</param>
+		/// <returns>The <see cref="DialogResult"/> from the option the user chose.</returns>
 		public static DialogResult YesNo(string text, string caption = null, string content = null)
 			=> YesNo(null, text, caption, content);
 
-		public static int TaskQuestion(string mainText, string text, string caption, string[] buttonOptions, string[] buttonNotes = null)
+		/// <summary>
+		/// Creates and shows a <see cref="TaskDialog"/>
+		/// </summary>
+		/// <param name="mainInstruction">The main text to show in the dialog.</param>
+		/// <param name="text">The content. This is the regular text shown below the main instruction. It is optional.</param>
+		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog.</param>
+		/// <param name="buttonOptions">An array of strings to show as options on buttons.</param>
+		/// <param name="buttonNotes">An array of strings that are the notes shown under each of the buttons. These are optional.</param>
+		/// <returns>The index of the option the user chose, or -1 if they canceled.</returns>
+		public static int TaskQuestion(string mainInstruction, string text, string caption, string[] buttonOptions, string[] buttonNotes = null)
 		{
 			var td = new TaskDialog
 			{
 				AllowDialogCancellation = true,
-				MainInstruction = mainText,
+				MainInstruction = mainInstruction,
 				Content = text,
 				MainIcon = TaskDialogIcon.Warning,
 				WindowTitle = caption,
@@ -141,6 +242,11 @@ namespace cmdwtf.Toolkit.WinForms.Dialogs
 			return -1;
 		}
 
+		/// <summary>
+		/// Converts a <see cref="MessageBoxIcon"/> to a similar <see cref="TaskDialogIcon"/>.
+		/// </summary>
+		/// <param name="icon">The icon to convert.</param>
+		/// <returns>The converted <see cref="TaskDialogIcon"/>.</returns>
 		private static TaskDialogIcon ToTaskDialogIcon(this MessageBoxIcon icon)
 		{
 			return icon switch
@@ -154,9 +260,21 @@ namespace cmdwtf.Toolkit.WinForms.Dialogs
 			};
 		}
 
+		/// <summary>
+		/// Determines whether the enum specified has a cancel button.
+		/// </summary>
+		/// <param name="buttons">The buttons.</param>
+		/// <returns>
+		///   <c>true</c> the enum specified has a cancel button; otherwise, <c>false</c>.
+		/// </returns>
 		private static bool HasCancelButton(this MessageBoxButtons buttons)
 			=> buttons is MessageBoxButtons.OKCancel or MessageBoxButtons.YesNoCancel or MessageBoxButtons.RetryCancel;
 
+		/// <summary>
+		/// Converts a <see cref="TaskDialogButton"/> to a <see cref="DialogResult"/>.
+		/// </summary>
+		/// <param name="button">The button.</param>
+		/// <returns>The equivalent <see cref="ButtonType"/>.</returns>
 		private static DialogResult ToDialogResult(this TaskDialogButton button)
 		{
 			return button.ButtonType switch

@@ -6,5 +6,6 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <LangVersion>preview</LangVersion>
     <GenerateDocumentation>true</GenerateDocumentation>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 </Project>

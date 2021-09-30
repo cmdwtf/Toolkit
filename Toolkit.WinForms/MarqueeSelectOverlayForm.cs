@@ -106,7 +106,7 @@ namespace cmdwtf.Toolkit.WinForms
 		}
 
 		/// <summary>
-		/// Handles <see cref="BackColor"/> changing,
+		/// Handles <see cref="Control.BackColor"/> changing,
 		/// to update our native background brush.
 		/// </summary>
 		/// <param name="e">The event data.</param>
@@ -128,7 +128,7 @@ namespace cmdwtf.Toolkit.WinForms
 
 		/// <summary>
 		/// Handles the form painting, drawing 1px a border rectangle
-		/// with the <see cref="ForeColor"/>.
+		/// with the <see cref="Control.ForeColor"/>.
 		/// </summary>
 		/// <param name="e">The event data.</param>
 		protected override void OnPaint(PaintEventArgs e)

@@ -140,7 +140,7 @@ namespace cmdwtf.Toolkit
 			return previous << 1;
 		}
 
-		/// <inheritdoc cref="ToString"/>
+		/// <inheritdoc cref="object.ToString()"/>
 		public static string ToString(StateFlags<T> value)
 		{
 #if NET5_0_OR_GREATER
@@ -222,7 +222,7 @@ namespace cmdwtf.Toolkit
 		#endregion Object Overrides
 
 		/// <summary>
-		/// Ensures that <see cref="StateFlags{T}"/> is wide enough to represent <see cref="T"/>.
+		/// Ensures that <see cref="StateFlags{T}"/> is wide enough to represent <typeparamref name="T"/>.
 		/// </summary>
 		private void CheckEnumWidth()
 		{

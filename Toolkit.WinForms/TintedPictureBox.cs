@@ -9,7 +9,7 @@ namespace cmdwtf.Toolkit.WinForms
 	/// <summary>
 	/// A <see cref="PictureBox"/> that draws it's image
 	/// tinted with the set <see cref="TintColor"/> instead of normally.
-	/// Setting the color to <see cref="Color.White"/> will cause it to
+	/// Setting the color to <see cref="SDColor.White"/> will cause it to
 	/// draw normally.
 	/// </summary>
 	[ToolboxItem(true)]

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Runtime.InteropServices;
 
@@ -10,6 +10,9 @@ using SDIcon = System.Drawing.Icon;
 
 namespace cmdwtf.Toolkit.WinForms
 {
+	/// <summary>
+	/// Extensions methods for <see cref="SDIcon"/>.
+	/// </summary>
 	public static class Icon
 	{
 		/// <summary>
@@ -17,8 +20,14 @@ namespace cmdwtf.Toolkit.WinForms
 		/// </summary>
 		public enum FolderType
 		{
+			/// <summary>
+			/// The closed folder type.
+			/// </summary>
 			Closed,
-			Open
+			/// <summary>
+			/// The open folder type.
+			/// </summary>
+			Open,
 		}
 
 		/// <summary>
@@ -50,16 +59,16 @@ namespace cmdwtf.Toolkit.WinForms
 		/// </summary>
 		/// <param name="filePath">The file to get the icon for.</param>
 		/// <returns>The file's icon.</returns>
-		public static SDIcon GetSmallIcon(string path)
-			=> GetIcon(path, SHGFI_ICON | SHGFI_SMALLICON);
+		public static SDIcon GetSmallIcon(string filePath)
+			=> GetIcon(filePath, SHGFI_ICON | SHGFI_SMALLICON);
 
 		/// <summary>
 		/// Gets a large icon for the given path.
 		/// </summary>
 		/// <param name="filePath">The file to get the icon for.</param>
 		/// <returns>The file's icon.</returns>
-		public static SDIcon GetLargeIcon(string path)
-			=> GetIcon(path, SHGFI_ICON | SHGFI_LARGEICON);
+		public static SDIcon GetLargeIcon(string filePath)
+			=> GetIcon(filePath, SHGFI_ICON | SHGFI_LARGEICON);
 
 		/// <summary>
 		/// Gets a shell sized icon for the given path, for the given size.
@@ -120,8 +129,8 @@ namespace cmdwtf.Toolkit.WinForms
 		/// those (eg: .lnk/.url files).
 		/// </summary>
 		/// <param name="path">The path to get the icon for.</param>
-		/// <param name="flags">A bitfield representing flags to pass to <
-		/// see cref="Trampolines.ShellGetFileInfo(string, FileAttributes, uint)"/></param>
+		/// <param name="flags">A bitfield representing flags to pass to
+		/// <see cref="Trampolines.ShellGetFileInfo(string, FileAttributes, uint)"/></param>
 		/// <param name="attribs">FileAttributes of the given path.</param>
 		/// <returns>The requested icon.</returns>
 		private static SDIcon GetIcon(string path, uint flags, FileAttributes attribs = 0)

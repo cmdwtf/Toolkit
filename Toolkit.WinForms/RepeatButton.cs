@@ -44,7 +44,7 @@ namespace cmdwtf.Toolkit.WinForms
 		#region Button overrides
 
 		/// <summary>
-		/// Raises the <see cref="MouseDown"/> event.
+		/// Raises the <see cref="Control.MouseDown"/> event.
 		/// As well, starts the click repeating timer.
 		/// </summary>
 		/// <param name="e">The event data.</param>
@@ -81,7 +81,7 @@ namespace cmdwtf.Toolkit.WinForms
 		}
 
 		/// <summary>
-		/// Raises the <see cref="Click"/> event.
+		/// Raises the <see cref="Control.Click"/> event.
 		/// </summary>
 		/// <param name="e">The event data.</param>
 		protected override void OnClick(EventArgs e)
@@ -97,7 +97,7 @@ namespace cmdwtf.Toolkit.WinForms
 		#endregion Button overrides
 
 		/// <summary>
-		/// Raises the <see cref="Click"/> and <see cref="MouseClick"/> events.
+		/// Raises the <see cref="Control.Click"/> and <see cref="Control.MouseClick"/> events.
 		/// </summary>
 		/// <param name="sender">The origin of this event.</param>
 		/// <param name="e">The event data.</param>

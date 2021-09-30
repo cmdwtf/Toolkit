@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text.RegularExpressions;
 
 namespace cmdwtf.Toolkit
@@ -24,7 +24,7 @@ namespace cmdwtf.Toolkit
 		/// </summary>
 		/// <param name="pattern">The wildcard pattern to match.</param>
 		/// <param name="options">A combination of one or more
-		/// <see cref="System.Text.RegexOptions"/>.</param>
+		/// <see cref="RegexOptions"/>.</param>
 		public Wildcard(string pattern, RegexOptions options)
 			: base(WildcardToRegex(pattern), options)
 		{

@@ -15,7 +15,7 @@ namespace cmdwtf.Toolkit.WinForms.DoubleBuffered
 		/// <summary>
 		/// Initializes <see cref="CreateParams"/> with
 		/// the WS_EX_COMPOSITED extended window style enabled.
-		/// This behavior only takes place if not in <see cref="DesignMode"/>.
+		/// This behavior only takes place if not in <see cref="System.ComponentModel.Component.DesignMode"/>.
 		/// </summary>
 		protected override CreateParams CreateParams
 		{
@@ -36,7 +36,7 @@ namespace cmdwtf.Toolkit.WinForms.DoubleBuffered
 		/// Creates a new instance of the <see cref="Control"/> class.
 		/// It enables <see cref="DoubleBuffered"/>, and sets the styles:
 		/// <see cref="ControlStyles.OptimizedDoubleBuffer"/> and <see cref="ControlStyles.AllPaintingInWmPaint"/>.
-		/// This behavior only takes place if not in <see cref="DesignMode"/>.
+		/// This behavior only takes place if not in <see cref="System.ComponentModel.Component.DesignMode"/>.
 		/// </summary>
 		public Control()
 		{

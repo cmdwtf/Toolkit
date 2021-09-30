@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -74,7 +74,7 @@ namespace cmdwtf.Toolkit.WinForms
 			=> _owner.Invalidate(true);
 
 		/// <summary>
-		/// Resubscribes the provided control's Paint & ControlAdded events
+		/// Resubscribes the provided control's Paint &amp; ControlAdded events
 		/// to this graphical overlays handlers. As well, does the same
 		/// for each of the control's children.
 		/// </summary>

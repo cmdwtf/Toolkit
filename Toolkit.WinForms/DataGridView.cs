@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+using System.Drawing;
 using System.Windows.Forms;
 
 using SwfDataGridView = System.Windows.Forms.DataGridView;
@@ -8,13 +8,14 @@ namespace cmdwtf.Toolkit.WinForms
 	/// <summary>
 	/// Extension methods for dealing with <see cref="System.Windows.Forms.DataGridView"/>
 	/// </summary>
-	static class DataGridView
+	internal static class DataGridView
 	{
 		/// <summary>
 		/// Converts the requested column into a checkbox column.
 		/// </summary>
 		/// <param name="dataGridView">The DataGridView to operate on.</param>
 		/// <param name="column">The zero-based column index to convert to a checkbox column.</param>
+		/// <param name="size">The size of the checkbox column to create. Defaults to 15 pixels.</param>
 		/// <returns>The checkbox control created for the column.</returns>
 		public static CheckBox ColumnCheckbox(this SwfDataGridView dataGridView, int column, Size? size = null)
 		{

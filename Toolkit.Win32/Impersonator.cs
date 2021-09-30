@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.Versioning;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -54,6 +54,12 @@ namespace cmdwtf.Toolkit.Win32
 		/// </summary>
 		public WindowsIdentity CurrentIdentity { get; private set; }
 
+		/// <summary>
+		/// Gets a value indicating whether we are logged on or not.
+		/// </summary>
+		/// <value>
+		///   <c>true</c> if we are logged on; otherwise, <c>false</c>.
+		/// </value>
 		public bool LoggedOn => _accessToken != IntPtr.Zero;
 
 		private IntPtr _accessToken = IntPtr.Zero;
@@ -119,23 +125,17 @@ namespace cmdwtf.Toolkit.Win32
 			}
 		}
 
-		//
-		// Summary:
-		//     Runs the specified function as the impersonated Windows identity. Instead of
-		//     using an impersonated method call and running your function in System.Security.Principal.WindowsImpersonationContext,
-		//     you can use System.Security.Principal.WindowsIdentity.RunImpersonated(Microsoft.Win32.SafeHandles.SafeAccessTokenHandle,System.Action)
-		//     and provide your function directly as a parameter.
-		//
-		// Parameters:
-		//   func:
-		//     The System.Func to run.
-		//
-		// Type parameters:
-		//   T:
-		//     The type of object used by and returned by the function.
-		//
-		// Returns:
-		//     The result of the function.
+		/// <summary>
+		/// Runs the specified action as the impersonated Windows identity.
+		/// Instead of using an impersonated method call and running your
+		/// function as the active <see cref="WindowsIdentity"/>,
+		/// you can use <see cref="System.Security.Principal.WindowsIdentity.RunImpersonated(Microsoft.Win32.SafeHandles.SafeAccessTokenHandle,System.Action)"/>
+		/// and provide your function directly as a parameter.
+		/// </summary>
+		/// <typeparam name="T">The type of the object to return.</typeparam>
+		/// <param name="func">The function to run.</param>
+		/// <returns>The result of the function.</returns>
+		/// <exception cref="System.UnauthorizedAccessException">You are not logged on as a user to impersonate!</exception>
 		public T RunImpersonated<T>(Func<T> func)
 		{
 			if (LoggedOn == false)
@@ -146,16 +146,15 @@ namespace cmdwtf.Toolkit.Win32
 			return WindowsIdentity.RunImpersonated(CurrentIdentity.AccessToken, func);
 		}
 
-		//
-		// Summary:
-		//     Runs the specified action as the impersonated Windows identity. Instead of using
-		//     an impersonated method call and running your function in System.Security.Principal.WindowsImpersonationContext,
-		//     you can use System.Security.Principal.WindowsIdentity.RunImpersonated(Microsoft.Win32.SafeHandles.SafeAccessTokenHandle,System.Action)
-		//     and provide your function directly as a parameter.
-		//
-		// Parameters:
-		//   action:
-		//     The System.Action to run.
+		/// <summary>
+		/// Runs the specified action as the impersonated Windows identity.
+		/// Instead of using an impersonated method call and running your
+		/// function as the active <see cref="WindowsIdentity"/>,
+		/// you can use <see cref="System.Security.Principal.WindowsIdentity.RunImpersonated(Microsoft.Win32.SafeHandles.SafeAccessTokenHandle,System.Action)"/>
+		/// and provide your function directly as a parameter.
+		/// </summary>
+		/// <param name="action">The action to run.</param>
+		/// <exception cref="System.UnauthorizedAccessException">You are not logged on as a user to impersonate!</exception>
 		public void RunImpersonated(Action action)
 		{
 			if (LoggedOn == false)
@@ -169,20 +168,12 @@ namespace cmdwtf.Toolkit.Win32
 
 #if NET5_0_OR_GREATER
 
-		//
-		// Summary:
-		//     Runs the specified asynchronous action as the impersonated Windows identity.
-		//
-		// Parameters:
-		//   func:
-		//     The function to run.
-		//
-		// Type parameters:
-		//   T:
-		//     The type of the object to return.
-		//
-		// Returns:
-		//     A task that represents the asynchronous operation of func.
+		/// <summary>
+		/// Runs the specified asynchronous action as the impersonated Windows identity.
+		/// </summary>
+		/// <typeparam name="T">The type of the object to return.</typeparam>
+		/// <param name="func">The function to run.</param>
+		/// <returns>A task that represents the asynchronous operation of func.</returns>
 		public async Task<T> RunImpersonatedAsync<T>(Func<Task<T>> func)
 		{
 
@@ -194,16 +185,11 @@ namespace cmdwtf.Toolkit.Win32
 			return await WindowsIdentity.RunImpersonatedAsync(CurrentIdentity.AccessToken, func).ConfigureAwait(false);
 		}
 
-		//
-		// Summary:
-		//     Runs the specified asynchronous action as the impersonated Windows identity.
-		//
-		// Parameters:
-		//   func:
-		//     The function to run.
-		//
-		// Returns:
-		//     A task that represents the asynchronous operation of the provided System.Func`1.
+		/// <summary>
+		/// Runs the specified asynchronous action as the impersonated Windows identity.
+		/// </summary>
+		/// <param name="func">The function to run.</param>
+		/// <returns> A task that represents the asynchronous operation of the provided <see cref="System.Func{TResult}"/>.</returns>
 		public async Task RunImpersonatedAsync(Func<Task> func)
 		{
 
@@ -219,9 +205,22 @@ namespace cmdwtf.Toolkit.Win32
 
 		// these functions are not supported before .NET 5... And the attribute I have to get compile time errors, is called "Obsolete" 🤷🏻‍♀️
 
+		/// <summary>
+		/// A non-function that exists to inform the caller that we need to be on .NET 5 or later.
+		/// </summary>
+		/// <typeparam name="T">Unused.</typeparam>
+		/// <param name="func">Unused.</param>
+		/// <returns>Nothing.</returns>
+		/// <exception cref="System.NotSupportedException">Always thrown.</exception>
 		[Obsolete($"{nameof(RunImpersonatedAsync)} is not supported on .NET versions before .NET 5. Please use the {nameof(RunImpersonated)} instead.", error: true)]
 		public Task<T> RunImpersonatedAsync<T>(Func<Task<T>> func) => throw new NotSupportedException($"{nameof(RunImpersonatedAsync)} is not supported!");
 
+		/// <summary>
+		/// A non-function that exists to inform the caller that we need to be on .NET 5 or later.
+		/// </summary>
+		/// <param name="func">Unused.</param>
+		/// <returns>Nothing.</returns>
+		/// <exception cref="System.NotSupportedException">Always thrown.</exception>
 		[Obsolete($"{nameof(RunImpersonatedAsync)} is not supported on .NET versions before .NET 5. Please use the {nameof(RunImpersonated)} instead.", error: true)]
 		public Task RunImpersonatedAsync(Func<Task> func) => throw new NotSupportedException($"{nameof(RunImpersonatedAsync)} is not supported!");
 

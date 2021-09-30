@@ -155,6 +155,11 @@ namespace cmdwtf.Toolkit.WinForms
 			}
 		}
 
+		/// <inheritdoc cref="FillRectangleRadialGradient(Graphics, SDColor, RectangleF, SDColor?, PointF?)"/>
+		public static void FillRectangleRadialGradient(this Graphics g, SDColor fillColor, Rectangle rect, SDColor? highlightColor = null, Point? centerPoint = null)
+			=> g.FillRectangleRadialGradient(fillColor, (RectangleF)rect, highlightColor, centerPoint);
+
+
 		/// <summary>
 		/// Fills a rectangle with a radial gradient.
 		/// </summary>
@@ -162,11 +167,8 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="fillColor">The color to start the gradient with.</param>
 		/// <param name="rect">The rectangle to fill.</param>
 		/// <param name="highlightColor">An optional color to end the gradient with. If null, will use <see cref="ControlPaint.Light(SDColor)"/> to calculate one.</param>
-		public static void FillRectangleRadialGradient(this Graphics g, SDColor fillColor, Rectangle rect, SDColor? highlightColor = null, Point? centerPoint = null)
-			=> g.FillRectangleRadialGradient(fillColor, (RectangleF)rect, highlightColor, centerPoint);
-
-		/// <inheritdoc cref="FillRectangleRadialGradient(Graphics, SDColor, Rectangle, SDColor?)"/>
-		// thanks, https://www.codeproject.com/Articles/20018/Gradients-made-easy
+		/// <param name="centerPoint">The center point of the gradient.</param>
+		/// <remarks>Thanks, <see href="https://www.codeproject.com/Articles/20018/Gradients-made-easy"/></remarks>
 		public static void FillRectangleRadialGradient(this Graphics g, SDColor fillColor, RectangleF rect, SDColor? highlightColor = null, PointF? centerPoint = null)
 		{
 			using GraphicsPath path = new();

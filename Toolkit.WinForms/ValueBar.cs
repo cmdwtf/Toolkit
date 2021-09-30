@@ -13,7 +13,7 @@ namespace cmdwtf.Toolkit.WinForms
 {
 	/// <summary>
 	/// A custom <see cref="SWFProgressBar"/> that draws it's value
-	/// on itself, as optionally controlled by <see cref="ShowValue"/>.
+	/// on itself, as optionally controlled by <see cref="ShowValueText"/>.
 	/// </summary>
 	[ToolboxItem(true)]
 	public class ValueBar : SWFProgressBar

@@ -12,7 +12,7 @@ namespace cmdwtf.Toolkit.WinForms
 	{
 		/// <summary>
 		/// <see cref="ReadOnlyRichTextBox"/> is always read only. This will always return true.
-		/// This hides <see cref="RichTextBox.ReadOnly"/>.
+		/// This hides <see cref="TextBoxBase.ReadOnly"/>.
 		/// </summary>
 		[DefaultValue(true)]
 		public static new bool ReadOnly
@@ -23,7 +23,7 @@ namespace cmdwtf.Toolkit.WinForms
 
 		/// <summary>
 		/// <see cref="ReadOnlyRichTextBox"/> is never a tab stop. This will always return false.
-		/// This hides <see cref="RichTextBox.TabStop"/>.
+		/// This hides <see cref="Control.TabStop"/>.
 		/// </summary>
 		[DefaultValue(false)]
 		public static new bool TabStop

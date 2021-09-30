@@ -18,7 +18,7 @@ namespace cmdwtf.Toolkit.WinForms.DoubleBuffered
 		/// the WS_EX_COMPOSITED extended window style optionally enabled.
 		/// An implementing class can override <see cref="UseWsExComposited"/>,
 		/// and return `false` to prevent this behavior.
-		/// This behavior only takes place if not in <see cref="DesignMode"/>.
+		/// This behavior only takes place if not in <see cref="System.ComponentModel.Component.DesignMode"/>.
 		/// </summary>
 		protected override CreateParams CreateParams
 		{
@@ -44,7 +44,7 @@ namespace cmdwtf.Toolkit.WinForms.DoubleBuffered
 		/// <summary>
 		/// Creates a new instance of the <see cref="Form"/> class.
 		/// It enables <see cref="DoubleBuffered"/>.
-		/// This behavior only takes place if not in <see cref="DesignMode"/>.
+		/// This behavior only takes place if not in <see cref="System.ComponentModel.Component.DesignMode"/>.
 		/// </summary>
 		public Form()
 		{

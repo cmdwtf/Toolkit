@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
@@ -13,15 +13,33 @@ namespace cmdwtf.Toolkit.WinForms
 		private static readonly SendOrPostCallback _postCallback = state => ((Action)state)();
 
 		private readonly SynchronizationContext _context;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SynchronizationContextAwaiter"/> struct.
+		/// </summary>
+		/// <param name="context">The context.</param>
 		public SynchronizationContextAwaiter(SynchronizationContext context)
 		{
 			_context = context;
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether this instance is completed.
+		/// </summary>
+		/// <value>
+		///   <c>true</c> if this instance is completed; otherwise, <c>false</c>.
+		/// </value>
 		public bool IsCompleted => _context == SynchronizationContext.Current;
 
+		/// <summary>
+		/// Schedules the continuation action that's invoked when the instance completes.
+		/// </summary>
+		/// <param name="continuation">The action to invoke when the operation completes.</param>
 		public void OnCompleted(Action continuation) => _context.Post(_postCallback, continuation);
 
+		/// <summary>
+		/// Gets the result.
+		/// </summary>
 		public static void GetResult() { }
 	}
 
@@ -30,6 +48,11 @@ namespace cmdwtf.Toolkit.WinForms
 	/// </summary>
 	public static class SynchronizationContextAwaiterExtensions
 	{
+		/// <summary>
+		/// Gets an awaiter for the given <see cref="SynchronizationContext"/>.
+		/// </summary>
+		/// <param name="context">The context.</param>
+		/// <returns>The awaiter.</returns>
 		public static SynchronizationContextAwaiter GetAwaiter(this SynchronizationContext context)
 			=> new(context);
 	}

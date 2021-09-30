@@ -1,4 +1,4 @@
-﻿
+
 using STimeSpan = System.TimeSpan;
 
 namespace cmdwtf.Toolkit
@@ -48,7 +48,7 @@ namespace cmdwtf.Toolkit
 		/// <summary>
 		/// Gets a <see cref="System.TimeSpan"/>
 		/// </summary>
-		/// <param name="fullTime">The span to get the percentage of.</param>
+		/// <param name="span">The span to get the percentage of.</param>
 		/// <param name="percentage">What percent of the full time should be returned.</param>
 		/// <param name="roundTo">A timespan representing the nearast value the result should round to. Optional.</param>
 		/// <returns>A timespan that is a percentage of the full time.</returns>

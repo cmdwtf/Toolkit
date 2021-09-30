@@ -12,8 +12,14 @@ namespace cmdwtf.Toolkit.WinForms
 	/// </summary>
 	public static class VisualStyleElement
 	{
+		/// <summary>
+		/// <see cref="VSE"/>s that represent the class "PROGRESS"
+		/// </summary>
 		public static class ProgressBar
 		{
+			/// <summary>
+			/// <see cref="VSE"/>s for the fill component of <see cref="ProgressBar"/>.
+			/// </summary>
 			public static class Fill
 			{
 				/// <summary>
@@ -35,6 +41,9 @@ namespace cmdwtf.Toolkit.WinForms
 				public static VSE Meter => Partial;
 			}
 
+			/// <summary>
+			/// <see cref="VSE"/>s for the transparent bar component of <see cref="ProgressBar"/>.
+			/// </summary>
 			public static class TransparentBar
 			{
 				/// <summary>
@@ -47,20 +56,29 @@ namespace cmdwtf.Toolkit.WinForms
 
 				/// <summary>
 				/// A Progress Bar renderer for a 'Meter' transparent bar.
-				/// See <see href="https://docs.microsoft.com/en-us/windows/win32/uxguide/progress-bars?redirectedfrom=MSDN#meters"/>
+				/// See <see href="https://docs.microsoft.com/en-us/windows/win32/uxguide/progress-bars?redirectedfrom=MSDN#meters">
 				/// the progress bars guidelines</see>.
 				/// </summary>
 				/// <remarks>
-				/// This is an alias for <see cref="Partial"/>
+				/// This is an alias for <see cref="Partial"/>.
 				/// </remarks>
 				public static VSE Meter => Partial;
 			}
 		}
 
+		/// <summary>
+		/// <see cref="VSE"/>s that represent the class "Explorer::TreeView".
+		/// </summary>
 		public static class ExplorerTreeView
 		{
+			/// <summary>
+			/// <see cref="VSE"/>s for the glyph components of <see cref="ExplorerTreeView"/>.
+			/// </summary>
 			public static class Glyph
 			{
+				/// <summary>
+				/// <see cref="VSE"/>s for the normal glyph components of <see cref="ExplorerTreeView"/>.
+				/// </summary>
 				public static class Normal
 				{
 					/// <summary>
@@ -80,6 +98,9 @@ namespace cmdwtf.Toolkit.WinForms
 							TV.GLPS.OPENED);
 				}
 
+				/// <summary>
+				/// <see cref="VSE"/>s for the hot glyph components of <see cref="ExplorerTreeView"/>.
+				/// </summary>
 				public static class Hot
 				{
 					/// <summary>
@@ -100,6 +121,9 @@ namespace cmdwtf.Toolkit.WinForms
 				}
 			}
 
+			/// <summary>
+			/// <see cref="VSE"/>s for the tree item components of <see cref="ExplorerTreeView"/>.
+			/// </summary>
 			public static class TreeItem
 			{
 				/// <summary>
@@ -142,7 +166,7 @@ namespace cmdwtf.Toolkit.WinForms
 					);
 
 				/// <summary>
-				/// A selected & unfocused tree item.
+				/// A selected &amp; unfocused tree item.
 				/// </summary>
 				public static VSE SelectedNotFocus = VSE.CreateElement(
 						TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
@@ -151,7 +175,7 @@ namespace cmdwtf.Toolkit.WinForms
 					);
 
 				/// <summary>
-				/// A hot & selected tree item.
+				/// A hot &amp; selected tree item.
 				/// </summary>
 				public static VSE HotSelected = VSE.CreateElement(
 						TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
@@ -161,8 +185,15 @@ namespace cmdwtf.Toolkit.WinForms
 			}
 		}
 
+
+		/// <summary>
+		/// <see cref="VSE"/>s that represent the class "Explorer::ListView".
+		/// </summary>
 		public static class ExplorerListView
 		{
+			/// <summary>
+			/// <see cref="VSE"/>s for the list item component of <see cref="ExplorerListView"/>.
+			/// </summary>
 			public static class ListItem
 			{
 				/// <summary>
@@ -202,7 +233,7 @@ namespace cmdwtf.Toolkit.WinForms
 					);
 
 				/// <summary>
-				/// A selected & unfocused list item.
+				/// A selected &amp; unfocused list item.
 				/// </summary>
 				public static VSE SelectedNotFocus = VSE.CreateElement(
 						LV.VSCLASS.Undocumented.Explorer.ExplorerListView,
@@ -211,7 +242,7 @@ namespace cmdwtf.Toolkit.WinForms
 					);
 
 				/// <summary>
-				/// A hot & selected list item.
+				/// A hot &amp; selected list item.
 				/// </summary>
 				public static VSE HotSelected = VSE.CreateElement(
 						LV.VSCLASS.Undocumented.Explorer.ExplorerListView,
