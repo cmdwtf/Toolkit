@@ -1,14 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(TargetFrameworksWindows)</TargetFrameworks>
-    <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>$(RootNamespace).WinForms</RootNamespace>
     <AssemblyName>$(AssemblyName).WinForms</AssemblyName>
     <PackageId>$(PackageId).WinForms</PackageId>
     <GenerateResourceUsePreserializedResources>True</GenerateResourceUsePreserializedResources>
-    <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
+
+  <Import Project="..\.meta\IncludeWindows.props" />
 
   <ItemGroup>
     <PackageReference Include="System.Resources.Extensions" Version="5.0.0" />

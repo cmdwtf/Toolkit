@@ -28,6 +28,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Properties", "Properties", 
 	ProjectSection(SolutionItems) = preProject
 		.meta\BuildSettings.props = .meta\BuildSettings.props
 		Directory.Build.props = Directory.Build.props
+		.meta\IncludeCommon.props = .meta\IncludeCommon.props
+		.meta\IncludeWindows.props = .meta\IncludeWindows.props
 		.meta\PackageCommon.props = .meta\PackageCommon.props
 		.meta\PackageStrings.props = .meta\PackageStrings.props
 		.meta\References.props = .meta\References.props
@@ -41,6 +43,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Meta Package", "Meta Packag
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meta", ".meta\Meta.csproj", "{021F8414-D54B-4533-B60D-915B9867FBD3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{32DCC00C-4EF9-42FD-8EF9-48A3745D1D5B}"
+	ProjectSection(SolutionItems) = preProject
+		Shared\IsExternalInit.cs = Shared\IsExternalInit.cs
+		Shared\Stub.cs = Shared\Stub.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,6 +86,7 @@ Global
 		{A8512AED-60C6-4D96-9428-B803C089F01E} = {C85D3415-0BE7-41A1-8A2F-133BA092EECA}
 		{61572379-C48A-410D-8254-E8BBF3FD587C} = {C85D3415-0BE7-41A1-8A2F-133BA092EECA}
 		{021F8414-D54B-4533-B60D-915B9867FBD3} = {61572379-C48A-410D-8254-E8BBF3FD587C}
+		{32DCC00C-4EF9-42FD-8EF9-48A3745D1D5B} = {C85D3415-0BE7-41A1-8A2F-133BA092EECA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {115CE4FB-3404-408B-A50B-53C7CC46C8FC}

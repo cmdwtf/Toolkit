@@ -5,4 +5,5 @@
   <Import Project=".meta\References.props" />
   <Import Project=".meta\PackageStrings.props" />
   <Import Project=".meta\PackageCommon.props" />
+  <Import Project=".meta\IncludeCommon.props" />
 </Project>

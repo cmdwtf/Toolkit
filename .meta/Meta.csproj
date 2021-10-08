@@ -1,9 +1,16 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" DefaultTargets="Restore;Pack">
+<Project Sdk="Microsoft.NET.Sdk" DefaultTargets="Restore;Pack">
   <PropertyGroup>
     <Configurations>Pack</Configurations>
     <EnableDefaultItems>false</EnableDefaultItems>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <IncludeSymbols>false</IncludeSymbols>
+    <!--
+      Suppress NU5128, which triggers because this project has no output.
+      Perhaps this project shouldn't be a csproj at all. But as of yet,
+      There isn't a project type that's supported in VS2019 & VS2022
+      for NuGet packages yet. So for now, we just silence the warning and move on.
+    -->
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../Toolkit.Core/Toolkit.Core.csproj" Version="[$(Version),)" />

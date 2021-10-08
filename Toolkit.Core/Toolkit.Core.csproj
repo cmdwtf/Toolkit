@@ -4,8 +4,4 @@
     <PackageId>$(PackageId).Core</PackageId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="..\Shared\IsExternalInit.cs" Link="IsExternalInit.cs" />
-  </ItemGroup>
-
 </Project>

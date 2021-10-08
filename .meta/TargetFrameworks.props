@@ -1,6 +1,16 @@
 <Project>
   <PropertyGroup>
-    <TargetFrameworks>net5.0;netstandard2.1;net48;net472;net471;net47</TargetFrameworks>
-    <TargetFrameworksWindows>net5.0-windows;net48;net472;net471;net47</TargetFrameworksWindows>
+    <!-- build framework lists -->
+    <NetFxFrameworks>net48;net472;net471;net47</NetFxFrameworks>
+    <NetCoreFrameworks>net5.0;netstandard2.1</NetCoreFrameworks>
+    <NetCoreWindowsFrameworks>net5.0-windows</NetCoreWindowsFrameworks>
+
+    <!-- set target frameworks property -->
+    <TargetFrameworks>$(NetCoreWindowsFrameworks);$(NetCoreFrameworks);$(NetFxFrameworks)</TargetFrameworks>
+
+    <!-- set platform checking properties -->
+    <TargetIsNonWindows>$(NetCoreFrameworks.Contains('$(TargetFramework)'))</TargetIsNonWindows>
+    <TargetIsWindows>!$(TargetIsNonWindows)</TargetIsWindows>
   </PropertyGroup>
+
 </Project>

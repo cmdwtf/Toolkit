@@ -1,15 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(TargetFrameworksWindows)</TargetFrameworks>
     <RootNamespace>$(RootNamespace).Win32</RootNamespace>
     <AssemblyName>$(AssemblyName).Win32</AssemblyName>
     <PackageId>$(PackageId).Win32</PackageId>
+    <UseWindowsForms>false</UseWindowsForms>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="..\Shared\IsExternalInit.cs" Link="IsExternalInit.cs" />
-  </ItemGroup>
+  <Import Project="..\.meta\IncludeWindows.props" />
 
   <ItemGroup>
     <PackageReference Include="System.Security.Principal.Windows" Version="5.0.0" />

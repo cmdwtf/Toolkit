@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(TargetFrameworksWindows)</TargetFrameworks>
-    <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>$(RootNamespace).WinForms.Dialogs</RootNamespace>
     <AssemblyName>$(AssemblyName).Winforms.Dialogs</AssemblyName>
     <PackageId>$(PackageId).WinForms.Dialogs</PackageId>
   </PropertyGroup>
 
-  <ItemGroup>
+  <Import Project="..\.meta\IncludeWindows.props" />
+
+  <ItemGroup Condition="$(TargetIsWindows)">
     <PackageReference Include="Ookii.Dialogs.WinForms" Version="3.0.0" NoWarn="NU1701" />
   </ItemGroup>
 
