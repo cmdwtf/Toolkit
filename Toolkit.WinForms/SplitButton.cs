@@ -31,10 +31,10 @@ namespace cmdwtf.Toolkit.WinForms
 		private Rectangle _dropDownRectangle;
 		private bool _showSplit;
 		private bool _isSplitMenuVisible;
-		private bool _isMouseEntered;
 		private TextFormatFlags _textFormatFlags = TextFormatFlags.Default;
 
 #if !NET5_0_OR_GREATER
+		private bool _isMouseEntered;
 		private ContextMenu _splitMenu;
 #endif // !NET5_0_OR_GREATER
 		private ContextMenuStrip _splitMenuStrip;
@@ -53,14 +53,8 @@ namespace cmdwtf.Toolkit.WinForms
 		[Browsable(false)]
 		public override ContextMenuStrip ContextMenuStrip
 		{
-			get
-			{
-				return SplitMenuStrip;
-			}
-			set
-			{
-				SplitMenuStrip = value;
-			}
+			get => SplitMenuStrip;
+			set => SplitMenuStrip = value;
 		}
 
 #if !NET5_0_OR_GREATER
@@ -68,7 +62,7 @@ namespace cmdwtf.Toolkit.WinForms
 		[DefaultValue(null)]
 		public ContextMenu SplitMenu
 		{
-			get { return _splitMenu; }
+			get => _splitMenu;
 			set
 			{
 				//remove the event handlers for the old SplitMenu
@@ -84,7 +78,9 @@ namespace cmdwtf.Toolkit.WinForms
 					value.Popup += SplitMenu_Popup;
 				}
 				else
+				{
 					ShowSplit = false;
+				}
 
 				_splitMenu = value;
 			}
@@ -95,10 +91,7 @@ namespace cmdwtf.Toolkit.WinForms
 		[DefaultValue(null)]
 		public ContextMenuStrip SplitMenuStrip
 		{
-			get
-			{
-				return _splitMenuStrip;
-			}
+			get => _splitMenuStrip;
 			set
 			{
 				//remove the event handlers for the old SplitMenuStrip
@@ -148,10 +141,7 @@ namespace cmdwtf.Toolkit.WinForms
 
 		private PushButtonState State
 		{
-			get
-			{
-				return _state;
-			}
+			get => _state;
 			set
 			{
 				if (!_state.Equals(value))
@@ -262,7 +252,9 @@ namespace cmdwtf.Toolkit.WinForms
 				return;
 			}
 
+#if !NET5_0_OR_GREATER
 			_isMouseEntered = true;
+#endif // !NET5_0_OR_GREATER
 
 			if (!State.Equals(PushButtonState.Pressed) && !State.Equals(PushButtonState.Disabled))
 			{
@@ -280,7 +272,9 @@ namespace cmdwtf.Toolkit.WinForms
 				return;
 			}
 
+#if !NET5_0_OR_GREATER
 			_isMouseEntered = false;
+#endif // !NET5_0_OR_GREATER
 
 			if (!State.Equals(PushButtonState.Pressed) && !State.Equals(PushButtonState.Disabled))
 			{
@@ -300,7 +294,9 @@ namespace cmdwtf.Toolkit.WinForms
 #if !NET5_0_OR_GREATER
 			//handle ContextMenu re-clicking the drop-down region to close the menu
 			if (_splitMenu != null && e.Button == MouseButtons.Left && !_isMouseEntered)
+			{
 				_skipNextOpen = true;
+			}
 #endif // !NET5_0_OR_GREATER
 
 			if (_dropDownRectangle.Contains(e.Location) && !_isSplitMenuVisible && e.Button == MouseButtons.Left)
@@ -328,7 +324,7 @@ namespace cmdwtf.Toolkit.WinForms
 				ShowContextMenuStrip();
 			}
 #if !NET5_0_OR_GREATER
-			else if (_splitMenuStrip == null && _splitMenu == null || !_isSplitMenuVisible)
+			else if ((_splitMenuStrip == null && _splitMenu == null) || !_isSplitMenuVisible)
 #else
 			else if (_splitMenuStrip == null || !_isSplitMenuVisible)
 #endif // !NET5_0_OR_GREATER
@@ -375,7 +371,7 @@ namespace cmdwtf.Toolkit.WinForms
 
 			int internalBorder = BorderSize;
 			Rectangle focusRect =
-				new Rectangle(internalBorder - 1,
+				new(internalBorder - 1,
 							  internalBorder - 1,
 							  bounds.Width - _dropDownRectangle.Width - internalBorder,
 							  bounds.Height - (internalBorder * 2) + 2);
@@ -421,10 +417,8 @@ namespace cmdwtf.Toolkit.WinForms
 		private void PaintTextandImage(Graphics g, Rectangle bounds)
 		{
 			// Figure out where our text and image should go
-			Rectangle text_rectangle;
-			Rectangle image_rectangle;
 
-			CalculateButtonTextAndImageLayout(ref bounds, out text_rectangle, out image_rectangle);
+			CalculateButtonTextAndImageLayout(ref bounds, out Rectangle text_rectangle, out Rectangle image_rectangle);
 
 			//draw the image
 			if (Image != null)
@@ -439,14 +433,14 @@ namespace cmdwtf.Toolkit.WinForms
 				}
 			}
 
-			// If we dont' use mnemonic, set formatFlag to NoPrefix as this will show ampersand.
+			// If we don't use mnemonic, set formatFlag to NoPrefix as this will show ampersand.
 			if (!UseMnemonic)
 			{
-				_textFormatFlags = _textFormatFlags | TextFormatFlags.NoPrefix;
+				_textFormatFlags |= TextFormatFlags.NoPrefix;
 			}
 			else if (!ShowKeyboardCues)
 			{
-				_textFormatFlags = _textFormatFlags | TextFormatFlags.HidePrefix;
+				_textFormatFlags |= TextFormatFlags.HidePrefix;
 			}
 
 			//draw the text
@@ -465,7 +459,7 @@ namespace cmdwtf.Toolkit.WinForms
 
 		private void PaintArrow(Graphics g, Rectangle dropDownRect)
 		{
-			Point middle = new Point(Convert.ToInt32(dropDownRect.Left + dropDownRect.Width / 2), Convert.ToInt32(dropDownRect.Top + dropDownRect.Height / 2));
+			Point middle = new(Convert.ToInt32(dropDownRect.Left + (dropDownRect.Width / 2)), Convert.ToInt32(dropDownRect.Top + (dropDownRect.Height / 2)));
 
 			//if the width is odd - favor pushing it over one pixel right.
 			middle.X += (dropDownRect.Width % 2);
@@ -497,7 +491,7 @@ namespace cmdwtf.Toolkit.WinForms
 
 				if (!string.IsNullOrEmpty(Text) && TextRenderer.MeasureText(Text, Font).Width + SplitSectionWidth > preferredSize.Width)
 				{
-					return preferredSize + new Size(SplitSectionWidth + BorderSize * 2, 0);
+					return preferredSize + new Size(SplitSectionWidth + (BorderSize * 2), 0);
 				}
 			}
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -9,7 +9,7 @@ namespace cmdwtf.Toolkit
 	/// <summary>
 	/// Windows related tools. Currently mostly related to executing files with the openas verb.
 	/// </summary>
-	static class Windows
+	internal static class Windows
 	{
 		public static bool IsWindows =>
 #if NET471_OR_GREATER || NETSTANDARD1_0 || NET5_0_OR_GREATER
@@ -26,11 +26,11 @@ namespace cmdwtf.Toolkit
 		/// </summary>
 		public class ExecuteOptions
 		{
-			private const string _emptyVerb = "";
+			private const string EmptyVerb = "";
 
 			public bool AllowTryOpenAs { get; init; } = false;
 			public bool UseShellExecute { get; init; } = false;
-			public string DefaultVerb { get; init; } = _emptyVerb;
+			public string DefaultVerb { get; init; } = EmptyVerb;
 		}
 
 		/// <summary>

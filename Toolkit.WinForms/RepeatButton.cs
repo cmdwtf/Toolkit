@@ -21,13 +21,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <summary>
 		/// If true, the button is being held down.
 		/// </summary>
-		public bool IsDown
-		{
-			get
-			{
-				return _repeatButtonTimer.Enabled;
-			}
-		}
+		public bool IsDown => _repeatButtonTimer.Enabled;
 
 		private readonly System.Timers.Timer _repeatButtonTimer;
 		private bool _mousingUp = false;

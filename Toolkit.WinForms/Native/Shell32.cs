@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 
 namespace cmdwtf.Toolkit.WinForms.Native
@@ -28,6 +28,7 @@ namespace cmdwtf.Toolkit.WinForms.Native
 		public const uint FILE_ATTRIBUTE_DIRECTORY = 0x00000010;
 
 		[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Win32 Naming")]
 		public struct SHFILEINFO
 		{
 			public IntPtr hIcon;

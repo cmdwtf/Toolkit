@@ -31,10 +31,10 @@ namespace cmdwtf.Toolkit.Timers
 			Dispose(false);
 		}
 
-		private const int _eventTypeSingle = 0;
-		private const int _eventTypePeriodic = 1;
+		private const int EventTypeSingle = 0;
+		private const int EventTypePeriodic = 1;
 
-		private static readonly Task _taskDone = Task.FromResult<object>(null);
+		private static readonly Task TaskDone = Task.FromResult<object>(null);
 
 		private bool _disposed = false;
 		private int _interval;
@@ -54,10 +54,7 @@ namespace cmdwtf.Toolkit.Timers
 		/// </summary>
 		public int Interval
 		{
-			get
-			{
-				return _interval;
-			}
+			get => _interval;
 			set
 			{
 				CheckDisposed();
@@ -80,10 +77,7 @@ namespace cmdwtf.Toolkit.Timers
 		/// </summary>
 		public int Resolution
 		{
-			get
-			{
-				return _resolution;
-			}
+			get => _resolution;
 			set
 			{
 				CheckDisposed();
@@ -100,10 +94,7 @@ namespace cmdwtf.Toolkit.Timers
 		/// <summary>
 		/// Gets whether the timer has been started yet.
 		/// </summary>
-		public bool IsRunning
-		{
-			get { return _timerId != 0; }
-		}
+		public bool IsRunning => _timerId != 0;
 
 		/// <summary>
 		/// Uses the Multimedia timer to delay for a number of milliseconds.
@@ -120,7 +111,7 @@ namespace cmdwtf.Toolkit.Timers
 
 			if (millisecondsDelay == 0)
 			{
-				return _taskDone;
+				return TaskDone;
 			}
 
 			token.ThrowIfCancellationRequested();
@@ -137,7 +128,7 @@ namespace cmdwtf.Toolkit.Timers
 			state[0] = callback;
 			uint userCtx = 0;
 
-			MMRESULT result = TimeSetEvent((uint)millisecondsDelay, 0, callback, ref userCtx, _eventTypeSingle);
+			MMRESULT result = TimeSetEvent((uint)millisecondsDelay, 0, callback, ref userCtx, EventTypeSingle);
 
 			if (result != MMRESULT.MMSYSERR_NOERROR)
 			{
@@ -165,7 +156,7 @@ namespace cmdwtf.Toolkit.Timers
 			uint userCtx = 0;
 			_timerId = 0;
 
-			MMRESULT result = TimeSetEvent((uint)Interval, (uint)Resolution, _callback, ref userCtx, _eventTypePeriodic);
+			MMRESULT result = TimeSetEvent((uint)Interval, (uint)Resolution, _callback, ref userCtx, EventTypePeriodic);
 
 			if (result == 0)
 			{

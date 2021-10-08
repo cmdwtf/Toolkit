@@ -21,6 +21,8 @@ namespace cmdwtf.Toolkit.WinForms.Native
 	{
 		public const string NativeLibrary = "user32.dll";
 
+		[StructLayout(LayoutKind.Sequential)]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Win32 Naming")]
 		public struct IconInfo
 		{
 			public bool fIcon;

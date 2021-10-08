@@ -1,4 +1,4 @@
-﻿using System.Drawing.Drawing2D;
+using System.Drawing.Drawing2D;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -14,11 +14,11 @@ namespace cmdwtf.Toolkit.WinForms.Native
 	{
 		public const string NativeLibrary = "gdiplus.dll";
 
-		private static readonly PropertyInfo _pathGradientBrushNativeBrushProperty;
+		private static readonly PropertyInfo PathGradientBrushNativeBrushProperty;
 
 		static GdiPlus()
 		{
-			_pathGradientBrushNativeBrushProperty = typeof(PathGradientBrush).GetProperty("NativeBrush");
+			PathGradientBrushNativeBrushProperty = typeof(PathGradientBrush).GetProperty("NativeBrush");
 		}
 
 		/// <summary>
@@ -29,9 +29,9 @@ namespace cmdwtf.Toolkit.WinForms.Native
 		/// <returns>true, on success.</returns>
 		public static bool SetPathGammaCorrection(this PathGradientBrush brush, bool useGammaCorrection)
 		{
-			if (_pathGradientBrushNativeBrushProperty != null)
+			if (PathGradientBrushNativeBrushProperty != null)
 			{
-				var brushRef = (HandleRef)_pathGradientBrushNativeBrushProperty.GetValue(brush);
+				var brushRef = (HandleRef)PathGradientBrushNativeBrushProperty.GetValue(brush);
 				return GdipSetPathGradientGammaCorrection(brushRef, useGammaCorrection);
 			}
 

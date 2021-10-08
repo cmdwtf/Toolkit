@@ -22,8 +22,8 @@ namespace cmdwtf.Toolkit.WinForms.Dialogs
 		/// </summary>
 		public string MainInstruction
 		{
-			get { return labelMainText.Text; }
-			set { labelMainText.Text = value; }
+			get => labelMainText.Text;
+			set => labelMainText.Text = value;
 		}
 
 		/// <summary>
@@ -31,8 +31,8 @@ namespace cmdwtf.Toolkit.WinForms.Dialogs
 		/// </summary>
 		public string Content
 		{
-			get { return labelBodyText.Text; }
-			set { labelBodyText.Text = value; }
+			get => labelBodyText.Text;
+			set => labelBodyText.Text = value;
 		}
 
 		private string _timeoutMainInstruction = string.Empty;

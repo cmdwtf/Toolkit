@@ -60,13 +60,7 @@ namespace cmdwtf.Toolkit.History
 		/// <value>
 		/// <c>true</c> if this instance can undo; otherwise, <c>false</c>.
 		/// </value>
-		public bool CanUndo
-		{
-			get
-			{
-				return (_states.Count > (_currentState + 1));
-			}
-		}
+		public bool CanUndo => (_states.Count > (_currentState + 1));
 
 		/// <summary>
 		/// Gets a value indicating whether this instance can redo.
@@ -74,13 +68,7 @@ namespace cmdwtf.Toolkit.History
 		/// <value>
 		/// <c>true</c> if this instance can redo; otherwise, <c>false</c>.
 		/// </value>
-		public bool CanRedo
-		{
-			get
-			{
-				return (_currentState > 0);
-			}
-		}
+		public bool CanRedo => (_currentState > 0);
 
 		/// <summary>
 		/// Gets the history info.

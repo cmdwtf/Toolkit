@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace cmdwtf.Toolkit.WinForms
@@ -16,7 +16,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <returns>A list of the menu items.</returns>
 		public static List<ToolStripMenuItem> GetMenuItems(this ToolStripItemCollection items)
 		{
-			var result = new List<ToolStripMenuItem>();
+			List<ToolStripMenuItem> result = new();
 			foreach (ToolStripItem item in items)
 			{
 				if (item is ToolStripMenuItem menuItem)

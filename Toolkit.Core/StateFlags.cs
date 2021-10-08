@@ -55,10 +55,7 @@ namespace cmdwtf.Toolkit
 		/// </summary>
 		public bool this[int bit]
 		{
-			get
-			{
-				return (_data & bit) == unchecked((uint)bit);
-			}
+			get => (_data & bit) == unchecked((uint)bit);
 			set
 			{
 				unchecked

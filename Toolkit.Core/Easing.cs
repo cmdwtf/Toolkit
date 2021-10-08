@@ -1086,6 +1086,7 @@ namespace cmdwtf.Toolkit
 		/// <param name="c">Final value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value, c.</returns>
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Match other ease functions.")]
 		public static double SnapOut(double t, double b, double c, double d)
 			=> c;
 
@@ -1097,6 +1098,7 @@ namespace cmdwtf.Toolkit
 		/// <param name="c">Final value.</param>
 		/// <param name="d">Duration of animation.</param>
 		/// <returns>The correct value, b.</returns>
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Match other ease functions.")]
 		public static double SnapIn(double t, double b, double c, double d)
 			=> b;
 

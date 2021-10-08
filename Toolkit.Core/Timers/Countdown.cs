@@ -1,4 +1,4 @@
-﻿
+
 using Stopwatch = System.Diagnostics.Stopwatch;
 
 namespace cmdwtf.Toolkit.Timers

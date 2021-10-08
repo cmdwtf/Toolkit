@@ -1,4 +1,4 @@
-﻿
+
 using System;
 
 using Newtonsoft.Json;
@@ -19,13 +19,13 @@ namespace cmdwtf.Toolkit.History
 		/// <param name="info">The descriptive information about the object to store.</param>
 		public State(T state, string info)
 		{
-			_state = JsonConvert.SerializeObject(state, _serializerSettings);
+			_state = JsonConvert.SerializeObject(state, SerializerSettings);
 			Info = info;
 		}
 
 		private readonly string _state = null;
 
-		private static readonly JsonSerializerSettings _serializerSettings = new()
+		private static readonly JsonSerializerSettings SerializerSettings = new()
 		{
 			Formatting = Formatting.None,
 			//PreserveReferencesHandling = PreserveReferencesHandling.Objects
@@ -46,7 +46,7 @@ namespace cmdwtf.Toolkit.History
 		/// </summary>
 		/// <returns>The object.</returns>
 		public T GetState()
-			=> JsonConvert.DeserializeObject<T>(_state, _serializerSettings);
+			=> JsonConvert.DeserializeObject<T>(_state, SerializerSettings);
 
 		/// <summary>
 		/// Gets the deserialized object, stored in the state, implicitly.

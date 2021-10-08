@@ -142,9 +142,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="sender">The origin of the event.</param>
 		/// <param name="e">The event data.</param>
 		private void PictureBoxMute_Click(object sender, EventArgs e)
-		{
-			Mute = !Mute;
-		}
+			 => Mute = !Mute;
 
 		/// <summary>
 		/// Handles the volume bar being clicked.
@@ -152,9 +150,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="sender">The origin of the event.</param>
 		/// <param name="e">The event data.</param>
 		private void VolumeControlBar_MouseDown(object sender, MouseEventArgs e)
-		{
-			_dragStartValue = volumeControlBar.Value;
-		}
+			 => _dragStartValue = volumeControlBar.Value;
 
 		/// <summary>
 		/// Handles the user changing the volume bar's value by clicking on it.
@@ -162,9 +158,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="sender">The origin of the event.</param>
 		/// <param name="e">The event data.</param>
 		private void VolumeControlBar_ValueChangedFromMouseInput(object sender, EventArgs e)
-		{
-			UpdateMutedImage();
-		}
+			 => UpdateMutedImage();
 
 		/// <summary>
 		/// Updates the mute/unmute picture box image by current volume.

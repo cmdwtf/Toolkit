@@ -13,7 +13,7 @@ namespace cmdwtf.Toolkit.Win32
 	/// </summary>
 	public sealed class TimePeriod : IDisposable
 	{
-		private static readonly TIMECAPS _timeCapabilities;
+		private static readonly TIMECAPS TimeCapabilities;
 
 		private static int _inTimePeriod;
 		private readonly int _periodMs;
@@ -22,7 +22,7 @@ namespace cmdwtf.Toolkit.Win32
 
 		static TimePeriod()
 		{
-			int result = TimeGetDevCaps(ref _timeCapabilities, Marshal.SizeOf(typeof(TIMECAPS)));
+			int result = TimeGetDevCaps(ref TimeCapabilities, Marshal.SizeOf(typeof(TIMECAPS)));
 			if (result != 0)
 			{
 				throw new InvalidOperationException(
@@ -38,7 +38,7 @@ namespace cmdwtf.Toolkit.Win32
 				throw new NotSupportedException("The process is already within a time period. Nested time periods are not supported.");
 			}
 
-			if (periodMs < _timeCapabilities.wPeriodMin || periodMs > _timeCapabilities.wPeriodMax)
+			if (periodMs < TimeCapabilities.wPeriodMin || periodMs > TimeCapabilities.wPeriodMax)
 			{
 				throw new ArgumentOutOfRangeException(nameof(periodMs), "The request to begin a time period was not completed because the resolution specified is out of range.");
 			}
@@ -53,9 +53,9 @@ namespace cmdwtf.Toolkit.Win32
 			_periodMs = periodMs;
 		}
 
-		internal static int MinimumPeriod => _timeCapabilities.wPeriodMin;
+		internal static int MinimumPeriod => TimeCapabilities.wPeriodMin;
 
-		internal static int MaximumPeriod => _timeCapabilities.wPeriodMax;
+		internal static int MaximumPeriod => TimeCapabilities.wPeriodMax;
 
 		internal int PeriodMs
 		{

@@ -249,7 +249,7 @@ namespace cmdwtf.Toolkit.WinForms
 			}
 			else if (align.Is(ContentAlignmentMasks.AnyMiddleAlign))
 			{
-				y = outer.Y + (outer.Height - inner.Height) / 2;
+				y = outer.Y + ((outer.Height - inner.Height) / 2);
 			}
 			else if (align.Is(ContentAlignmentMasks.AnyBottomAlign))
 			{
@@ -259,9 +259,25 @@ namespace cmdwtf.Toolkit.WinForms
 			return new Rectangle(x, y, Min(inner.Width, outer.Width), Min(inner.Height, outer.Height));
 		}
 
+		/// <summary>
+		/// Determines the size and location of the given <see cref="Size"/>
+		/// within the <see cref="Rectangle"/> based on the alignment.
+		/// </summary>
+		/// <param name="outer">The rectangle to place the new rectangle in.</param>
+		/// <param name="inner">The size of the inner rectangle to create.</param>
+		/// <param name="align">The alignment the new rectangle should have inside the outer rectangle.</param>
+		/// <returns>The rectangle, placed inside <paramref name="outer"/>.</returns>
 		public static Rectangle CalculateAlignedRect(this Size inner, Rectangle outer, ContentAlignment align)
 			=> Rectangle.Round(CalculateAlignedRect(inner, outer, align));
 
+		/// <summary>
+		/// Determines the size and location of the given <see cref="SizeF"/>
+		/// within the <see cref="RectangleF"/> based on the alignment.
+		/// </summary>
+		/// <param name="outer">The rectangle to place the new rectangle in.</param>
+		/// <param name="inner">The size of the inner rectangle to create.</param>
+		/// <param name="align">The alignment the new rectangle should have inside the outer rectangle.</param>
+		/// <returns>The rectangle, placed inside <paramref name="outer"/>.</returns>
 		public static RectangleF CalculateAlignedRect(this SizeF inner, RectangleF outer, ContentAlignment align)
 		{
 			float x = outer.X + 2;

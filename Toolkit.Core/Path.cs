@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using SPath = System.IO.Path;
 
@@ -22,6 +22,8 @@ namespace cmdwtf.Toolkit
 		/// Defaults to true on Windows platforms, otherwise false.
 		/// </param>
 		/// <returns>The relative path if one could be calculated, otherwise the full path.</returns>
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0056:Use index operator", Justification = "Legacy .NET Framework compatibility")]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0057:Use range operator", Justification = "Legacy .NET Framework compatibility")]
 		public static string GetRelativePath(string workingDirectory, string fullPath, bool? ignoreCase = null)
 		{
 			string result = string.Empty;

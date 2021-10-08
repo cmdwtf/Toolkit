@@ -344,7 +344,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <summary>
 		/// A set of points to save the transformed arrow shape info in.
 		/// </summary>
-		private static readonly PointF[] _transformedArrowPositions2 =
+		private static readonly PointF[] TransformedArrowPositions2 =
 			new PointF[] { new(), new(), new(), new() };
 
 		/// <summary>
@@ -455,23 +455,23 @@ namespace cmdwtf.Toolkit.WinForms
 			var arrowPointRight = new PointF((float)pointX, (float)pointY);
 
 			//create the point list
-			_transformedArrowPositions2[0] = arrowPoint;
-			_transformedArrowPositions2[1] = arrowPointLeft;
-			_transformedArrowPositions2[2] = arrowPointBack;
-			_transformedArrowPositions2[3] = arrowPointRight;
+			TransformedArrowPositions2[0] = arrowPoint;
+			TransformedArrowPositions2[1] = arrowPointLeft;
+			TransformedArrowPositions2[2] = arrowPointBack;
+			TransformedArrowPositions2[3] = arrowPointRight;
 
 			//draw the outline
-			g.DrawPolygon(pen, _transformedArrowPositions2);
+			g.DrawPolygon(pen, TransformedArrowPositions2);
 
 			//fill the polygon
 			using var brush = new SolidBrush(color);
-			g.FillPolygon(brush, _transformedArrowPositions2);
+			g.FillPolygon(brush, TransformedArrowPositions2);
 		}
 
 		/// <summary>
 		/// Arrow shape information, for DrawArrow
 		/// </summary>
-		private static readonly PointF[] _arrowPositions = new PointF[]
+		private static readonly PointF[] ArrowPositions = new PointF[]
 		{
 			new(4.0f, 0.0f),
 			new(0.0f, 4.0f),
@@ -481,7 +481,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <summary>
 		/// A set of points to save the transformed arrow shape info in.
 		/// </summary>
-		private static readonly PointF[] _transformedArrowPositions =
+		private static readonly PointF[] TransformedArrowPositions =
 			new PointF[] { new(), new(), new() };
 
 		/// <summary>
@@ -506,15 +506,15 @@ namespace cmdwtf.Toolkit.WinForms
 			g.DrawLine(pen, origin, pt);
 
 			// transform points.
-			for (int i = 0; i < _arrowPositions.Length; ++i)
+			for (int i = 0; i < ArrowPositions.Length; ++i)
 			{
-				_transformedArrowPositions[i].X =
-					pt.X + ((cos * _arrowPositions[i].X) - (sin * _arrowPositions[i].Y));
-				_transformedArrowPositions[i].Y =
-					pt.Y - ((sin * _arrowPositions[i].X) + (cos * _arrowPositions[i].Y));
+				TransformedArrowPositions[i].X =
+					pt.X + ((cos * ArrowPositions[i].X) - (sin * ArrowPositions[i].Y));
+				TransformedArrowPositions[i].Y =
+					pt.Y - ((sin * ArrowPositions[i].X) + (cos * ArrowPositions[i].Y));
 			}
 
-			g.FillPolygon(brush, _transformedArrowPositions);
+			g.FillPolygon(brush, TransformedArrowPositions);
 		}
 
 		#endregion Arrow Drawing

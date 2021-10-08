@@ -10,7 +10,7 @@ namespace cmdwtf.Toolkit.WinForms
 	/// </summary>
 	public struct SynchronizationContextAwaiter : INotifyCompletion
 	{
-		private static readonly SendOrPostCallback _postCallback = state => ((Action)state)();
+		private static readonly SendOrPostCallback PostCallback = state => ((Action)state)();
 
 		private readonly SynchronizationContext _context;
 
@@ -35,7 +35,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// Schedules the continuation action that's invoked when the instance completes.
 		/// </summary>
 		/// <param name="continuation">The action to invoke when the operation completes.</param>
-		public void OnCompleted(Action continuation) => _context.Post(_postCallback, continuation);
+		public void OnCompleted(Action continuation) => _context.Post(PostCallback, continuation);
 
 		/// <summary>
 		/// Gets the result.

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 
 using static cmdwtf.Toolkit.WinForms.Native.User32;

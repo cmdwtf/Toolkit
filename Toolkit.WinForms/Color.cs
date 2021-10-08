@@ -1,4 +1,4 @@
-﻿
+
 using SDColor = System.Drawing.Color;
 
 namespace cmdwtf.Toolkit.WinForms

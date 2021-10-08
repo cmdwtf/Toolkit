@@ -17,7 +17,7 @@ namespace cmdwtf.Toolkit.WinForms
 		[DefaultValue(true)]
 		public static new bool ReadOnly
 		{
-			get { return true; }
+			get => true;
 			set { }
 		}
 
@@ -28,7 +28,7 @@ namespace cmdwtf.Toolkit.WinForms
 		[DefaultValue(false)]
 		public static new bool TabStop
 		{
-			get { return false; }
+			get => false;
 			set { }
 		}
 
