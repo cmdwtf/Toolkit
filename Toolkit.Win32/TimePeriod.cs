@@ -30,7 +30,14 @@ namespace cmdwtf.Toolkit.Win32
 			}
 		}
 
-		internal TimePeriod(int periodMs)
+		/// <summary>
+		/// Creates a new <see cref="TimePeriod"/> instance. Until the instance
+		/// is disposed, the time period will be set. This make it easy to
+		/// create an instance with a <see langword="using"/> statement,
+		/// so that the time period will be ended with the automatic disposal.
+		/// </summary>
+		/// <param name="periodMs"></param>
+		public TimePeriod(int periodMs)
 		{
 			if (Interlocked.Increment(ref _inTimePeriod) != 1)
 			{
@@ -53,11 +60,20 @@ namespace cmdwtf.Toolkit.Win32
 			_periodMs = periodMs;
 		}
 
-		internal static int MinimumPeriod => TimeCapabilities.wPeriodMin;
+		/// <summary>
+		/// The minimum allowable time period, in milliseconds.
+		/// </summary>
+		public static int MinimumPeriod => TimeCapabilities.wPeriodMin;
 
-		internal static int MaximumPeriod => TimeCapabilities.wPeriodMax;
+		/// <summary>
+		/// The maximum allowable time period, in milliseconds.
+		/// </summary>
+		public static int MaximumPeriod => TimeCapabilities.wPeriodMax;
 
-		internal int PeriodMs
+		/// <summary>
+		/// The time period set by this instance of <see cref="TimePeriod"/>.
+		/// </summary>
+		public int PeriodMs
 		{
 			get
 			{
