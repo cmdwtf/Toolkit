@@ -1,4 +1,4 @@
-namespace cmdwtf.Toolkit.WinForms.Dialogs
+namespace cmdwtf.Toolkit.WinForms
 {
 	partial class WaitingDialog
 	{

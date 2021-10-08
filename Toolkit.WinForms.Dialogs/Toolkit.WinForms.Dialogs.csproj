@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>$(RootNamespace).WinForms.Dialogs</RootNamespace>
+    <RootNamespace>$(RootNamespace).WinForms</RootNamespace>
     <AssemblyName>$(AssemblyName).Winforms.Dialogs</AssemblyName>
     <PackageId>$(PackageId).WinForms.Dialogs</PackageId>
   </PropertyGroup>

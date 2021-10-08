@@ -8,7 +8,7 @@ using IWin32Window = System.Windows.Forms.IWin32Window;
 using MessageBoxButtons = System.Windows.Forms.MessageBoxButtons;
 using MessageBoxIcon = System.Windows.Forms.MessageBoxIcon;
 
-namespace cmdwtf.Toolkit.WinForms.Dialogs
+namespace cmdwtf.Toolkit.WinForms
 {
 	/// <summary>
 	/// A collection of shortcuts to use <see cref="Ookii.Dialogs.WinForms.TaskDialog"/> with the ease of

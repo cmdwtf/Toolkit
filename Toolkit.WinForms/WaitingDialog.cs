@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 using STimeSpan = System.TimeSpan;
 
-namespace cmdwtf.Toolkit.WinForms.Dialogs
+namespace cmdwtf.Toolkit.WinForms
 {
 	/// <summary>
 	/// A simple modal message box dialog that can be shown while the user

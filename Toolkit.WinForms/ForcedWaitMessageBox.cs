@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 using STimeSpan = System.TimeSpan;
 
-namespace cmdwtf.Toolkit.WinForms.Dialogs
+namespace cmdwtf.Toolkit.WinForms
 {
 	/// <summary>
 	/// An "OK/Cancel" message box very similar to that shown by
