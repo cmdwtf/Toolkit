@@ -8,6 +8,32 @@ namespace cmdwtf.Toolkit
 	/// </summary>
 	public static class TimeSpan
 	{
+		private const double AverateDaysPerYearGregorian = ((291 * 366) + (909 * 365)) / 1200.0; // 365.2425
+		private const double AverageDaysPerYearJulian = ((365 * 3) + 366) / 4.0; // 365.25
+		private const double AverageDaysPerMonthGregorian = AverateDaysPerYearGregorian / 12.0; // 30.436875
+		private const double AverageDaysPerMonthJulian = AverageDaysPerYearJulian / 12.0; // 30.4375
+
+		/// <summary>
+		/// Gets the approximate number of years represented by the
+		/// <see cref="STimeSpan"/>.
+		/// </summary>
+		/// <param name="timespan">The time to inspect.</param>
+		/// <param name="useGregorianYear">If <c>true</c>, the calculation will
+		/// use the average length of a Gregorian year. Otherwise, Julian.</param>
+		/// <returns>A whole number of years.</returns>
+		public static int GetApproximateYears(this STimeSpan timespan, bool useGregorianYear = true)
+			=> (int)(timespan.Days / (useGregorianYear ? AverateDaysPerYearGregorian : AverageDaysPerYearJulian));
+
+		/// <summary>
+		/// Gets the approximate number of months represented by the
+		/// <see cref="STimeSpan"/>.
+		/// </summary>
+		/// <param name="timespan">The time to inspect.</param>
+		/// <param name="useGregorianMonth">If <c>true</c>, the calculation will
+		/// use the average length of a Gregorian year. Otherwise, Julian.</param>
+		/// <returns>A whole number of months.</returns>
+		public static int GetApproximateMonths(this STimeSpan timespan, bool useGregorianMonth = true)
+			=> (int)(timespan.Days / (useGregorianMonth ? AverageDaysPerMonthGregorian : AverageDaysPerMonthJulian));
 
 		/// <summary>
 		/// Gets the percentage of how much the a partial span is of a full time span.
@@ -89,26 +115,18 @@ namespace cmdwtf.Toolkit
 		/// <returns>A pleasant string.</returns>
 		public static string ToHumanReadableString(this STimeSpan span)
 		{
-			if (span.TotalSeconds <= 1)
+			int totalMonths = span.GetApproximateMonths();
+			int totalYears = span.GetApproximateYears();
+			return span switch
 			{
-				return $@"{span:s\.ff} second{(span.Milliseconds != 1 ? "s" : "")}";
-			}
-			if (span.TotalMinutes <= 1)
-			{
-				return $@"{span:%s} second{(span.Seconds != 1 ? "s" : "")}";
-			}
-			if (span.TotalHours <= 1)
-			{
-				return $@"{span:%m} minute{(span.Minutes != 1 ? "s" : "")}";
-			}
-			if (span.TotalDays <= 1)
-			{
-				return $@"{span:%h} hour{(span.Hours != 1 ? "s" : "")}";
-			}
-
-			// #TODO: Months/Years support.
-
-			return $@"{span:%d} day{(span.Days != 1 ? "s" : "")}";
+				{ TotalSeconds: <= 1 } => $@"{span:s\.ff} second{(span.Milliseconds != 1 ? "s" : "")}",
+				{ TotalMinutes: <= 1 } => $@"{span:%s} second{(span.Seconds != 1 ? "s" : "")}",
+				{ TotalHours: <= 1 } => $@"{span:%m} minute{(span.Minutes != 1 ? "s" : "")}",
+				{ TotalDays: <= 1 } => $@"{span:%h} hour{(span.Hours != 1 ? "s" : "")}",
+				_ when totalMonths <= 1 => $@"{span:%d} day{(span.Days != 1 ? "s" : "")}",
+				_ when totalYears <= 1 => $@"{totalMonths} month{(totalMonths != 1 ? "s" : "")}",
+				_ => $@"{totalYears} year{(totalYears != 1 ? "s" : "")}",
+			};
 		}
 	}
 }
