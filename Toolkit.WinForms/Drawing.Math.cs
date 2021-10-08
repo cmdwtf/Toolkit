@@ -3,6 +3,8 @@ using System.Drawing;
 using static System.Math;
 using static cmdwtf.Toolkit.Math;
 
+using Image = System.Drawing.Image;
+
 namespace cmdwtf.Toolkit.WinForms
 {
 	/// <summary>
@@ -208,6 +210,81 @@ namespace cmdwtf.Toolkit.WinForms
 			=> !size.IsEmpty;
 
 		/// <summary>
+		/// Returns a value if the given content alignment is in the given mask.
+		/// </summary>
+		/// <param name="alignment">The alignment to check.</param>
+		/// <param name="mask">The mask to check against.</param>
+		/// <returns><c>true</c>, if the alignment value is in the mask; otherwise <c>false</c>.</returns>
+		public static bool Is(this ContentAlignment alignment, ContentAlignment mask)
+			=> ((alignment & mask) != 0);
+
+		/// <summary>
+		/// Creates a rectangle with the given size inside the outer rectangle with the specified alignment.
+		/// </summary>
+		/// <param name="outer">The rectangle to place the new rectangle in.</param>
+		/// <param name="inner">The size of the inner rectangle to create.</param>
+		/// <param name="align">The alignment the new rectangle should have inside the outer rectangle.</param>
+		/// <returns>The rectangle, placed inside <paramref name="outer"/>.</returns>
+		internal static Rectangle AlignInRectangle(Rectangle outer, Size inner, ContentAlignment align)
+		{
+			int x = 0;
+			int y = 0;
+
+			if (align.Is(ContentAlignmentMasks.AnyLeftAlign))
+			{
+				x = outer.X;
+			}
+			else if (align.Is(ContentAlignmentMasks.AnyCenterAlign))
+			{
+				x = Max(outer.X + ((outer.Width - inner.Width) / 2), outer.Left);
+			}
+			else if (align.Is(ContentAlignmentMasks.AnyRightAlign))
+			{
+				x = outer.Right - inner.Width;
+			}
+
+			if (align.Is(ContentAlignmentMasks.AnyTopAlign))
+			{
+				y = outer.Y;
+			}
+			else if (align.Is(ContentAlignmentMasks.AnyMiddleAlign))
+			{
+				y = outer.Y + (outer.Height - inner.Height) / 2;
+			}
+			else if (align.Is(ContentAlignmentMasks.AnyBottomAlign))
+			{
+				y = outer.Bottom - inner.Height;
+			}
+
+			return new Rectangle(x, y, Min(inner.Width, outer.Width), Min(inner.Height, outer.Height));
+		}
+
+		public static Rectangle CalculateAlignedRect(this Size inner, Rectangle outer, ContentAlignment align)
+			=> Rectangle.Round(CalculateAlignedRect(inner, outer, align));
+
+		public static RectangleF CalculateAlignedRect(this SizeF inner, RectangleF outer, ContentAlignment align)
+		{
+			float x = outer.X + 2;
+
+			if ((align & ContentAlignmentMasks.AnyRightAlign) != 0)
+			{
+				x = outer.X + outer.Width - 4 - inner.Width;
+			}
+			else if ((align & ContentAlignmentMasks.AnyCenterAlign) != 0)
+			{
+				x = outer.X + ((outer.Width - inner.Width) / 2);
+			}
+
+			float y = (align & ContentAlignmentMasks.AnyBottomAlign) == 0
+				? ((align & ContentAlignmentMasks.AnyTopAlign) == 0
+					? outer.Y + ((outer.Height - inner.Height) / 2)
+					: outer.Y + 2)
+				: outer.Y + outer.Height - 4 - inner.Height;
+
+			return new RectangleF(x, y, inner.Width, inner.Height);
+		}
+
+		/// <summary>
 		/// Determines the size and location of an image drawn within the <see cref="Rectangle"/> based on the alignment.
 		/// </summary>
 		/// <param name="image">The <see cref="Image"/> used to determine size and location when drawn within the rectangle.</param>
@@ -221,27 +298,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <see href="https://github.com/dotnet/winforms/blob/441b19a3bf7ede62c103250fd698f5c2490c4006/src/System.Windows.Forms/src/System/Windows/Forms/Label.cs">Label.cs</see>
 		/// </remarks>
 		public static RectangleF CalcImageRenderBounds(this Image image, RectangleF r, ContentAlignment align)
-		{
-			SizeF size = image.Size;
-			float x = r.X + 2;
-
-			if ((align & ContentAlignmentMasks.AnyRightAlign) != 0)
-			{
-				x = r.X + r.Width - 4 - size.Width;
-			}
-			else if ((align & ContentAlignmentMasks.AnyCenterAlign) != 0)
-			{
-				x = r.X + ((r.Width - size.Width) / 2);
-			}
-
-			float y = (align & ContentAlignmentMasks.AnyBottomAlign) == 0
-				? ((align & ContentAlignmentMasks.AnyTopAlign) == 0
-					? r.Y + ((r.Height - size.Height) / 2)
-					: r.Y + 2)
-				: r.Y + r.Height - 4 - size.Height;
-
-			return new RectangleF(x, y, size.Width, size.Height);
-		}
+			=> CalculateAlignedRect(image.Size, r, align);
 
 		/// <inheritdoc cref="CalcImageRenderBounds(Image, RectangleF, ContentAlignment)"/>
 		public static Rectangle CalcImageRenderBounds(this Image image, Rectangle r, ContentAlignment align)

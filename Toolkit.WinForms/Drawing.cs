@@ -10,6 +10,7 @@ using static cmdwtf.Toolkit.WinForms.Native.GdiPlus;
 
 using ControlPaint = System.Windows.Forms.ControlPaint;
 using SDColor = System.Drawing.Color;
+using VerticalAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment;
 
 namespace cmdwtf.Toolkit.WinForms
 {
@@ -538,6 +539,27 @@ namespace cmdwtf.Toolkit.WinForms
 				ContentAlignment.BottomLeft => (StringAlignment.Near, StringAlignment.Far),
 				ContentAlignment.BottomCenter => (StringAlignment.Center, StringAlignment.Far),
 				ContentAlignment.BottomRight => (StringAlignment.Far, StringAlignment.Far),
+				_ => throw new InvalidEnumArgumentException($"Unexpected {nameof(ContentAlignment)} value: {alignment}."),
+			};
+		}
+		/// <summary>
+		/// Converts a <see cref="ContentAlignment"/> into a pair of alignments.
+		/// </summary>
+		/// <param name="alignment">The <see cref="ContentAlignment"/> to convert.</param>
+		/// <returns>A tuple representing the <see cref="HorizontalAlignment"/> and <see cref="VerticalAlignment"/>.</returns>
+		public static (HorizontalAlignment Horizontal, VerticalAlignment Vertical) ToAlignments(this ContentAlignment alignment)
+		{
+			return alignment switch
+			{
+				ContentAlignment.TopLeft => (HorizontalAlignment.Left, VerticalAlignment.Top),
+				ContentAlignment.TopCenter => (HorizontalAlignment.Center, VerticalAlignment.Top),
+				ContentAlignment.TopRight => (HorizontalAlignment.Right, VerticalAlignment.Top),
+				ContentAlignment.MiddleLeft => (HorizontalAlignment.Left, VerticalAlignment.Center),
+				ContentAlignment.MiddleCenter => (HorizontalAlignment.Center, VerticalAlignment.Center),
+				ContentAlignment.MiddleRight => (HorizontalAlignment.Right, VerticalAlignment.Center),
+				ContentAlignment.BottomLeft => (HorizontalAlignment.Left, VerticalAlignment.Bottom),
+				ContentAlignment.BottomCenter => (HorizontalAlignment.Center, VerticalAlignment.Bottom),
+				ContentAlignment.BottomRight => (HorizontalAlignment.Right, VerticalAlignment.Bottom),
 				_ => throw new InvalidEnumArgumentException($"Unexpected {nameof(ContentAlignment)} value: {alignment}."),
 			};
 		}
