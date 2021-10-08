@@ -22,15 +22,15 @@ namespace cmdwtf.Toolkit
 
 
 		/// <summary>
-		/// #TODO: This should be a record, whenever records get released.
+		/// Optional settings to be passed to <see cref="Execute(string, string, ExecuteOptions)"/>.
 		/// </summary>
-		public class ExecuteOptions
+		public record ExecuteOptions(
+			string DefaultVerb = ExecuteOptions.EmptyVerb,
+			bool AllowTryOpenAs = false,
+			bool UseShellExecute = false
+			)
 		{
 			private const string EmptyVerb = "";
-
-			public bool AllowTryOpenAs { get; init; } = false;
-			public bool UseShellExecute { get; init; } = false;
-			public string DefaultVerb { get; init; } = EmptyVerb;
 		}
 
 		/// <summary>
