@@ -30,6 +30,11 @@ Comment: Modifications include: refactoring to fit this library in naming,
          adjustments to code style, removal of Coordinates extension and use
          of Coordinates extension already in library, and added documentation.
 
+Files: Toolkit.Winforms/SplitButton.cs
+Copyright: 2021, Chris Marc Dailey
+           2010, wyDay
+License: GPL-3.0-only and BSD-2-Clause
+
 License: GPL-3.0-only
                      GNU GENERAL PUBLIC LICENSE
                         Version 3, 29 June 2007
@@ -758,10 +763,10 @@ License: BSD-2-clause
  Redistribution and use in source and binary forms, with or without modification,
  are permitted provided that the following conditions are met:
  .
-    - Redistributions of source code must retain the above copyright notice,
+    * Redistributions of source code must retain the above copyright notice,
       this list of conditions and the following disclaimer.
  .
-    - Redistributions in binary form must reproduce the above copyright notice,
+    * Redistributions in binary form must reproduce the above copyright notice,
       this list of conditions and the following disclaimer in the documentation
       and/or other materials provided with the distribution.
  .
@@ -970,7 +975,7 @@ License: CPOL-1.02
  .
  7. Indemnity. You agree to defend, indemnify and hold harmless the Author and
  the Publisher from and against any claims, suits, losses, damages, liabilities,
- costs, and expenses (including reasonable legal or attorneys’ fees) resulting
+ costs, and expenses (including reasonable legal or attorneysâ€™ fees) resulting
  from or relating to any use of the Work by You.
  .
  8. Limitation on Liability. EXCEPT TO THE EXTENT REQUIRED BY APPLICABLE LAW, IN
