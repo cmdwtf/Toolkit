@@ -129,7 +129,7 @@ namespace cmdwtf.Toolkit.WinForms
 				/// <summary>
 				/// A normal tree item.
 				/// </summary>
-				public static VSE Normal = VSE.CreateElement(
+				public static VSE Normal { get; } = VSE.CreateElement(
 						TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
 						TV.TVP.TREEITEM,
 						TV.TREIS.NORMAL
@@ -139,7 +139,7 @@ namespace cmdwtf.Toolkit.WinForms
 				/// <summary>
 				/// A hot tree item.
 				/// </summary>
-				public static VSE Hot = VSE.CreateElement(
+				public static VSE Hot { get; } = VSE.CreateElement(
 						TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
 						TV.TVP.TREEITEM,
 						TV.TREIS.HOT
@@ -149,7 +149,7 @@ namespace cmdwtf.Toolkit.WinForms
 				/// <summary>
 				/// A selected tree item.
 				/// </summary>
-				public static VSE Selected = VSE.CreateElement(
+				public static VSE Selected { get; } = VSE.CreateElement(
 						TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
 						TV.TVP.TREEITEM,
 						TV.TREIS.SELECTED
@@ -159,7 +159,7 @@ namespace cmdwtf.Toolkit.WinForms
 				/// <summary>
 				/// A disabled tree item.
 				/// </summary>
-				public static VSE Disabled = VSE.CreateElement(
+				public static VSE Disabled { get; } = VSE.CreateElement(
 						TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
 						TV.TVP.TREEITEM,
 						TV.TREIS.DISABLED
@@ -168,7 +168,7 @@ namespace cmdwtf.Toolkit.WinForms
 				/// <summary>
 				/// A selected &amp; unfocused tree item.
 				/// </summary>
-				public static VSE SelectedNotFocus = VSE.CreateElement(
+				public static VSE SelectedNotFocus { get; } = VSE.CreateElement(
 						TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
 						TV.TVP.TREEITEM,
 						TV.TREIS.SELECTEDNOTFOCUS
@@ -177,7 +177,7 @@ namespace cmdwtf.Toolkit.WinForms
 				/// <summary>
 				/// A hot &amp; selected tree item.
 				/// </summary>
-				public static VSE HotSelected = VSE.CreateElement(
+				public static VSE HotSelected { get; } = VSE.CreateElement(
 						TV.VSCLASS.Undocumented.Explorer.ExplorerTreeView,
 						TV.TVP.TREEITEM,
 						TV.TREIS.HOTSELECTED
@@ -199,7 +199,7 @@ namespace cmdwtf.Toolkit.WinForms
 				/// <summary>
 				/// A normal list item.
 				/// </summary>
-				public static VSE Normal = VSE.CreateElement(
+				public static VSE Normal { get; } = VSE.CreateElement(
 						LV.VSCLASS.Undocumented.Explorer.ExplorerListView,
 						LV.LVP.LISTITEM,
 						LV.LISS.NORMAL
@@ -208,7 +208,7 @@ namespace cmdwtf.Toolkit.WinForms
 				/// <summary>
 				/// A hot list item.
 				/// </summary>
-				public static VSE Hot = VSE.CreateElement(
+				public static VSE Hot { get; } = VSE.CreateElement(
 						LV.VSCLASS.Undocumented.Explorer.ExplorerListView,
 						LV.LVP.LISTITEM,
 						LV.LISS.HOT
@@ -217,7 +217,7 @@ namespace cmdwtf.Toolkit.WinForms
 				/// <summary>
 				/// A selected list item.
 				/// </summary>
-				public static VSE Selected = VSE.CreateElement(
+				public static VSE Selected { get; } = VSE.CreateElement(
 						LV.VSCLASS.Undocumented.Explorer.ExplorerListView,
 						LV.LVP.LISTITEM,
 						LV.LISS.SELECTED
@@ -226,7 +226,7 @@ namespace cmdwtf.Toolkit.WinForms
 				/// <summary>
 				/// A disabled list item.
 				/// </summary>
-				public static VSE Disabled = VSE.CreateElement(
+				public static VSE Disabled { get; } = VSE.CreateElement(
 						LV.VSCLASS.Undocumented.Explorer.ExplorerListView,
 						LV.LVP.LISTITEM,
 						LV.LISS.DISABLED
@@ -235,7 +235,7 @@ namespace cmdwtf.Toolkit.WinForms
 				/// <summary>
 				/// A selected &amp; unfocused list item.
 				/// </summary>
-				public static VSE SelectedNotFocus = VSE.CreateElement(
+				public static VSE SelectedNotFocus { get; } = VSE.CreateElement(
 						LV.VSCLASS.Undocumented.Explorer.ExplorerListView,
 						LV.LVP.LISTITEM,
 						LV.LISS.SELECTEDNOTFOCUS
@@ -244,7 +244,7 @@ namespace cmdwtf.Toolkit.WinForms
 				/// <summary>
 				/// A hot &amp; selected list item.
 				/// </summary>
-				public static VSE HotSelected = VSE.CreateElement(
+				public static VSE HotSelected { get; } = VSE.CreateElement(
 						LV.VSCLASS.Undocumented.Explorer.ExplorerListView,
 						LV.LVP.LISTITEM,
 						LV.LISS.HOTSELECTED
