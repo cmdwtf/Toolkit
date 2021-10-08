@@ -5,31 +5,43 @@ using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 
 
-//Get the latest version of SplitButton at: http://wyday.com/splitbutton/
+using SMath = System.Math;
+using SWFCursor = System.Windows.Forms.Cursor;
 
 
-namespace wyDay.Controls
+namespace cmdwtf.Toolkit.WinForms
 {
+	/// <summary>
+	/// A button control that allows a context menu to be added. The menu
+	/// behavior is similar to that of <see cref="ToolStripSplitButton"/>.
+	/// </summary>
+	/// <remarks>
+	/// Original work on the split button by
+	/// <seealso href="http://wyday.com/splitbutton/">wyDay</seealso>,
+	/// and was licensed under BSD-2-Clause.
+	/// <see cref="SplitButton"/> is licensed under the license of the package as a whole.
+	/// </remarks>
 	public class SplitButton : Button
 	{
-		PushButtonState _state;
+		private const int SplitSectionWidth = 18;
+		private static readonly int BorderSize = SystemInformation.Border3DSize.Width * 2;
 
+		private PushButtonState _state;
+		private bool _skipNextOpen;
+		private Rectangle _dropDownRectangle;
+		private bool _showSplit;
+		private bool _isSplitMenuVisible;
+		private bool _isMouseEntered;
+		private TextFormatFlags _textFormatFlags = TextFormatFlags.Default;
 
-		const int SplitSectionWidth = 18;
+#if !NET5_0_OR_GREATER
+		private ContextMenu _splitMenu;
+#endif // !NET5_0_OR_GREATER
+		private ContextMenuStrip _splitMenuStrip;
 
-		static int BorderSize = SystemInformation.Border3DSize.Width * 2;
-		bool skipNextOpen;
-		Rectangle dropDownRectangle;
-		bool showSplit;
-
-		bool isSplitMenuVisible;
-
-
-		ContextMenuStrip m_SplitMenuStrip;
-		ContextMenu m_SplitMenu;
-
-		TextFormatFlags textFormatFlags = TextFormatFlags.Default;
-
+		/// <summary>
+		/// Creates a new <see cref="SplitButton"/> instance.
+		/// </summary>
 		public SplitButton()
 		{
 			AutoSize = true;
@@ -37,6 +49,7 @@ namespace wyDay.Controls
 
 		#region Properties
 
+		/// <inheritdoc/>
 		[Browsable(false)]
 		public override ContextMenuStrip ContextMenuStrip
 		{
@@ -50,16 +63,18 @@ namespace wyDay.Controls
 			}
 		}
 
+#if !NET5_0_OR_GREATER
+		/// <inheritdoc cref="ContextMenuStrip"/>
 		[DefaultValue(null)]
 		public ContextMenu SplitMenu
 		{
-			get { return m_SplitMenu; }
+			get { return _splitMenu; }
 			set
 			{
 				//remove the event handlers for the old SplitMenu
-				if (m_SplitMenu != null)
+				if (_splitMenu != null)
 				{
-					m_SplitMenu.Popup -= SplitMenu_Popup;
+					_splitMenu.Popup -= SplitMenu_Popup;
 				}
 
 				//add the event handlers for the new SplitMenu
@@ -71,24 +86,26 @@ namespace wyDay.Controls
 				else
 					ShowSplit = false;
 
-				m_SplitMenu = value;
+				_splitMenu = value;
 			}
 		}
+#endif // !NET5_0_OR_GREATER
 
+		/// <inheritdoc cref="ContextMenuStrip"/>
 		[DefaultValue(null)]
 		public ContextMenuStrip SplitMenuStrip
 		{
 			get
 			{
-				return m_SplitMenuStrip;
+				return _splitMenuStrip;
 			}
 			set
 			{
 				//remove the event handlers for the old SplitMenuStrip
-				if (m_SplitMenuStrip != null)
+				if (_splitMenuStrip != null)
 				{
-					m_SplitMenuStrip.Closing -= SplitMenuStrip_Closing;
-					m_SplitMenuStrip.Opening -= SplitMenuStrip_Opening;
+					_splitMenuStrip.Closing -= SplitMenuStrip_Closing;
+					_splitMenuStrip.Opening -= SplitMenuStrip_Opening;
 				}
 
 				//add the event handlers for the new SplitMenuStrip
@@ -99,25 +116,32 @@ namespace wyDay.Controls
 					value.Opening += SplitMenuStrip_Opening;
 				}
 				else
+				{
 					ShowSplit = false;
+				}
 
-
-				m_SplitMenuStrip = value;
+				_splitMenuStrip = value;
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets a value that will configure if
+		/// the split portion of the button is shown or not.
+		/// </summary>
 		[DefaultValue(false)]
 		public bool ShowSplit
 		{
 			set
 			{
-				if (value != showSplit)
+				if (value != _showSplit)
 				{
-					showSplit = value;
+					_showSplit = value;
 					Invalidate();
 
 					if (Parent != null)
+					{
 						Parent.PerformLayout();
+					}
 				}
 			}
 		}
@@ -140,17 +164,21 @@ namespace wyDay.Controls
 
 		#endregion Properties
 
+		/// <inheritdoc/>
 		protected override bool IsInputKey(Keys keyData)
 		{
-			if (keyData.Equals(Keys.Down) && showSplit)
+			if (keyData.Equals(Keys.Down) && _showSplit)
+			{
 				return true;
+			}
 
 			return base.IsInputKey(keyData);
 		}
 
+		/// <inheritdoc/>
 		protected override void OnGotFocus(EventArgs e)
 		{
-			if (!showSplit)
+			if (!_showSplit)
 			{
 				base.OnGotFocus(e);
 				return;
@@ -162,11 +190,12 @@ namespace wyDay.Controls
 			}
 		}
 
+		/// <inheritdoc/>
 		protected override void OnKeyDown(KeyEventArgs kevent)
 		{
-			if (showSplit)
+			if (_showSplit)
 			{
-				if (kevent.KeyCode.Equals(Keys.Down) && !isSplitMenuVisible)
+				if (kevent.KeyCode.Equals(Keys.Down) && !_isSplitMenuVisible)
 				{
 					ShowContextMenuStrip();
 				}
@@ -180,6 +209,7 @@ namespace wyDay.Controls
 			base.OnKeyDown(kevent);
 		}
 
+		/// <inheritdoc/>
 		protected override void OnKeyUp(KeyEventArgs kevent)
 		{
 			if (kevent.KeyCode.Equals(Keys.Space))
@@ -191,7 +221,7 @@ namespace wyDay.Controls
 			}
 			else if (kevent.KeyCode.Equals(Keys.Apps))
 			{
-				if (MouseButtons == MouseButtons.None && !isSplitMenuVisible)
+				if (MouseButtons == MouseButtons.None && !_isSplitMenuVisible)
 				{
 					ShowContextMenuStrip();
 				}
@@ -200,6 +230,7 @@ namespace wyDay.Controls
 			base.OnKeyUp(kevent);
 		}
 
+		/// <inheritdoc/>
 		protected override void OnEnabledChanged(EventArgs e)
 		{
 			State = Enabled ? PushButtonState.Normal : PushButtonState.Disabled;
@@ -207,9 +238,10 @@ namespace wyDay.Controls
 			base.OnEnabledChanged(e);
 		}
 
+		/// <inheritdoc/>
 		protected override void OnLostFocus(EventArgs e)
 		{
-			if (!showSplit)
+			if (!_showSplit)
 			{
 				base.OnLostFocus(e);
 				return;
@@ -221,17 +253,16 @@ namespace wyDay.Controls
 			}
 		}
 
-		bool isMouseEntered;
-
+		/// <inheritdoc/>
 		protected override void OnMouseEnter(EventArgs e)
 		{
-			if (!showSplit)
+			if (!_showSplit)
 			{
 				base.OnMouseEnter(e);
 				return;
 			}
 
-			isMouseEntered = true;
+			_isMouseEntered = true;
 
 			if (!State.Equals(PushButtonState.Pressed) && !State.Equals(PushButtonState.Disabled))
 			{
@@ -240,15 +271,16 @@ namespace wyDay.Controls
 
 		}
 
+		/// <inheritdoc/>
 		protected override void OnMouseLeave(EventArgs e)
 		{
-			if (!showSplit)
+			if (!_showSplit)
 			{
 				base.OnMouseLeave(e);
 				return;
 			}
 
-			isMouseEntered = false;
+			_isMouseEntered = false;
 
 			if (!State.Equals(PushButtonState.Pressed) && !State.Equals(PushButtonState.Disabled))
 			{
@@ -256,19 +288,22 @@ namespace wyDay.Controls
 			}
 		}
 
+		/// <inheritdoc/>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			if (!showSplit)
+			if (!_showSplit)
 			{
 				base.OnMouseDown(e);
 				return;
 			}
 
+#if !NET5_0_OR_GREATER
 			//handle ContextMenu re-clicking the drop-down region to close the menu
-			if (m_SplitMenu != null && e.Button == MouseButtons.Left && !isMouseEntered)
-				skipNextOpen = true;
+			if (_splitMenu != null && e.Button == MouseButtons.Left && !_isMouseEntered)
+				_skipNextOpen = true;
+#endif // !NET5_0_OR_GREATER
 
-			if (dropDownRectangle.Contains(e.Location) && !isSplitMenuVisible && e.Button == MouseButtons.Left)
+			if (_dropDownRectangle.Contains(e.Location) && !_isSplitMenuVisible && e.Button == MouseButtons.Left)
 			{
 				ShowContextMenuStrip();
 			}
@@ -278,36 +313,44 @@ namespace wyDay.Controls
 			}
 		}
 
+		/// <inheritdoc/>
 		protected override void OnMouseUp(MouseEventArgs mevent)
 		{
-			if (!showSplit)
+			if (!_showSplit)
 			{
 				base.OnMouseUp(mevent);
 				return;
 			}
 
 			// if the right button was released inside the button
-			if (mevent.Button == MouseButtons.Right && ClientRectangle.Contains(mevent.Location) && !isSplitMenuVisible)
+			if (mevent.Button == MouseButtons.Right && ClientRectangle.Contains(mevent.Location) && !_isSplitMenuVisible)
 			{
 				ShowContextMenuStrip();
 			}
-			else if (m_SplitMenuStrip == null && m_SplitMenu == null || !isSplitMenuVisible)
+#if !NET5_0_OR_GREATER
+			else if (_splitMenuStrip == null && _splitMenu == null || !_isSplitMenuVisible)
+#else
+			else if (_splitMenuStrip == null || !_isSplitMenuVisible)
+#endif // !NET5_0_OR_GREATER
 			{
 				SetButtonDrawState();
 
-				if (ClientRectangle.Contains(mevent.Location) && !dropDownRectangle.Contains(mevent.Location))
+				if (ClientRectangle.Contains(mevent.Location) && !_dropDownRectangle.Contains(mevent.Location))
 				{
 					OnClick(new EventArgs());
 				}
 			}
 		}
 
+		/// <inheritdoc/>
 		protected override void OnPaint(PaintEventArgs pevent)
 		{
 			base.OnPaint(pevent);
 
-			if (!showSplit)
+			if (!_showSplit)
+			{
 				return;
+			}
 
 			Graphics g = pevent.Graphics;
 			Rectangle bounds = ClientRectangle;
@@ -319,7 +362,7 @@ namespace wyDay.Controls
 				backgroundBounds.Inflate(-1, -1);
 				ButtonRenderer.DrawButton(g, backgroundBounds, State);
 
-				// button renderer doesnt draw the black frame when themes are off
+				// button renderer doesn't draw the black frame when themes are off
 				g.DrawRectangle(SystemPens.WindowFrame, 0, 0, bounds.Width - 1, bounds.Height - 1);
 			}
 			else
@@ -328,13 +371,13 @@ namespace wyDay.Controls
 			}
 
 			// calculate the current dropdown rectangle.
-			dropDownRectangle = new Rectangle(bounds.Right - SplitSectionWidth, 0, SplitSectionWidth, bounds.Height);
+			_dropDownRectangle = new Rectangle(bounds.Right - SplitSectionWidth, 0, SplitSectionWidth, bounds.Height);
 
 			int internalBorder = BorderSize;
 			Rectangle focusRect =
 				new Rectangle(internalBorder - 1,
 							  internalBorder - 1,
-							  bounds.Width - dropDownRectangle.Width - internalBorder,
+							  bounds.Width - _dropDownRectangle.Width - internalBorder,
 							  bounds.Height - (internalBorder * 2) + 2);
 
 			bool drawSplitLine = (State == PushButtonState.Hot || State == PushButtonState.Pressed || !Application.RenderWithVisualStyles);
@@ -342,8 +385,8 @@ namespace wyDay.Controls
 
 			if (RightToLeft == RightToLeft.Yes)
 			{
-				dropDownRectangle.X = bounds.Left + 1;
-				focusRect.X = dropDownRectangle.Right;
+				_dropDownRectangle.X = bounds.Left + 1;
+				focusRect.X = _dropDownRectangle.Right;
 
 				if (drawSplitLine)
 				{
@@ -363,7 +406,7 @@ namespace wyDay.Controls
 			}
 
 			// Draw an arrow in the correct location
-			PaintArrow(g, dropDownRectangle);
+			PaintArrow(g, _dropDownRectangle);
 
 			//paint the image and text in the "button" part of the splitButton
 			PaintTextandImage(g, new Rectangle(0, 0, ClientRectangle.Width - SplitSectionWidth, ClientRectangle.Height));
@@ -387,24 +430,36 @@ namespace wyDay.Controls
 			if (Image != null)
 			{
 				if (Enabled)
+				{
 					g.DrawImage(Image, image_rectangle.X, image_rectangle.Y, Image.Width, Image.Height);
+				}
 				else
+				{
 					ControlPaint.DrawImageDisabled(g, Image, image_rectangle.X, image_rectangle.Y, BackColor);
+				}
 			}
 
 			// If we dont' use mnemonic, set formatFlag to NoPrefix as this will show ampersand.
 			if (!UseMnemonic)
-				textFormatFlags = textFormatFlags | TextFormatFlags.NoPrefix;
+			{
+				_textFormatFlags = _textFormatFlags | TextFormatFlags.NoPrefix;
+			}
 			else if (!ShowKeyboardCues)
-				textFormatFlags = textFormatFlags | TextFormatFlags.HidePrefix;
+			{
+				_textFormatFlags = _textFormatFlags | TextFormatFlags.HidePrefix;
+			}
 
 			//draw the text
 			if (!string.IsNullOrEmpty(Text))
 			{
 				if (Enabled)
-					TextRenderer.DrawText(g, Text, Font, text_rectangle, ForeColor, textFormatFlags);
+				{
+					TextRenderer.DrawText(g, Text, Font, text_rectangle, ForeColor, _textFormatFlags);
+				}
 				else
-					ControlPaint.DrawStringDisabled(g, Text, Font, BackColor, text_rectangle, textFormatFlags);
+				{
+					ControlPaint.DrawStringDisabled(g, Text, Font, BackColor, text_rectangle, _textFormatFlags);
+				}
 			}
 		}
 
@@ -418,23 +473,32 @@ namespace wyDay.Controls
 			Point[] arrow = new[] { new Point(middle.X - 2, middle.Y - 1), new Point(middle.X + 3, middle.Y - 1), new Point(middle.X, middle.Y + 2) };
 
 			if (Enabled)
+			{
 				g.FillPolygon(SystemBrushes.ControlText, arrow);
+			}
 			else
+			{
 				g.FillPolygon(SystemBrushes.ButtonShadow, arrow);
+			}
 		}
 
+		/// <inheritdoc/>
 		public override Size GetPreferredSize(Size proposedSize)
 		{
 			Size preferredSize = base.GetPreferredSize(proposedSize);
 
 			//autosize correctly for splitbuttons
-			if (showSplit)
+			if (_showSplit)
 			{
 				if (AutoSize)
+				{
 					return CalculateButtonAutoSize();
+				}
 
 				if (!string.IsNullOrEmpty(Text) && TextRenderer.MeasureText(Text, Font).Width + SplitSectionWidth > preferredSize.Width)
+				{
 					return preferredSize + new Size(SplitSectionWidth + BorderSize * 2, 0);
+				}
 			}
 
 			return preferredSize;
@@ -456,17 +520,17 @@ namespace wyDay.Controls
 			switch (TextImageRelation)
 			{
 				case TextImageRelation.Overlay:
-					ret_size.Height = Math.Max(Text.Length == 0 ? 0 : text_size.Height, image_size.Height);
-					ret_size.Width = Math.Max(text_size.Width, image_size.Width);
+					ret_size.Height = SMath.Max(Text.Length == 0 ? 0 : text_size.Height, image_size.Height);
+					ret_size.Width = SMath.Max(text_size.Width, image_size.Width);
 					break;
 				case TextImageRelation.ImageAboveText:
 				case TextImageRelation.TextAboveImage:
 					ret_size.Height = text_size.Height + image_size.Height;
-					ret_size.Width = Math.Max(text_size.Width, image_size.Width);
+					ret_size.Width = SMath.Max(text_size.Width, image_size.Width);
 					break;
 				case TextImageRelation.ImageBeforeText:
 				case TextImageRelation.TextBeforeImage:
-					ret_size.Height = Math.Max(text_size.Height, image_size.Height);
+					ret_size.Height = SMath.Max(text_size.Height, image_size.Height);
 					ret_size.Width = text_size.Width + image_size.Width;
 					break;
 			}
@@ -476,8 +540,10 @@ namespace wyDay.Controls
 			ret_size.Width += (Padding.Horizontal + 6);
 
 			//pad the splitButton arrow region
-			if (showSplit)
+			if (_showSplit)
+			{
 				ret_size.Width += SplitSectionWidth;
+			}
 
 			return ret_size;
 		}
@@ -490,7 +556,7 @@ namespace wyDay.Controls
 
 		private void CalculateButtonTextAndImageLayout(ref Rectangle content_rect, out Rectangle textRectangle, out Rectangle imageRectangle)
 		{
-			Size text_size = TextRenderer.MeasureText(Text, Font, content_rect.Size, textFormatFlags);
+			Size text_size = TextRenderer.MeasureText(Text, Font, content_rect.Size, _textFormatFlags);
 			Size image_size = Image == null ? Size.Empty : Image.Size;
 
 			textRectangle = Rectangle.Empty;
@@ -504,11 +570,15 @@ namespace wyDay.Controls
 
 					//Offset on Windows 98 style when button is pressed
 					if (_state == PushButtonState.Pressed && !Application.RenderWithVisualStyles)
+					{
 						textRectangle.Offset(1, 1);
+					}
 
 					// Image is dependent on ImageAlign
 					if (Image != null)
+					{
 						imageRectangle = OverlayObjectRect(ref content_rect, ref image_size, ImageAlign);
+					}
 
 					break;
 				case TextImageRelation.ImageAboveText:
@@ -587,7 +657,9 @@ namespace wyDay.Controls
 			int total_width = textSize.Width + element_spacing + imageSize.Width;
 
 			if (!textFirst)
+			{
 				element_spacing += 2;
+			}
 
 			// If the text is too big, chop it down to the size we have available to it
 			if (total_width > totalArea.Width)
@@ -602,27 +674,35 @@ namespace wyDay.Controls
 			Rectangle final_text_rect;
 			Rectangle final_image_rect;
 
-			HorizontalAlignment h_text = GetHorizontalAlignment(TextAlign);
-			HorizontalAlignment h_image = GetHorizontalAlignment(ImageAlign);
+			HorizontalAlignment h_text = TextAlign.ToAlignments().Horizontal;
+			HorizontalAlignment h_image = ImageAlign.ToAlignments().Horizontal;
 
 			if (h_image == HorizontalAlignment.Left)
-				offset = 0;
-			else if (h_image == HorizontalAlignment.Right && h_text == HorizontalAlignment.Right)
-				offset = excess_width;
-			else if (h_image == HorizontalAlignment.Center && (h_text == HorizontalAlignment.Left || h_text == HorizontalAlignment.Center))
-				offset += excess_width / 3;
-			else
-				offset += 2 * (excess_width / 3);
-
-			if (textFirst)
 			{
-				final_text_rect = new Rectangle(totalArea.Left + offset, AlignInRectangle(totalArea, textSize, TextAlign).Top, textSize.Width, textSize.Height);
-				final_image_rect = new Rectangle(final_text_rect.Right + element_spacing, AlignInRectangle(totalArea, imageSize, ImageAlign).Top, imageSize.Width, imageSize.Height);
+				offset = 0;
+			}
+			else if (h_image == HorizontalAlignment.Right && h_text == HorizontalAlignment.Right)
+			{
+				offset = excess_width;
+			}
+			else if (h_image == HorizontalAlignment.Center && (h_text == HorizontalAlignment.Left || h_text == HorizontalAlignment.Center))
+			{
+				offset += excess_width / 3;
 			}
 			else
 			{
-				final_image_rect = new Rectangle(totalArea.Left + offset, AlignInRectangle(totalArea, imageSize, ImageAlign).Top, imageSize.Width, imageSize.Height);
-				final_text_rect = new Rectangle(final_image_rect.Right + element_spacing, AlignInRectangle(totalArea, textSize, TextAlign).Top, textSize.Width, textSize.Height);
+				offset += 2 * (excess_width / 3);
+			}
+
+			if (textFirst)
+			{
+				final_text_rect = new Rectangle(totalArea.Left + offset, textSize.CalculateAlignedRect(totalArea, TextAlign).Top, textSize.Width, textSize.Height);
+				final_image_rect = new Rectangle(final_text_rect.Right + element_spacing, imageSize.CalculateAlignedRect(totalArea, ImageAlign).Top, imageSize.Width, imageSize.Height);
+			}
+			else
+			{
+				final_image_rect = new Rectangle(totalArea.Left + offset, imageSize.CalculateAlignedRect(totalArea, ImageAlign).Top, imageSize.Width, imageSize.Height);
+				final_text_rect = new Rectangle(final_image_rect.Right + element_spacing, textSize.CalculateAlignedRect(totalArea, TextAlign).Top, textSize.Width, textSize.Height);
 			}
 
 			textRect = final_text_rect;
@@ -635,10 +715,14 @@ namespace wyDay.Controls
 			int total_height = textSize.Height + element_spacing + imageSize.Height;
 
 			if (textFirst)
+			{
 				element_spacing += 2;
+			}
 
 			if (textSize.Width > totalArea.Width)
+			{
 				textSize.Width = totalArea.Width;
+			}
 
 			// If the there isn't enough room and we're text first, cut out the image
 			if (total_height > totalArea.Height && textFirst)
@@ -653,97 +737,44 @@ namespace wyDay.Controls
 			Rectangle final_text_rect;
 			Rectangle final_image_rect;
 
-			VerticalAlignment v_text = GetVerticalAlignment(TextAlign);
-			VerticalAlignment v_image = GetVerticalAlignment(ImageAlign);
+			VerticalAlignment v_text = TextAlign.ToAlignments().Vertical;
+			VerticalAlignment v_image = ImageAlign.ToAlignments().Vertical;
 
 			if (v_image == VerticalAlignment.Top)
-				offset = 0;
-			else if (v_image == VerticalAlignment.Bottom && v_text == VerticalAlignment.Bottom)
-				offset = excess_height;
-			else if (v_image == VerticalAlignment.Center && (v_text == VerticalAlignment.Top || v_text == VerticalAlignment.Center))
-				offset += excess_height / 3;
-			else
-				offset += 2 * (excess_height / 3);
-
-			if (textFirst)
 			{
-				final_text_rect = new Rectangle(AlignInRectangle(totalArea, textSize, TextAlign).Left, totalArea.Top + offset, textSize.Width, textSize.Height);
-				final_image_rect = new Rectangle(AlignInRectangle(totalArea, imageSize, ImageAlign).Left, final_text_rect.Bottom + element_spacing, imageSize.Width, imageSize.Height);
+				offset = 0;
+			}
+			else if (v_image == VerticalAlignment.Bottom && v_text == VerticalAlignment.Bottom)
+			{
+				offset = excess_height;
+			}
+			else if (v_image == VerticalAlignment.Center && (v_text == VerticalAlignment.Top || v_text == VerticalAlignment.Center))
+			{
+				offset += excess_height / 3;
 			}
 			else
 			{
-				final_image_rect = new Rectangle(AlignInRectangle(totalArea, imageSize, ImageAlign).Left, totalArea.Top + offset, imageSize.Width, imageSize.Height);
-				final_text_rect = new Rectangle(AlignInRectangle(totalArea, textSize, TextAlign).Left, final_image_rect.Bottom + element_spacing, textSize.Width, textSize.Height);
+				offset += 2 * (excess_height / 3);
+			}
+
+			if (textFirst)
+			{
+				final_text_rect = new Rectangle(textSize.CalculateAlignedRect(totalArea, TextAlign).Left, totalArea.Top + offset, textSize.Width, textSize.Height);
+				final_image_rect = new Rectangle(imageSize.CalculateAlignedRect(totalArea, ImageAlign).Left, final_text_rect.Bottom + element_spacing, imageSize.Width, imageSize.Height);
+			}
+			else
+			{
+				final_image_rect = new Rectangle(imageSize.CalculateAlignedRect(totalArea, ImageAlign).Left, totalArea.Top + offset, imageSize.Width, imageSize.Height);
+				final_text_rect = new Rectangle(textSize.CalculateAlignedRect(totalArea, TextAlign).Left, final_image_rect.Bottom + element_spacing, textSize.Width, textSize.Height);
 
 				if (final_text_rect.Bottom > totalArea.Bottom)
+				{
 					final_text_rect.Y = totalArea.Top;
+				}
 			}
 
 			textRect = final_text_rect;
 			imageRect = final_image_rect;
-		}
-
-		private static HorizontalAlignment GetHorizontalAlignment(System.Drawing.ContentAlignment align)
-		{
-			switch (align)
-			{
-				case System.Drawing.ContentAlignment.BottomLeft:
-				case System.Drawing.ContentAlignment.MiddleLeft:
-				case System.Drawing.ContentAlignment.TopLeft:
-					return HorizontalAlignment.Left;
-				case System.Drawing.ContentAlignment.BottomCenter:
-				case System.Drawing.ContentAlignment.MiddleCenter:
-				case System.Drawing.ContentAlignment.TopCenter:
-					return HorizontalAlignment.Center;
-				case System.Drawing.ContentAlignment.BottomRight:
-				case System.Drawing.ContentAlignment.MiddleRight:
-				case System.Drawing.ContentAlignment.TopRight:
-					return HorizontalAlignment.Right;
-			}
-
-			return HorizontalAlignment.Left;
-		}
-
-		private static VerticalAlignment GetVerticalAlignment(System.Drawing.ContentAlignment align)
-		{
-			switch (align)
-			{
-				case System.Drawing.ContentAlignment.TopLeft:
-				case System.Drawing.ContentAlignment.TopCenter:
-				case System.Drawing.ContentAlignment.TopRight:
-					return VerticalAlignment.Top;
-				case System.Drawing.ContentAlignment.MiddleLeft:
-				case System.Drawing.ContentAlignment.MiddleCenter:
-				case System.Drawing.ContentAlignment.MiddleRight:
-					return VerticalAlignment.Center;
-				case System.Drawing.ContentAlignment.BottomLeft:
-				case System.Drawing.ContentAlignment.BottomCenter:
-				case System.Drawing.ContentAlignment.BottomRight:
-					return VerticalAlignment.Bottom;
-			}
-
-			return VerticalAlignment.Top;
-		}
-
-		internal static Rectangle AlignInRectangle(Rectangle outer, Size inner, System.Drawing.ContentAlignment align)
-		{
-			int x = 0;
-			int y = 0;
-
-			if (align == System.Drawing.ContentAlignment.BottomLeft || align == System.Drawing.ContentAlignment.MiddleLeft || align == System.Drawing.ContentAlignment.TopLeft)
-				x = outer.X;
-			else if (align == System.Drawing.ContentAlignment.BottomCenter || align == System.Drawing.ContentAlignment.MiddleCenter || align == System.Drawing.ContentAlignment.TopCenter)
-				x = Math.Max(outer.X + ((outer.Width - inner.Width) / 2), outer.Left);
-			else if (align == System.Drawing.ContentAlignment.BottomRight || align == System.Drawing.ContentAlignment.MiddleRight || align == System.Drawing.ContentAlignment.TopRight)
-				x = outer.Right - inner.Width;
-			if (align == System.Drawing.ContentAlignment.TopCenter || align == System.Drawing.ContentAlignment.TopLeft || align == System.Drawing.ContentAlignment.TopRight)
-				y = outer.Y;
-			else if (align == System.Drawing.ContentAlignment.MiddleCenter || align == System.Drawing.ContentAlignment.MiddleLeft || align == System.Drawing.ContentAlignment.MiddleRight)
-				y = outer.Y + (outer.Height - inner.Height) / 2;
-			else if (align == System.Drawing.ContentAlignment.BottomCenter || align == System.Drawing.ContentAlignment.BottomRight || align == System.Drawing.ContentAlignment.BottomLeft)
-				y = outer.Bottom - inner.Height;
-
-			return new Rectangle(x, y, Math.Min(inner.Width, outer.Width), Math.Min(inner.Height, outer.Height));
 		}
 
 		#endregion Button Layout Calculations
@@ -751,56 +782,49 @@ namespace wyDay.Controls
 
 		private void ShowContextMenuStrip()
 		{
-			if (skipNextOpen)
+			if (_skipNextOpen)
 			{
 				// we were called because we're closing the context menu strip
 				// when clicking the dropdown button.
-				skipNextOpen = false;
+				_skipNextOpen = false;
 				return;
 			}
 
 			State = PushButtonState.Pressed;
 
-			if (m_SplitMenu != null)
-			{
-				m_SplitMenu.Show(this, new Point(0, Height));
-			}
-			else if (m_SplitMenuStrip != null)
-			{
-				m_SplitMenuStrip.Show(this, new Point(0, Height), ToolStripDropDownDirection.BelowRight);
-			}
+
+#if !NET5_0_OR_GREATER
+			_splitMenu?.Show(this, new Point(0, Height));
+#endif // !NET5_0_OR_GREATER
+			_splitMenuStrip?.Show(this, new Point(0, Height), ToolStripDropDownDirection.BelowRight);
 		}
 
-		void SplitMenuStrip_Opening(object sender, CancelEventArgs e)
-		{
-			isSplitMenuVisible = true;
-		}
+		private void SplitMenuStrip_Opening(object sender, CancelEventArgs e)
+			=> _isSplitMenuVisible = true;
 
-		void SplitMenuStrip_Closing(object sender, ToolStripDropDownClosingEventArgs e)
+		private void SplitMenuStrip_Closing(object sender, ToolStripDropDownClosingEventArgs e)
 		{
-			isSplitMenuVisible = false;
+			_isSplitMenuVisible = false;
 
 			SetButtonDrawState();
 
 			if (e.CloseReason == ToolStripDropDownCloseReason.AppClicked)
 			{
-				skipNextOpen = (dropDownRectangle.Contains(PointToClient(Cursor.Position))) && MouseButtons == MouseButtons.Left;
+				_skipNextOpen = _dropDownRectangle.Contains(PointToClient(SWFCursor.Position)) && MouseButtons == MouseButtons.Left;
 			}
 		}
 
+		private void SplitMenu_Popup(object sender, EventArgs e)
+			=> _isSplitMenuVisible = true;
 
-		void SplitMenu_Popup(object sender, EventArgs e)
-		{
-			isSplitMenuVisible = true;
-		}
-
+		/// <inheritdoc/>
 		protected override void WndProc(ref Message m)
 		{
 			//0x0212 == WM_EXITMENULOOP
 			if (m.Msg == 0x0212)
 			{
 				//this message is only sent when a ContextMenu is closed (not a ContextMenuStrip)
-				isSplitMenuVisible = false;
+				_isSplitMenuVisible = false;
 				SetButtonDrawState();
 			}
 
@@ -809,7 +833,7 @@ namespace wyDay.Controls
 
 		private void SetButtonDrawState()
 		{
-			if (Bounds.Contains(Parent.PointToClient(Cursor.Position)))
+			if (Bounds.Contains(Parent.PointToClient(SWFCursor.Position)))
 			{
 				State = PushButtonState.Hot;
 			}
