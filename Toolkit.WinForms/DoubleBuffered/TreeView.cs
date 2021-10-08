@@ -10,7 +10,6 @@ namespace cmdwtf.Toolkit.WinForms
 	/// A class that is just a <see cref="System.Windows.Forms.TreeView"/>, but doubled buffered.
 	/// </summary>
 	[ToolboxItem(true)]
-	[System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Matching Win32 symbols.")]
 	public class TreeView : System.Windows.Forms.TreeView
 	{
 		/// <summary>
