@@ -10,9 +10,9 @@ namespace cmdwtf.Toolkit.WinForms.Native
 	internal static class Windows
 	{
 		/// <summary>
-		/// A convinent uint for other values to reference for WM_USER's base value.
+		/// A continent uint for other values to reference for WM_USER's base value.
 		/// </summary>
-		public const uint WM_USER = (uint)WM.USER;
+		public const int WM_USER = (int)WM.USER;
 
 		/// <summary>
 		/// Windows Messages
@@ -20,7 +20,7 @@ namespace cmdwtf.Toolkit.WinForms.Native
 		/// Documentation pulled from MSDN.
 		/// </summary>
 		[System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1069:Enums values should not be duplicated", Justification = "The API is based on the Windows SDK, and they reuse values it seems.")]
-		public enum WM : uint
+		public enum WM : int
 		{
 			/// <summary>
 			/// The WM_NULL message performs no operation. An application sends the WM_NULL message if it wants to post a message that the recipient window will ignore.

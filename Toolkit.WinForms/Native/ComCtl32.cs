@@ -22,21 +22,21 @@ namespace cmdwtf.Toolkit.WinForms.Native
 		/// </summary>
 		public static class CCM
 		{
-			public const uint FIRST = 0x2000;
-			public const uint LAST = FIRST + 0x200;
+			public const int FIRST = 0x2000;
+			public const int LAST = FIRST + 0x200;
 
-			public const uint SETBKCOLOR = FIRST + 1;
-			public const uint SETCOLORSCHEME = FIRST + 2;
-			public const uint GETCOLORSCHEME = FIRST + 3;
-			public const uint GETDROPTARGET = FIRST + 4;
-			public const uint SETUNICODEFORMAT = FIRST + 5;
-			public const uint GETUNICODEFORMAT = FIRST + 6;
-			public const uint SETVERSION = FIRST + 0x7;
-			public const uint GETVERSION = FIRST + 0x8;
-			public const uint SETNOTIFYWINDOW = FIRST + 0x9;
+			public const int SETBKCOLOR = FIRST + 1;
+			public const int SETCOLORSCHEME = FIRST + 2;
+			public const int GETCOLORSCHEME = FIRST + 3;
+			public const int GETDROPTARGET = FIRST + 4;
+			public const int SETUNICODEFORMAT = FIRST + 5;
+			public const int GETUNICODEFORMAT = FIRST + 6;
+			public const int SETVERSION = FIRST + 0x7;
+			public const int GETVERSION = FIRST + 0x8;
+			public const int SETNOTIFYWINDOW = FIRST + 0x9;
 			// 0xA skipped
-			public const uint SETWINDOWTHEME = FIRST + 0xB;
-			public const uint DPISCALE = FIRST + 0xC; // wParam = Awareness
+			public const int SETWINDOWTHEME = FIRST + 0xB;
+			public const int DPISCALE = FIRST + 0xC; // wParam = Awareness
 		}
 	}
 }
