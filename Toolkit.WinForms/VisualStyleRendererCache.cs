@@ -31,7 +31,7 @@ namespace cmdwtf.Toolkit.WinForms
 		{
 			if (!_cache.ContainsKey(element))
 			{
-				_cache[element] = new VisualStyleRenderer(element);
+				_cache[element] = new VSR(element);
 			}
 
 			return _cache[element];

@@ -1,6 +1,4 @@
-using System.Runtime.InteropServices;
-
-using SRAssembly = System.Reflection.Assembly;
+using cmdwtf.Toolkit.WinForms.Native;
 
 namespace cmdwtf.Toolkit.WinForms
 {
@@ -25,22 +23,13 @@ namespace cmdwtf.Toolkit.WinForms
 		public static void CreateConsole()
 		{
 			bool shouldCreateConsole = IsDebugBuild ||
-				SRAssembly.GetCallingAssembly() != SRAssembly.GetAssembly(typeof(Debug));
+				Assembly.CallingAssembly != System.Reflection.Assembly.GetAssembly(typeof(Debug));
 
 			if (shouldCreateConsole)
 			{
-				Native.AllocConsole();
-				Native.AttachConsole(-1);
+				Kernel32.AllocConsole();
+				Kernel32.AttachConsole(-1);
 			}
-		}
-
-		private static class Native
-		{
-			[DllImport("kernel32.dll", SetLastError = true)]
-			[return: MarshalAs(UnmanagedType.Bool)]
-			public static extern bool AllocConsole();
-			[DllImport("kernel32.dll")]
-			public static extern bool AttachConsole(int pid);
 		}
 	}
 }

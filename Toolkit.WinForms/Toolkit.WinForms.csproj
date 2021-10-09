@@ -18,17 +18,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="ForcedWaitMessageBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="Forms\ForcedWaitMessageBox.cs" />
     <Compile Update="Resources\Images.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Images.resx</DependentUpon>
     </Compile>
-    <Compile Update="WaitingDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="Forms\WaitingDialog.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
+using static cmdwtf.Toolkit.WinForms.Native.ComCtl32;
 using static cmdwtf.Toolkit.WinForms.Native.Windows;
 
 using DWORD = System.UInt32;
@@ -28,32 +29,32 @@ namespace cmdwtf.Toolkit.WinForms.Native
 			public bool fIcon;
 			public int xHotspot;
 			public int yHotspot;
-			public IntPtr hbmMask;
-			public IntPtr hbmColor;
+			public LPARAM hbmMask;
+			public LPARAM hbmColor;
 		}
 
 		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
-		public static extern IntPtr CreateIconIndirect(ref IconInfo icon);
+		public static extern LPARAM CreateIconIndirect(ref IconInfo icon);
 
 		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
 		[return: MarshalAs(UnmanagedType.Bool)]
-		public static extern bool DestroyIcon(IntPtr hIcon);
+		public static extern bool DestroyIcon(LPARAM hIcon);
 
 		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
-		public static extern IntPtr GetDC(HWND hWnd);
+		public static extern LPARAM GetDC(HWND hWnd);
 
 		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
 		[return: MarshalAs(UnmanagedType.Bool)]
-		public static extern bool GetIconInfo(IntPtr hIcon, ref IconInfo pIconInfo);
+		public static extern bool GetIconInfo(LPARAM hIcon, ref IconInfo pIconInfo);
 
 		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
-		public static extern IntPtr GetSysColorBrush(int nIndex);
+		public static extern LPARAM GetSysColorBrush(int nIndex);
 
 		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
 		public static extern LRESULT HideCaret(HWND hWnd);
 
 		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
-		public static extern LRESULT SendMessage(HWNDRef hWnd, WM wMsg, IntPtr wParam, LPARAM lParam);
+		public static extern LRESULT SendMessage(HWNDRef hWnd, WM wMsg, LPARAM wParam, LPARAM lParam);
 
 		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
 		public static extern LRESULT SendMessage(HWND hWnd, WM wMsg, bool wParam, LPARAM lParam);
@@ -65,13 +66,13 @@ namespace cmdwtf.Toolkit.WinForms.Native
 		public static extern LRESULT SendMessage(HWND hWnd, uint wMsg, DWORD wParam, DWORD lParam);
 
 		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
-		public static extern LRESULT SendMessage(HWND hWnd, ComboxBox.CB wMsg, WPARAM wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
+		public static extern LRESULT SendMessage(HWND hWnd, ComboBox.CB wMsg, WPARAM wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
 
 		[DllImport(NativeLibrary, EntryPoint = "SetClassLong", CharSet = CharSet.Auto, SetLastError = true)]
 		public static extern DWORD SetClassLongPtr32(HWND hWnd, int nIndex, DWORD dwNewLong);
 
 		[DllImport(NativeLibrary, EntryPoint = "SetClassLongPtr", CharSet = CharSet.Auto, SetLastError = true)]
-		public static extern UIntPtr SetClassLongPtr64(HWND hWnd, int nIndex, IntPtr dwNewLong);
+		public static extern WPARAM SetClassLongPtr64(HWND hWnd, int nIndex, LPARAM dwNewLong);
 
 		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
 		[return: MarshalAs(UnmanagedType.Bool)]
@@ -83,6 +84,6 @@ namespace cmdwtf.Toolkit.WinForms.Native
 
 		[DllImport(NativeLibrary, CharSet = CharSet.Auto, SetLastError = true)]
 		[return: MarshalAs(UnmanagedType.Bool)]
-		public static extern bool ValidateRect(HWND hWnd, IntPtr lpRect);
+		public static extern bool ValidateRect(HWND hWnd, LPARAM lpRect);
 	}
 }
