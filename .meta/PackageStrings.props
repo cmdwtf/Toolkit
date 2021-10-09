@@ -2,7 +2,7 @@
   <Choose>
     <When Condition="'$(MSBuildProjectName)' == 'Meta'">
       <PropertyGroup>
-        <PackageReleaseNotes>Some Toolkit.Core components still had the improper namespace of `cmdwtf.Toolkit.WinForms`.</PackageReleaseNotes>
+        <PackageReleaseNotes>Many changes across the subpackages. Too many to list here!</PackageReleaseNotes>
         <Description>A small collection of utility functions and tools created over the years, bundled up in a single package for easy inclusion and management. This is a meta package containing all the various bits of the toolkit.</Description>
         <PackageTags>win32;windows;dialogs;winforms;history;undo;redo;utilities;extensions;helpers</PackageTags>
         <Product>cmd.wtf Toolkit</Product>
@@ -11,7 +11,7 @@
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.Core'">
       <PropertyGroup>
         <Description>A small collection of utility functions and tools created over the years, bundled up in a single package for easy inclusion and management.</Description>
-        <PackageReleaseNotes>Add `StateFlags` for .NET 5.0+, and .NET Framework 4.7+</PackageReleaseNotes>
+        <PackageReleaseNotes>Improved `TimeSpan.ToHumanReadableString()`. Moved TImers.Multimedia to `Win32`. Cleanup and refactoring.</PackageReleaseNotes>
         <PackageTags>utilities;extensions;helpers;xplat;crossplatform;wildcard;easing</PackageTags>
         <Product>cmd.wtf Toolkit Core</Product>
       </PropertyGroup>
@@ -19,7 +19,7 @@
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.History'">
       <PropertyGroup>
         <Description>A small history toolkit. Supports saving states, undo, and redo. States are saved as serialized JSON objects, via the Newtonsoft.Json library.</Description>
-        <PackageReleaseNotes>Multi-framework targeting — $(LibraryFrameworks). Cleanup and refactoring.</PackageReleaseNotes>
+        <PackageReleaseNotes>Cleanup and refactoring.</PackageReleaseNotes>
         <PackageTags>history;undo;redo</PackageTags>
         <Product>cmd.wtf History Toolkit</Product>
       </PropertyGroup>
@@ -27,15 +27,15 @@
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.Win32'">
       <PropertyGroup>
         <Description>A small collection of Windows specific utility functions and tools.</Description>
-        <PackageReleaseNotes>Multi-framework targeting — $(LibraryFrameworksWindows). Cleanup and refactoring.</PackageReleaseNotes>
-        <PackageTags>win32;windows;utilities;extensions;helpers;impersonation</PackageTags>
+        <PackageReleaseNotes>Added `TimePeriod`. Added `Timers.Multimedia` from `Core`. Cleanup and refactoring.</PackageReleaseNotes>
+        <PackageTags>win32;windows;utilities;extensions;helpers;impersonation;timers;winmm;period</PackageTags>
         <Product>cmd.wtf Win32 Toolkit</Product>
       </PropertyGroup>
     </When>
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.WinForms'">
       <PropertyGroup>
-        <Description>A collection of tools, extensions, and helpers to get a little more out of WinForms that isn't provided by the system components.</Description>
-        <PackageReleaseNotes>Fix copy/paste problems from ExplorerTreeView.Glyph VSEs.</PackageReleaseNotes>
+        <Description>A collection of controls, components, forms, dialogs, tools, extensions, and helpers to get a little more out of WinForms that isn't provided by the system components.</Description>
+        <PackageReleaseNotes>Major refactoring to better organize as more classes are added. Split portions into sub namespaces: `Components`, `Controls`, `Controls.Bindable`, `DoubleBUffered`, `Forms`, `Extensions`. Most extension methods now live in the `Extensions` namespace, which can be `using`'d easier now. The classes themselves are no longer colliding with their core libary class names, so all that janky type aliasing or `static using` required before is no longer. Added several new items: Since v0.27.0, `AggregateFormContext`, `ProgressMeter`, `VolumeControl`, `ValueBar`, `SplitButton`, `ForcedWaitMessageBox`, `WaitingDialog`, and more. Cleanup and refactoring.</PackageReleaseNotes>
         <PackageTags>winforms;utilities;extensions;helpers;drawing;gdi;gdip;bitmap;datagrid;icon;overlay;controls;cursor</PackageTags>
         <Product>cmd.wtf WinForms Toolkit</Product>
       </PropertyGroup>
@@ -43,8 +43,8 @@
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.WinForms.Dialogs'">
       <PropertyGroup>
         <Description>A small toolkit that provides easy-to-use Ookii.Dialogs functionality through MessageBox-style APIs.</Description>
-        <PackageReleaseNotes>Bumped Ookii.Dialog package to 3.0.0 for proper .NET 5.0 and .NET Core 3.1 support.</PackageReleaseNotes>
-        <PackageTags>dialogs;winforms;utilities;extensions;helpers</PackageTags>
+        <PackageReleaseNotes>Produced stub dll for non-supported platforms. Cleanup and refactoring.</PackageReleaseNotes>
+        <PackageTags>dialogs;winforms;utilities;extensions;helpers;taskdialog;task</PackageTags>
         <Product>cmd.wtf WinForms Dialog Toolkit</Product>
       </PropertyGroup>
     </When>
