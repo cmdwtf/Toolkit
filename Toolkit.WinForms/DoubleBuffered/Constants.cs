@@ -10,5 +10,7 @@ namespace cmdwtf.Toolkit.WinForms.DoubleBuffered
 		public static ControlStyles UserPaintStyles = ControlStyles.UserPaint |
 			ControlStyles.AllPaintingInWmPaint |
 			ControlStyles.OptimizedDoubleBuffer;
+
+		public static ControlStyles DoubleBufferStyles = ControlStyles.OptimizedDoubleBuffer;
 	}
 }
