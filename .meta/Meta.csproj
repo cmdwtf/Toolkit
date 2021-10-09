@@ -3,7 +3,6 @@
     <Configurations>Pack</Configurations>
     <EmbedUntrackedSources>false</EmbedUntrackedSources>
     <EnableDefaultItems>false</EnableDefaultItems>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateDocumentationFile />
     <GenerateManifests>false</GenerateManifests>
     <IncludeBuildOutput>false</IncludeBuildOutput>
