@@ -67,12 +67,7 @@ namespace cmdwtf.Toolkit.WinForms
 
 			TaskDialogButton pressed = box.ShowDialog(owner);
 
-			if (pressed == null)
-			{
-				return DialogResult.Cancel;
-			}
-
-			return pressed.ToDialogResult();
+			return pressed == null ? DialogResult.Cancel : pressed.ToDialogResult();
 		}
 
 		/// <summary>
