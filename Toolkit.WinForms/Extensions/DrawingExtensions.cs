@@ -301,14 +301,14 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 		/// <summary>
 		/// Creates a SolidBrush, virtually identical to <see cref="SolidBrush"/>
 		/// However, it uses the native call so that it can pass it to the native function
-		/// <see cref="SetBackgroundBrush(IntPtr, Native.BrushHandle)"/>, which normal brushes
+		/// <see cref="SetBackgroundBrush(Control, Native.BrushHandle)"/>, which normal brushes
 		/// can't. Because for some reason, they hide their handle, and won't let us have nice things.
 		/// </summary>
 		/// <param name="_">Ignored. This is just so this function is an extension method on IntPtr.</param>
 		/// <param name="color">The color of the brush to create.</param>
 		/// <returns>The native brush handle.</returns>
-		public static Native.BrushHandle CreateSolidBrush(this IntPtr _, Color color)
-			=> Native.Gdi32.CreateSolidBrush(ColorTranslator.ToWin32(color));
+		public static Native.BrushHandle CreateNativeSolidBrush(this Control _, Color color)
+			=> CreateSolidBrush(ColorTranslator.ToWin32(color));
 
 		/// <summary>
 		/// Sets the window's background brush to the given native brush.
@@ -316,8 +316,8 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 		/// <param name="hWnd">The handle to the window of the background to set.</param>
 		/// <param name="hBrush">The handle to the native brush.</param>
 		/// <returns>The handle of the previous background brush if successful, or Zero on error.</returns>
-		public static UIntPtr SetBackgroundBrush(this IntPtr hWnd, Native.BrushHandle hBrush)
-			=> hWnd.SetClassLong(GCL_HBRBACKGROUND, hBrush.DangerousGetHandle());
+		public static UIntPtr SetBackgroundBrush(this Control hWnd, Native.BrushHandle hBrush)
+			=> hWnd.SetClassLongPtr(GCL_HBRBACKGROUND, hBrush.DangerousGetHandle());
 
 		#region Arrow Drawing
 
@@ -380,23 +380,13 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 			//in the next if/else blocks to 6
 
 			double pointX, pointY;
-			if (origin.X > destination.X)
-			{
-				pointX = origin.X - (System.Math.Cos(arrowAngle) * (arrowLength - (3 * multiplier)));
-			}
-			else
-			{
-				pointX = (System.Math.Cos(arrowAngle) * (arrowLength - (3 * multiplier))) + origin.X;
-			}
+			pointX = origin.X > destination.X
+				? origin.X - (System.Math.Cos(arrowAngle) * (arrowLength - (3 * multiplier)))
+				: (System.Math.Cos(arrowAngle) * (arrowLength - (3 * multiplier))) + origin.X;
 
-			if (origin.Y > destination.Y)
-			{
-				pointY = origin.Y - (System.Math.Sin(arrowAngle) * (arrowLength - (3 * multiplier)));
-			}
-			else
-			{
-				pointY = (System.Math.Sin(arrowAngle) * (arrowLength - (3 * multiplier))) + origin.Y;
-			}
+			pointY = origin.Y > destination.Y
+				? origin.Y - (System.Math.Sin(arrowAngle) * (arrowLength - (3 * multiplier)))
+				: (System.Math.Sin(arrowAngle) * (arrowLength - (3 * multiplier))) + origin.Y;
 
 			var arrowPointBack = new PointF((float)pointX, (float)pointY);
 
@@ -408,23 +398,13 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 			//get the secondary length
 			double secondaryLength = 3 * multiplier / System.Math.Sin(angleB);
 
-			if (origin.X > destination.X)
-			{
-				pointX = origin.X - (System.Math.Sin(angleC) * secondaryLength);
-			}
-			else
-			{
-				pointX = (System.Math.Sin(angleC) * secondaryLength) + origin.X;
-			}
+			pointX = origin.X > destination.X
+				? origin.X - (System.Math.Sin(angleC) * secondaryLength)
+				: (System.Math.Sin(angleC) * secondaryLength) + origin.X;
 
-			if (origin.Y > destination.Y)
-			{
-				pointY = origin.Y - (System.Math.Cos(angleC) * secondaryLength);
-			}
-			else
-			{
-				pointY = (System.Math.Cos(angleC) * secondaryLength) + origin.Y;
-			}
+			pointY = origin.Y > destination.Y
+				? origin.Y - (System.Math.Cos(angleC) * secondaryLength)
+				: (System.Math.Cos(angleC) * secondaryLength) + origin.Y;
 
 			//get the left point
 			var arrowPointLeft = new PointF((float)pointX, (float)pointY);
@@ -432,23 +412,11 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 			//move to the right point
 			angleC = arrowAngle - angleB;
 
-			if (origin.X > destination.X)
-			{
-				pointX = origin.X - (System.Math.Cos(angleC) * secondaryLength);
-			}
-			else
-			{
-				pointX = (System.Math.Cos(angleC) * secondaryLength) + origin.X;
-			}
+			pointX = origin.X > destination.X
+				? origin.X - (System.Math.Cos(angleC) * secondaryLength)
+				: (System.Math.Cos(angleC) * secondaryLength) + origin.X;
 
-			if (origin.Y > destination.Y)
-			{
-				pointY = origin.Y - (System.Math.Sin(angleC) * secondaryLength);
-			}
-			else
-			{
-				pointY = (System.Math.Sin(angleC) * secondaryLength) + origin.Y;
-			}
+			pointY = origin.Y > destination.Y ? origin.Y - (System.Math.Sin(angleC) * secondaryLength) : (System.Math.Sin(angleC) * secondaryLength) + origin.Y;
 
 			var arrowPointRight = new PointF((float)pointX, (float)pointY);
 
@@ -622,6 +590,8 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 			}
 		}
 
-		#endregion
+		#endregion String Format
+
+		#endregion Text
 	}
 }

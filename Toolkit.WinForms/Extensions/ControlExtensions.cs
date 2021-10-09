@@ -165,6 +165,143 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 		public static Rectangle RelativeClientRectangle(this Control control, Control toControl)
 			=> new(control.RelationTo(toControl), control.Size);
 
+		#region Style Flags
 
+		/// <summary>
+		/// Gets the native style flag of the specified value using the
+		/// GWL_STYLE index of GetWindowLong.
+		/// </summary>
+		/// <param name="control">The control to get the style of.</param>
+		/// <param name="flag">The flag value to get.</param>
+		/// <returns><c>true</c> if the flag is set, otherwise <c>false</c>.</returns>
+		public static bool GetNativeStyleFlagSet(this Control control, int flag)
+		{
+			if (control.IsHandleCreated == false)
+			{
+				return false;
+			}
+
+			int style = control.GetWindowLong(Native.User32.GWL.STYLE);
+			return (style & flag) != 0;
+		}
+
+		/// <summary>
+		/// Sets the native style flag of the specified value using the
+		/// GWL_STYLE index of SetWindowLong.
+		/// </summary>
+		/// <param name="control">The control to set the style on.</param>
+		/// <param name="flag">The flag value to set.</param>
+		/// <param name="value"><c>true</c> to set the flag, <c>false</c> to clear it.</param>
+		/// <returns>The previous GWL_STYLE value.</returns>
+		public static int SetNativeStyleFlag(this Control control, int flag, bool value)
+		{
+			if (control.IsHandleCreated == false)
+			{
+				return -1;
+			}
+
+			int currentStyle = control.GetWindowLong(Native.User32.GWL.STYLE);
+
+			int newStyle = value switch
+			{
+				true => currentStyle |= flag,
+				false => currentStyle &= ~flag,
+			};
+
+
+			// don't bother calling set if the style isn't changing.
+			return newStyle == currentStyle
+				? currentStyle
+				: control.SetWindowLong(Native.User32.GWL.STYLE, newStyle);
+		}
+
+		#endregion Style Flags
+
+		#region Class and Window longs
+
+		/// <summary>
+		/// Gets the specified 32-bit (long) value at the specified offset into the extra class
+		/// memory or the WNDCLASSEX structure for the class to which the specified window belongs.
+		/// <seealso href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getclasslonga"/>
+		/// </summary>
+		/// <param name="control">The window to get the class long for.</param>
+		/// <param name="index">The index of the class long to get.</param>
+		/// <returns>
+		/// If the function succeeds, the return value is the value of the specified 32-bit integer.
+		/// If the value was not previously set, the return value is zero.
+		/// If the function fails, the return value is zero. To get extended error information,
+		/// call GetLastError.
+		/// </returns>
+		public static int GetClassLong(this Control control, int index)
+			=> Native.User32.GetClassLong(control.Handle, index);
+
+		/// <inheritdoc cref="GetClassLong(Control, int)"/>
+		public static UIntPtr GetClassLongPtr(this Control control, int index)
+			=> Native.User32.GetClassLongPtr(control.Handle, index);
+
+		/// <summary>
+		/// Replaces the specified 32-bit (long) value at the specified offset into the extra class
+		/// memory or the WNDCLASSEX structure for the class to which the specified window belongs.
+		/// <seealso href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setclasslonga"/>
+		/// </summary>
+		/// <param name="control">The window to set the class long for.</param>
+		/// <param name="index">The index of the class long to set.</param>
+		/// <param name="value">The value to set for the class long.</param>
+		/// <returns>
+		/// If the function succeeds, the return value is the previous value of the specified 32-bit integer.
+		/// If the value was not previously set, the return value is zero.
+		/// If the function fails, the return value is zero. To get extended error information,
+		/// call GetLastError.
+		/// </returns>
+		public static uint SetClassLong(this Control control, int index, int value)
+			=> Native.User32.SetClassLong(control.Handle, index, value);
+
+		/// <inheritdoc cref="SetClassLong(Control, int, int)"/>
+		public static UIntPtr SetClassLongPtr(this Control control, int index, IntPtr value)
+			=> Native.User32.SetClassLongPtr(control.Handle, index, value);
+
+
+		/// <summary>
+		/// Retrieves information about the specified window. The function
+		/// also retrieves the value at a specified offset into the extra window memory.
+		/// <seealso href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowlonga"/>
+		/// </summary>
+		/// <param name="control">The window to get the window long for.</param>
+		/// <param name="index">The index of the window long to get.</param>
+		/// <returns>
+		/// If the function succeeds, the return value is the value of the specified 32-bit integer.
+		/// If the value was not previously set, the return value is zero.
+		/// If the function fails, the return value is zero. To get extended error information,
+		/// call GetLastError.
+		/// </returns>
+		public static int GetWindowLong(this Control control, int index)
+			=> Native.User32.GetWindowLong(control.Handle, index);
+
+		/// <inheritdoc cref="GetWindowLong(Control, int)"/>
+		public static IntPtr GetWindowLongPtr(this Control control, int index)
+			=> Native.User32.GetWindowLongPtr(control.Handle, index);
+
+		/// <summary>
+		/// Changes an attribute of the specified window. The function also
+		/// sets a value at the specified offset in the extra window memory.
+		/// <seealso href="https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowlonga"/>
+		/// </summary>
+		/// <param name="control">The window to set the window long for.</param>
+		/// <param name="index">The index of the window long to set.</param>
+		/// <param name="value">The value to set for the window long.</param>
+		/// <returns>
+		/// If the function succeeds, the return value is the previous value of the specified 32-bit integer.
+		/// If the value was not previously set, the return value is zero.
+		/// If the function fails, the return value is zero. To get extended error information,
+		/// call GetLastError.
+		/// </returns>
+		public static int SetWindowLong(this Control control, int index, int value)
+			=> Native.User32.SetWindowLong(control.Handle, index, value);
+
+		/// <inheritdoc cref="SetWindowLong(Control, int, int)"/>
+		public static IntPtr SetWindowLongPtr(this Control control, int index, IntPtr value)
+			=> Native.User32.SetWindowLongPtr(control.Handle, index, value);
+
+		#endregion Class and Window longs
 	}
 }
