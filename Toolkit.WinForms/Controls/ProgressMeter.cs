@@ -9,17 +9,18 @@ using DBConstants = cmdwtf.Toolkit.WinForms.DoubleBuffered.Constants;
 namespace cmdwtf.Toolkit.WinForms.Controls
 {
 	/// <summary>
-	/// A <see cref="ProgressBar"/> that
+	/// A <see cref="StyledProgressBar"/> (<see cref="ProgressBar"/>) that
 	/// draws itself using the 'Meter' style as outlined by the
 	/// <see href="https://docs.microsoft.com/en-us/windows/win32/uxguide/progress-bars?redirectedfrom=MSDN#meters">
 	/// visual style guide</see>.
 	/// </summary>
-	public class ProgressMeter : ProgressBar
+	public class ProgressMeter : StyledProgressBar
 	{
 		/// <summary>
 		/// Initializes <see cref="CreateParams"/> with
 		/// the WS_EX_COMPOSITED extended window style enabled,
-		/// and the WS_CLIPCHILDREN window style disabled.
+		/// and the WS_CLIPCHILDREN window style disabled. As well,
+		/// enables the "SMOOTH" and "SMOOTHREVERSE" progress bar styles.
 		/// </summary>
 		protected override CreateParams CreateParams
 		{
@@ -64,7 +65,23 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 
 			float percent = (float)Value / (Maximum + Minimum);
 			Rectangle fillRect = e.ClipRectangle;
-			fillRect.Width = (int)System.Math.Round(Width * percent);
+
+			// get the fill rect based on the orientation.
+			if (Orientation == Orientation.Horizontal)
+			{
+				// scale the width by the percent value
+				fillRect.Width = (int)System.Math.Round(Width * percent);
+			}
+			else
+			{
+				// like above, get percentage of height, but also
+				// move the rect to start at the bottom so it grows 'up'
+				// rather than from the top down.
+				// this is the native progress bar behavior.
+				fillRect.Height = (int)System.Math.Round(Height * percent);
+				fillRect.Y += Height - fillRect.Height;
+			}
+
 			VisualStyleElement.ProgressBar.Fill.Meter.GetRenderer(_renderers)
 				.DrawBackground(e.Graphics, fillRect);
 		}
