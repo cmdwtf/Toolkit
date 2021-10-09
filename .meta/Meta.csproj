@@ -1,9 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk" DefaultTargets="Restore;Pack">
   <PropertyGroup>
     <Configurations>Pack</Configurations>
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
     <EnableDefaultItems>false</EnableDefaultItems>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDocumentationFile />
+    <GenerateManifests>false</GenerateManifests>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <IncludeSymbols>false</IncludeSymbols>
+    <NoBuild>true</NoBuild>
     <!--
       Suppress NU5128, which triggers because this project has no output.
       Perhaps this project shouldn't be a csproj at all. But as of yet,
