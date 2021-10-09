@@ -485,6 +485,42 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 
 		#endregion Arrow Drawing
 
+		#region Text
+
+		/// <inheritdoc cref="DrawString(Graphics, string, Font, Brush, RectangleF, float, StringFormat)"/>
+		public static void DrawString(this Graphics g, string s, Font font, Brush brush, float x, float y, float angle, StringFormat format = null)
+			=> g.DrawString(s, font, brush, new RectangleF(x, y, 0, 0), angle, format);
+
+		/// <inheritdoc cref="DrawString(Graphics, string, Font, Brush, RectangleF, float, StringFormat)"/>
+		public static void DrawString(this Graphics g, string s, Font font, Brush brush, PointF point, float angle, StringFormat format = null)
+			=> g.DrawString(s, font, brush, new RectangleF(point.X, point.Y, 0, 0), angle, format);
+
+		/// <summary>
+		/// Draws a string, rotated at the specified angle.
+		/// <seealso cref="Graphics.DrawString(string?, Font, Brush, float, float)"/>
+		/// </summary>
+		/// <param name="g">The graphics context to draw into.</param>
+		/// <param name="s">The string to draw.</param>
+		/// <param name="font">The <see cref="Font"/> to render the string with.</param>
+		/// <param name="brush">The <see cref="Brush"/> to render with.</param>
+		/// <param name="layoutRect">The <see cref="RectangleF"/> representing the bounds of the text.</param>
+		/// <param name="angle">The angle in degrees the text should be drawn at.</param>
+		/// <param name="format">The optional string formatting options.</param>
+		public static void DrawString(this Graphics g, string s, Font font, Brush brush, RectangleF layoutRect, float angle, StringFormat format = null)
+		{
+			// Save the graphics state.
+			GraphicsState state = g.Save();
+			g.ResetTransform();
+
+			// rotate, then append translation.
+			g.RotateTransform(angle);
+			g.TranslateTransform(layoutRect.X, layoutRect.Y, MatrixOrder.Append);
+
+			g.DrawString(s, font, brush, 0, 0, format);
+
+			g.Restore(state);
+		}
+
 		#region String Format
 
 		/// <summary>
