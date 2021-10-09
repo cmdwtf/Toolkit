@@ -131,14 +131,7 @@ namespace cmdwtf.Toolkit
 		/// and numbers greater than 1.0 are greater than max.
 		/// </returns>
 		public static double InverseLerp(this double min, double max, double value)
-		{
-			if (Abs(max - min) < double.Epsilon)
-			{
-				return min;
-			}
-
-			return (value - min) / (max - min);
-		}
+			=> Abs(max - min) < double.Epsilon ? min : (value - min) / (max - min);
 
 		/// <inheritdoc cref="InverseLerp(double, double, double)"/>
 		public static float InverseLerp(float min, float max, float t)
