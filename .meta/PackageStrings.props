@@ -35,7 +35,7 @@
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.WinForms'">
       <PropertyGroup>
         <Description>A collection of controls, components, forms, dialogs, tools, extensions, and helpers to get a little more out of WinForms that isn't provided by the system components.</Description>
-        <PackageReleaseNotes>Major refactoring to better organize as more classes are added. Split portions into sub namespaces: `Components`, `Controls`, `Controls.Bindable`, `DoubleBUffered`, `Forms`, `Extensions`. Most extension methods now live in the `Extensions` namespace, which can be `using`'d easier now. The classes themselves are no longer colliding with their core libary class names, so all that janky type aliasing or `static using` required before is no longer. Added several new items: Since v0.27.0, `AggregateFormContext`, `ProgressMeter`, `VolumeControl`, `ValueBar`, `SplitButton`, `ForcedWaitMessageBox`, `WaitingDialog`, and more. Cleanup and refactoring.</PackageReleaseNotes>
+        <PackageReleaseNotes>Add `StyledProgressBar`, improved `ProgressMeter` and `ValueBar` to both optionally draw vertically.</PackageReleaseNotes>
         <PackageTags>winforms;utilities;extensions;helpers;drawing;gdi;gdip;bitmap;datagrid;icon;overlay;controls;cursor</PackageTags>
         <Product>cmd.wtf WinForms Toolkit</Product>
       </PropertyGroup>
