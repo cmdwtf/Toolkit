@@ -100,8 +100,8 @@ namespace cmdwtf.Toolkit.WinForms.Forms
 
 			// using some native tricks so we can set our background
 			// brush to match our back color, so everything draws nicely on resize.
-			_nativeBackgroundBrush = Handle.CreateSolidBrush(BackColor);
-			Handle.SetBackgroundBrush(_nativeBackgroundBrush);
+			_nativeBackgroundBrush = this.CreateNativeSolidBrush(BackColor);
+			this.SetBackgroundBrush(_nativeBackgroundBrush);
 		}
 
 		/// <summary>
