@@ -5,7 +5,6 @@ using System.Windows.Forms;
 
 using cmdwtf.Toolkit.WinForms.Extensions;
 
-using static cmdwtf.Toolkit.WinForms.Extensions.ProgressBarExtensions;
 using static cmdwtf.Toolkit.WinForms.Native.Windows;
 
 using DBConstants = cmdwtf.Toolkit.WinForms.DoubleBuffered.Constants;
@@ -13,11 +12,14 @@ using DBConstants = cmdwtf.Toolkit.WinForms.DoubleBuffered.Constants;
 namespace cmdwtf.Toolkit.WinForms.Controls
 {
 	/// <summary>
-	/// A custom <see cref="ProgressBar"/> that draws it's value
-	/// on itself, as optionally controlled by <see cref="ShowValueText"/>.
+	/// A custom <see cref="StyledProgressBar"/> (<see cref="ProgressBar"/>)
+	/// that draws it's value on itself, as optionally
+	/// controlled by <see cref="ShowValueText"/>. As well, the value
+	/// can be adjusted by the user via mouse input with clicking on the control.
 	/// </summary>
 	[ToolboxItem(true)]
-	public class ValueBar : ProgressBar
+	[DefaultEvent(nameof(ValueChangedFromMouseInput))]
+	public class ValueBar : StyledProgressBar
 	{
 		/// <summary>
 		/// Initializes <see cref="CreateParams"/> with
@@ -41,7 +43,7 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 		[Category("Appearance")]
 		[DefaultValue(typeof(Color), nameof(Color.Black))]
 		[Description("The color to draw the text if the value bar is shorter than the text length.")]
-		public Color LowValueTextColor { get; set; } = Color.Black;
+		public virtual Color LowValueTextColor { get; set; } = Color.Black;
 
 		/// <summary>
 		/// Gets or sets the color to draw the text if the value bar is longer than the text length.
@@ -49,7 +51,7 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 		[Category("Appearance")]
 		[DefaultValue(typeof(Color), nameof(Color.White))]
 		[Description("The color to draw the text if the value bar is longer than the text length.")]
-		public Color HighValueTextColor { get; set; } = Color.White;
+		public virtual Color HighValueTextColor { get; set; } = Color.White;
 
 		/// <summary>
 		/// Gets or sets a color that will be drawn as the end of the value bar gradient.
@@ -57,7 +59,7 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 		[Category("Appearance")]
 		[DefaultValue(typeof(Color), nameof(SystemColors.Highlight))]
 		[Description("The color at the maximum end of the bar to fade to over a linear gradient.")]
-		public Color ForeColorGradientEnd { get; set; } = SystemColors.Highlight;
+		public virtual Color ForeColorGradientEnd { get; set; } = SystemColors.Highlight;
 
 		/// <summary>
 		/// Gets or sets a value that is drawn when the bar is at the minimum value.
@@ -66,7 +68,7 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 		[Category("Appearance")]
 		[DefaultValue("")]
 		[Description("The optional text to draw when the value is at the minimum.")]
-		public string MinimumText { get; set; } = string.Empty;
+		public virtual string MinimumText { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Gets or sets a value that is drawn when the bar is at the minimum value.
@@ -75,7 +77,7 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 		[Category("Appearance")]
 		[DefaultValue("")]
 		[Description("The optional text to draw when the value is at the maximum.")]
-		public string MaximumText { get; set; } = string.Empty;
+		public virtual string MaximumText { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Gets or sets a value that indicates if the control
@@ -84,14 +86,14 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 		[Category("Behavior")]
 		[DefaultValue(true)]
 		[Description("If true, left mouse clicks/drags will change the bar's value.")]
-		public bool UpdateByMouseInput { get; set; } = true;
+		public virtual bool UpdateByMouseInput { get; set; } = true;
 
 		/// <summary>
 		/// Gets a value that represents what percent of the way the
 		/// bar's value is from minimum to maximum.
 		/// </summary>
 		[Browsable(false)]
-		public float ValuePercent => (float)Value / (Maximum + Minimum);
+		public virtual float ValuePercent => (float)Value / (Maximum + Minimum);
 
 		/// <summary>
 		/// Gets or sets a value that indicates if the control
@@ -100,7 +102,7 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 		[Category("Appearance")]
 		[DefaultValue(true)]
 		[Description("If true, the control will render its value as text.")]
-		public bool ShowValueText { get; set; } = true;
+		public virtual bool ShowValueText { get; set; } = true;
 
 		/// <summary>
 		/// Gets or sets a value that indicates if the control
@@ -109,7 +111,7 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 		[Category("Appearance")]
 		[DefaultValue(false)]
 		[Description("If true, the control will render using system progress bar rendering.")]
-		public bool UseNativeProgressBarStyle
+		public virtual bool UseNativeProgressBarStyle
 		{
 			get => _useNativeProgressBarStyle;
 			set
@@ -125,20 +127,7 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 		}
 
 		/// <summary>
-		/// Gets or sets a value that indicates if the control
-		/// should draw its value bar using the system's progress bar rendering.
-		/// </summary>
-		[Category("Appearance")]
-		[DefaultValue(State.Normal)]
-		[Description("What state to draw the native progress bar in, if used.")]
-		public State NativeProgressBarState
-		{
-			get => this.GetState();
-			set => this.SetState(value);
-		}
-
-		/// <summary>
-		/// An event raised if a users's mouse click changes the bar's value.
+		/// An event raised if a users' mouse click changes the bar's value.
 		/// </summary>
 		[Category("Action")]
 		[DefaultValue(null)]
@@ -146,7 +135,8 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 		public event EventHandler<EventArgs> ValueChangedFromMouseInput;
 
 		private Font _scaledFont = null;
-		private readonly StringFormat _stringFormat = new StringFormat().SetAlignments(ContentAlignment.MiddleLeft);
+		private readonly StringFormat _stringFormatHorizontal = new StringFormat().SetAlignments(ContentAlignment.MiddleLeft);
+		private readonly StringFormat _stringFormatVertical = new StringFormat().SetAlignments(ContentAlignment.MiddleLeft);
 		private Rectangle _valueBarRect = Rectangle.Empty;
 		private bool _useNativeProgressBarStyle = false;
 
@@ -163,8 +153,10 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 		/// </summary>
 		private void UpdateByCursor()
 		{
-			int mouseX = PointToClient(System.Windows.Forms.Cursor.Position).X;
-			float percent = (float)mouseX / Width;
+			Point mouse = PointToClient(Cursor.Position);
+			float percent = Orientation == Orientation.Horizontal
+				? (float)mouse.X / Width
+				: 1.0f - ((float)mouse.Y / Height);
 
 			percent = percent.Clamp(0.0f, 1.0f);
 
@@ -173,7 +165,7 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 
 			if (previousValue != Value)
 			{
-				ValueChangedFromMouseInput?.Invoke(this, new EventArgs());
+				OnValueChangedFromMouseInput(new EventArgs());
 			}
 		}
 
@@ -237,8 +229,6 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 				return;
 			}
 
-			_valueBarRect = GetValueBarRect(e.ClipRectangle, ValuePercent, isFillRectangle: true);
-
 			// get text: optional minimum/maximum text values, or the value itself.
 			string text = Value == Maximum && !string.IsNullOrEmpty(MaximumText)
 				? MaximumText
@@ -246,24 +236,65 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 					? MinimumText
 					: $"{Value}";
 
-			if (_scaledFont is null || _scaledFont.SizeInPoints > _valueBarRect.Height)
+			if (string.IsNullOrWhiteSpace(text))
+			{
+				return;
+			}
+
+			_valueBarRect = GetValueBarRect(e.ClipRectangle, ValuePercent, isFillRectangle: true);
+
+			int textHeightArea = Orientation == Orientation.Horizontal
+				? _valueBarRect.Height
+				: _valueBarRect.Width;
+
+			// get a font that is determined by the height (or width for vertical) of the control
+			if (_scaledFont is null || _scaledFont.SizeInPoints > textHeightArea)
 			{
 				_scaledFont?.Dispose();
 				float scale = 0.65f; // scale determined by randomly trying until i found something that worked nicely.
-				float textEm = System.Math.Max(_valueBarRect.Height * scale, 6.0f);
+				float textEm = System.Math.Max(textHeightArea * scale, 6.0f);
 				_scaledFont = new Font(Font.FontFamily, textEm, Font.Style);
 			}
 
-			SizeF textSize = e.Graphics.MeasureString(text, _scaledFont, e.ClipRectangle.Size);
-			float textPercent = textSize.Width / e.ClipRectangle.Width;
+			// get the size to measure the text in,
+			// 'rotating' it if we are vertical.
+			SizeF measureSize = Orientation == Orientation.Horizontal
+				? e.ClipRectangle.Size
+				: new SizeF(e.ClipRectangle.Size.Height, e.ClipRectangle.Size.Width);
 
+			// measure the text size, and get the percentage of how much of the control
+			// it occupies depending on the orientation.
+			SizeF textSize = e.Graphics.MeasureString(text, _scaledFont, measureSize);
+			float textPercent = textSize.Width / (Orientation == Orientation.Horizontal
+				? e.ClipRectangle.Width
+				: e.ClipRectangle.Height);
+
+			// choose the high or low value brush depending on where the value is at.
 			using SolidBrush textBrush = textPercent < ValuePercent
 				? new(HighValueTextColor)
 				: new(LowValueTextColor);
 
-			Rectangle textLayoutRect = GetValueBarRect(e.ClipRectangle, 1.0f, isFillRectangle: false);
+			// we want to bump the text in just a smidge.
+			int twoPixels = LogicalToDeviceUnits(2);
 
-			e.Graphics.DrawString(text, _scaledFont, textBrush, textLayoutRect, _stringFormat);
+			// draw the text based on the orientation.
+			if (Orientation == Orientation.Horizontal)
+			{
+				// horizontal will draw to the left of the control, centered vertically.
+				float x = twoPixels;
+				float y = Height / 2.0f;
+				e.Graphics.DrawString(text, _scaledFont, textBrush, x, y, _stringFormatHorizontal);
+			}
+			else
+			{
+				// vertical will draw at the bottom of the control, centered horizontally,
+				// and rotated -90 degrees.
+				float x = Width / 2.0f;
+				float y = Height - twoPixels;
+				float angle = 270.0f;
+				e.Graphics.DrawString(text, _scaledFont, textBrush, x, y, angle, _stringFormatVertical);
+			}
+
 			// debug rect:
 			//e.Graphics.DrawRectangle(Pens.Red, textLayoutRect.X, textLayoutRect.Y, textLayoutRect.Width, textLayoutRect.Height);
 		}
@@ -278,8 +309,21 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 		/// <returns>The deflated, width-scaled value rectang.e</returns>
 		private Rectangle GetValueBarRect(Rectangle clipRectangle, float valueScale, bool isFillRectangle)
 		{
-			// scale the width by the percent value
-			clipRectangle.Width = (int)(clipRectangle.Width * valueScale);
+			Size previousSize = clipRectangle.Size;
+			if (Orientation == Orientation.Horizontal)
+			{
+				// scale the width by the percent value
+				clipRectangle.Width = (int)System.Math.Round(clipRectangle.Width * valueScale);
+			}
+			else
+			{
+				// like above, get percentage of height, but also
+				// move the rect to start at the bottom so it grows 'up'
+				// rather than from the top down.
+				// this is the native progress bar behavior.
+				clipRectangle.Height = (int)System.Math.Round(clipRectangle.Height * valueScale);
+				clipRectangle.Y += previousSize.Height - clipRectangle.Height;
+			}
 
 			int twoPixels = LogicalToDeviceUnits(2);
 			int onePixel = LogicalToDeviceUnits(1);
@@ -296,6 +340,13 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 			}
 			return clipRectangle;
 		}
+
+		/// <summary>
+		/// Raises the <see cref="ValueChangedFromMouseInput"/> event.
+		/// </summary>
+		/// <param name="args">A <see cref="EventArgs"/> that contains the event data.</param>
+		protected virtual void OnValueChangedFromMouseInput(EventArgs args)
+			=> ValueChangedFromMouseInput?.Invoke(this, args);
 	}
 }
 
