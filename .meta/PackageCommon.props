@@ -9,7 +9,7 @@
     <IncludeSymbols>true</IncludeSymbols>
     <PackageIcon>PackageIcon.png</PackageIcon>
     <!-- Icon by Freepik -->
-    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <PackageLicenseExpression>0BSD</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>https://cmd.wtf/projects/toolkit</PackageProjectUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
