@@ -2,17 +2,17 @@ Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: cmd.wtf Toolkit
 Upstream-Contact: https://cmd.wtf/contact
 Source: https://github.com/cmdwtf/Toolkit
-License: GPL-3.0-only
+License: 0BSD
 Copyright: 2021, Chris Marc Dailey
 
 Files: *
 Copyright: 2021, Chris Marc Dailey
-License: GPL-3.0-only
+License: 0BSD
 
 Files: Toolkit.Win32/Timers/Multimedia.cs
 Copyright: 2021, Chris Marc Dailey
            2016, Mike Zboray
-License: GPL-3.0-only and MIT
+License: 0BSD and MIT
 
 Files: Toolkit.Core/Easing.cs
 Copyright: 2021, Chris Marc Dailey
@@ -20,7 +20,7 @@ Copyright: 2021, Chris Marc Dailey
            ?, Darren David <darren-code@lookorfeel.com>
            ?, Marco Mastropaolo
            ?, Zeh Fernando
-License: GPL-3.0-only and MIT
+License: 0BSD and MIT
 
 Files: Toolkit.WinForms/Components/GraphicalOverlay*.cs
 Copyright: 2021, Chris Marc Dailey
@@ -33,7 +33,7 @@ Comment: Modifications include: refactoring to fit this library in naming,
 Files: Toolkit.Winforms/Controls/SplitButton.cs
 Copyright: 2021, Chris Marc Dailey
            2010, wyDay
-License: GPL-3.0-only and BSD-2-Clause
+License: 0BSD and BSD-2-Clause
 
 Files: Toolkit.Winforms/Controls/StyledProgressBar.cs
 Copyright: ?, Marco Minerva <marco.minerva@gmail.com>
@@ -786,6 +786,18 @@ License: BSD-2-clause
  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
  OF SUCH DAMAGE.
+
+License: 0BSD
+ Permission to use, copy, modify, and/or distribute this software for any
+ purpose with or without fee is hereby granted.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 License: MS-PL
  Microsoft Public License (Ms-PL)
