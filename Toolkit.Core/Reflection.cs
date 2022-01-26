@@ -29,7 +29,7 @@ namespace cmdwtf.Toolkit
 			}
 
 			// check for complex/nested type
-			if (propertyName.Contains("."))
+			if (propertyName.Contains('.'))
 			{
 				string[] temp = propertyName.Split(new char[] { '.' }, 2);
 				return (T)GetPropertyValue(GetPropertyValue(obj, temp[0]), temp[1]);

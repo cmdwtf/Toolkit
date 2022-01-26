@@ -42,5 +42,21 @@ namespace cmdwtf.Toolkit
 			double num = System.Math.Round(bytes / System.Math.Pow(1024, place), 1);
 			return (System.Math.Sign(byteCount) * num).ToString() + $" {suffix[place]}";
 		}
+
+#if !NETSTANDARD2_1_OR_GREATER
+
+		/// <inheritdoc cref="string.Contains(string)"/>
+		internal static bool Contains(this string s, char value)
+			=> s.Contains(value.ToString());
+
+#if NET5_0_OR_GREATER
+
+		/// <inheritdoc cref="string.Contains(string, StringComparison)"/>
+		internal static bool Contains(this string s, char value, StringComparison comparisonType)
+			=> s.Contains(value.ToString(), comparisonType);
+
+#endif // NET5_0_OR_GREATER
+
+#endif // !NETSTANDARD2_1_OR_GREATER
 	}
 }
