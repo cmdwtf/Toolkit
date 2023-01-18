@@ -10,7 +10,7 @@ Copyright: 2021-2023, Chris Marc Dailey
 License: 0BSD
 
 Files: Toolkit.Win32/Timers/Multimedia.cs
-Copyright: 2021, Chris Marc Dailey
+Copyright: 2021-2023, Chris Marc Dailey
            2016, Mike Zboray
 License: 0BSD and MIT
 
@@ -23,7 +23,7 @@ Copyright: 2021, Chris Marc Dailey
 License: 0BSD and MIT
 
 Files: Toolkit.WinForms/Components/GraphicalOverlay*.cs
-Copyright: 2021, Chris Marc Dailey
+Copyright: 2021-2023, Chris Marc Dailey
            2010, RocketteScientist
 License: CPOL-1.02
 Comment: Modifications include: refactoring to fit this library in naming,
@@ -31,7 +31,7 @@ Comment: Modifications include: refactoring to fit this library in naming,
          of Coordinates extension already in library, and added documentation.
 
 Files: Toolkit.Winforms/Controls/SplitButton.cs
-Copyright: 2021, Chris Marc Dailey
+Copyright: 2021-2023, Chris Marc Dailey
            2010, wyDay
 License: 0BSD and BSD-2-Clause
 

@@ -2,8 +2,8 @@
   <Choose>
     <When Condition="'$(MSBuildProjectName)' == 'Meta'">
       <PropertyGroup>
-        <PackageReleaseNotes>Many changes across the subpackages. Too many to list here!</PackageReleaseNotes>
         <Description>A small collection of utility functions and tools created over the years, bundled up in a single package for easy inclusion and management. This is a meta package containing all the various bits of the toolkit.</Description>
+        <PackageReleaseNotes>Added support .NET 6, .NET 7, .NET Framework 4.8.1. Dropped support for .NET 5. Switched to using nullable reference types.</PackageReleaseNotes>
         <PackageTags>win32;windows;dialogs;winforms;history;undo;redo;utilities;extensions;helpers</PackageTags>
         <Product>cmd.wtf Toolkit</Product>
       </PropertyGroup>
@@ -11,7 +11,7 @@
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.Core'">
       <PropertyGroup>
         <Description>A small collection of utility functions and tools created over the years, bundled up in a single package for easy inclusion and management.</Description>
-        <PackageReleaseNotes>Improved `TimeSpan.ToHumanReadableString()`. Moved TImers.Multimedia to `Win32`. Cleanup and refactoring.</PackageReleaseNotes>
+        <PackageReleaseNotes>Added small extension for `IEnumerable`.</PackageReleaseNotes>
         <PackageTags>utilities;extensions;helpers;xplat;crossplatform;wildcard;easing</PackageTags>
         <Product>cmd.wtf Toolkit Core</Product>
       </PropertyGroup>
@@ -19,7 +19,7 @@
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.History'">
       <PropertyGroup>
         <Description>A small history toolkit. Supports saving states, undo, and redo. States are saved as serialized JSON objects, via the Newtonsoft.Json library.</Description>
-        <PackageReleaseNotes>Cleanup and refactoring.</PackageReleaseNotes>
+        <PackageReleaseNotes>No changes outside global solution changes.</PackageReleaseNotes>
         <PackageTags>history;undo;redo</PackageTags>
         <Product>cmd.wtf History Toolkit</Product>
       </PropertyGroup>
@@ -27,7 +27,7 @@
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.Win32'">
       <PropertyGroup>
         <Description>A small collection of Windows specific utility functions and tools.</Description>
-        <PackageReleaseNotes>Added `TimePeriod`. Added `Timers.Multimedia` from `Core`. Cleanup and refactoring.</PackageReleaseNotes>
+        <PackageReleaseNotes>Added `FocusTheif`.</PackageReleaseNotes>
         <PackageTags>win32;windows;utilities;extensions;helpers;impersonation;timers;winmm;period</PackageTags>
         <Product>cmd.wtf Win32 Toolkit</Product>
       </PropertyGroup>
@@ -35,7 +35,7 @@
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.WinForms'">
       <PropertyGroup>
         <Description>A collection of controls, components, forms, dialogs, tools, extensions, and helpers to get a little more out of WinForms that isn't provided by the system components.</Description>
-        <PackageReleaseNotes>Add `StyledProgressBar`, improved `ProgressMeter` and `ValueBar` to both optionally draw vertically.</PackageReleaseNotes>
+        <PackageReleaseNotes>No changes outside global solution changes.</PackageReleaseNotes>
         <PackageTags>winforms;utilities;extensions;helpers;drawing;gdi;gdip;bitmap;datagrid;icon;overlay;controls;cursor</PackageTags>
         <Product>cmd.wtf WinForms Toolkit</Product>
       </PropertyGroup>
@@ -43,7 +43,7 @@
     <When Condition="'$(MSBuildProjectName)' == 'Toolkit.WinForms.Dialogs'">
       <PropertyGroup>
         <Description>A small toolkit that provides easy-to-use Ookii.Dialogs functionality through MessageBox-style APIs.</Description>
-        <PackageReleaseNotes>Produced stub dll for non-supported platforms. Cleanup and refactoring.</PackageReleaseNotes>
+        <PackageReleaseNotes>No changes outside global solution changes.</PackageReleaseNotes>
         <PackageTags>dialogs;winforms;utilities;extensions;helpers;taskdialog;task</PackageTags>
         <Product>cmd.wtf WinForms Dialog Toolkit</Product>
       </PropertyGroup>
