@@ -1,6 +1,8 @@
 using System;
 using System.Runtime.InteropServices;
 
+using DWORD = System.UInt32;
+
 namespace cmdwtf.Toolkit.Win32.Native
 {
 	/// <summary>
@@ -15,5 +17,8 @@ namespace cmdwtf.Toolkit.Win32.Native
 		[DllImport(NativeLibrary, CharSet = CharSet.Auto, ExactSpelling = true, SetLastError = true)]
 		[return: MarshalAs(UnmanagedType.Bool)]
 		public static extern bool CloseHandle(IntPtr handle);
+
+		[DllImport(NativeLibrary, CharSet = CharSet.Auto, ExactSpelling = true, SetLastError = true)]
+		public static extern DWORD GetCurrentThreadId();
 	}
 }
