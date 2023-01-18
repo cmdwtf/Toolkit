@@ -10,6 +10,7 @@
     <PackageIcon>PackageIcon.png</PackageIcon>
     <!-- Icon by Freepik -->
     <PackageLicenseExpression>0BSD</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>https://cmd.wtf/projects/toolkit</PackageProjectUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
