@@ -39,15 +39,15 @@ jobs:
       DOTNET_MULTILEVEL_LOOKUP: 0
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     
     - name: Cache .NET Toolchains
       id: cache-dotnet-toolchain
       uses: actions/cache@v2
       with:
         path: '%LocalAppData%\Microsoft\dotnet\'
-        key: 'dotnet-toolchain'
-        restore-keys: 'dotnet-toolchain'
+        key: 'dotnet-toolchain-7-6-3.1'
+        restore-keys: 'dotnet-toolchain-7-6-3.1'
         
     - id: cache-dotnet-toolchain-hit-reset-paths
       if: steps.cache-dotnet-toolchain.outputs.cache-hit == 'true'
@@ -56,17 +56,14 @@ jobs:
         echo "$env:LocalAppData\Microsoft\dotnet;$env:UserProfile\.dotnet\tools;$env:PATH"
         $env:GITHUB_PATH="$env:LocalAppData\Microsoft\dotnet;$env:UserProfile\.dotnet\tools;$env:PATH"
 
-    - name: Setup .NET 5.0
+    - name: Setup .NET (7.0, 6.0, Core 3.1)
       if: steps.cache-dotnet-toolchain.outputs.cache-hit != 'true'
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 5.0.x
-
-    - name: Setup .NET Core 3.1
-      if: steps.cache-dotnet-toolchain.outputs.cache-hit != 'true'
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.x
+        dotnet-version: |
+          3.1.x
+          6.0.x
+          7.0.x
 
     # packages don't like to restore if you don't clean first?
     # see: https://github.com/actions/setup-dotnet/issues/155
