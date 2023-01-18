@@ -1,9 +1,9 @@
 <Project>
   <PropertyGroup>
     <!-- build framework lists -->
-    <NetFxFrameworks>net48;net472;net471;net47</NetFxFrameworks>
-    <NetCoreFrameworks>net5.0;netstandard2.1</NetCoreFrameworks>
-    <NetCoreWindowsFrameworks>net5.0-windows</NetCoreWindowsFrameworks>
+    <NetFxFrameworks>net481;net48;net472;net471;net47</NetFxFrameworks>
+    <NetCoreFrameworks>net7.0;net6.0;netstandard2.1</NetCoreFrameworks>
+    <NetCoreWindowsFrameworks>net7.0-windows;net6.0-windows</NetCoreWindowsFrameworks>
 
     <!-- set target frameworks property -->
     <TargetFrameworks>$(NetCoreWindowsFrameworks);$(NetCoreFrameworks);$(NetFxFrameworks)</TargetFrameworks>

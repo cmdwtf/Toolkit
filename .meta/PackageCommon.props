@@ -3,7 +3,7 @@
     <Authors>Chris Marc Dailey (nitz)</Authors>
     <PackageId>cmdwtf.Toolkit</PackageId>
     <Company>cmd.wtf</Company>
-    <Copyright>© 2021 Chris Marc Dailey</Copyright>
+    <Copyright>© 2021-2023 Chris Marc Dailey</Copyright>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
