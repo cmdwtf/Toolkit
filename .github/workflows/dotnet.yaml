@@ -26,9 +26,9 @@ jobs:
   build-and-deploy:
     if: contains(toJson(github.event.commits), '***NO_CI***') == false
     name: Build & Deploy Toolkit
-    
+
     runs-on: windows-latest
-    
+
     env:
       # .NET Settings
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -40,15 +40,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
+
     - name: Cache .NET Toolchains
       id: cache-dotnet-toolchain
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: '%LocalAppData%\Microsoft\dotnet\'
         key: 'dotnet-toolchain-7-6-3.1'
-        restore-keys: 'dotnet-toolchain-7-6-3.1'
-        
+
     - id: cache-dotnet-toolchain-hit-reset-paths
       if: steps.cache-dotnet-toolchain.outputs.cache-hit == 'true'
       run: |
@@ -72,12 +71,12 @@ jobs:
 
     - name: Restore dependencies
       run: dotnet restore --nologo
-      
+
     ####################################### BUILD #######################################
 
     - name: Build
       run: dotnet build --nologo --no-restore --verbosity normal --configuration Release  -property:ContinuousIntegrationBuild=true
-      
+
     ####################################### STORE #######################################
 
     - name: Store Package Artifacts
@@ -99,20 +98,20 @@ jobs:
           LICENSE
           *.md
         retention-days: 7
-              
+
     ####################################### TEST #######################################
 
     - name: Test
       run: dotnet test --nologo --no-build --no-restore --verbosity normal
-      
+
     ####################################### META #######################################
 
     - name: Restore Meta Package
       run: dotnet restore .meta/Meta.csproj --nologo
-      
+
     - name: Pack Meta Package
       run: dotnet pack .meta/Meta.csproj --nologo --no-build --configuration Release -o .
-      
+
     - name: Store Meta Artifacts
       uses: actions/upload-artifact@v2.2.2
       with:
@@ -120,12 +119,12 @@ jobs:
         path: |
           *.nupkg
         retention-days: 7
-      
+
     ####################################### PUBLISH #######################################
-    
+
     ### Publish Meta, Tag Repo
     - name: Publish Meta Package & Tag
-      uses: nitz/publish-nuget@13cf3a0ec3840b62a0fd20d559ab1e2a63b0d75a
+      uses: nitz/publish-nuget@60fd3adf9d9eecc3bbf8a98738734d3061347172
       with:
         PROJECT_FILE_PATH: .meta/Meta.csproj
         PACKAGE_NAME: cmdwtf.Toolkit
@@ -142,7 +141,7 @@ jobs:
 
     ### Publish Core
     - name: Publish Toolkit.Core
-      uses: nitz/publish-nuget@13cf3a0ec3840b62a0fd20d559ab1e2a63b0d75a
+      uses: nitz/publish-nuget@60fd3adf9d9eecc3bbf8a98738734d3061347172
       with:
         PROJECT_FILE_PATH: Toolkit.Core/Toolkit.Core.csproj
         PACKAGE_NAME: cmdwtf.Toolkit.Core
@@ -157,7 +156,7 @@ jobs:
 
     ### Publish History
     - name: Publish Toolkit.History
-      uses: nitz/publish-nuget@13cf3a0ec3840b62a0fd20d559ab1e2a63b0d75a
+      uses: nitz/publish-nuget@60fd3adf9d9eecc3bbf8a98738734d3061347172
       with:
         PROJECT_FILE_PATH: Toolkit.History/Toolkit.History.csproj
         PACKAGE_NAME: cmdwtf.Toolkit.History
@@ -172,7 +171,7 @@ jobs:
 
     ### Publish Win32
     - name: Publish Toolkit.Win32
-      uses: nitz/publish-nuget@13cf3a0ec3840b62a0fd20d559ab1e2a63b0d75a
+      uses: nitz/publish-nuget@60fd3adf9d9eecc3bbf8a98738734d3061347172
       with:
         PROJECT_FILE_PATH: Toolkit.Win32/Toolkit.Win32.csproj
         PACKAGE_NAME: cmdwtf.Toolkit.Win32
@@ -187,7 +186,7 @@ jobs:
 
     ### Publish WinForms
     - name: Publish Toolkit.WinForms
-      uses: nitz/publish-nuget@13cf3a0ec3840b62a0fd20d559ab1e2a63b0d75a
+      uses: nitz/publish-nuget@60fd3adf9d9eecc3bbf8a98738734d3061347172
       with:
         PROJECT_FILE_PATH: Toolkit.WinForms/Toolkit.WinForms.csproj
         PACKAGE_NAME: cmdwtf.Toolkit.WinForms
@@ -202,7 +201,7 @@ jobs:
 
     ### Publish WinForms.Dialogs
     - name: Publish Toolkit.WinForms.Dialogs
-      uses: nitz/publish-nuget@13cf3a0ec3840b62a0fd20d559ab1e2a63b0d75a
+      uses: nitz/publish-nuget@60fd3adf9d9eecc3bbf8a98738734d3061347172
       with:
         PROJECT_FILE_PATH: Toolkit.WinForms.Dialogs/Toolkit.WinForms.Dialogs.csproj
         PACKAGE_NAME: cmdwtf.Toolkit.WinForms.Dialogs
