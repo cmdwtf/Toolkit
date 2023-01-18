@@ -3,10 +3,10 @@ Upstream-Name: cmd.wtf Toolkit
 Upstream-Contact: https://cmd.wtf/contact
 Source: https://github.com/cmdwtf/Toolkit
 License: 0BSD
-Copyright: 2021, Chris Marc Dailey
+Copyright: 2021-2023, Chris Marc Dailey
 
 Files: *
-Copyright: 2021, Chris Marc Dailey
+Copyright: 2021-2023, Chris Marc Dailey
 License: 0BSD
 
 Files: Toolkit.Win32/Timers/Multimedia.cs
