@@ -132,9 +132,9 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 		[Category("Action")]
 		[DefaultValue(null)]
 		[Description("Raised when the bar's value changes from mouse input.")]
-		public event EventHandler<EventArgs> ValueChangedFromMouseInput;
+		public event EventHandler<EventArgs>? ValueChangedFromMouseInput;
 
-		private Font _scaledFont = null;
+		private Font? _scaledFont = null;
 		private readonly StringFormat _stringFormatHorizontal = new StringFormat().SetAlignments(ContentAlignment.MiddleLeft);
 		private readonly StringFormat _stringFormatVertical = new StringFormat().SetAlignments(ContentAlignment.MiddleLeft);
 		private Rectangle _valueBarRect = Rectangle.Empty;

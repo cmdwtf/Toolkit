@@ -51,7 +51,7 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 		/// <param name="filePath">The file to get the icon for.</param>
 		/// <param name="size">The size of icon to get. (Defaults to Large.)</param>
 		/// <returns>The file's icon.</returns>
-		public static SDIcon GetIcon(string filePath, Size size = Size.Large)
+		public static SDIcon? GetIcon(string filePath, Size size = Size.Large)
 			=> size == Size.Large ? GetLargeIcon(filePath) : GetSmallIcon(filePath);
 
 		/// <summary>
@@ -59,7 +59,7 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 		/// </summary>
 		/// <param name="filePath">The file to get the icon for.</param>
 		/// <returns>The file's icon.</returns>
-		public static SDIcon GetSmallIcon(string filePath)
+		public static SDIcon? GetSmallIcon(string filePath)
 			=> GetIcon(filePath, SHGFI_ICON | SHGFI_SMALLICON);
 
 		/// <summary>
@@ -67,7 +67,7 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 		/// </summary>
 		/// <param name="filePath">The file to get the icon for.</param>
 		/// <returns>The file's icon.</returns>
-		public static SDIcon GetLargeIcon(string filePath)
+		public static SDIcon? GetLargeIcon(string filePath)
 			=> GetIcon(filePath, SHGFI_ICON | SHGFI_LARGEICON);
 
 		/// <summary>
@@ -76,7 +76,7 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 		/// <param name="filePath">The file to get the icon for.</param>
 		/// <param name="size">The size of icon to get. (Defaults to Large.)</param>
 		/// <returns>The file's icon.</returns>
-		public static SDIcon GetShellIcon(string filePath, Size size = Size.Large)
+		public static SDIcon? GetShellIcon(string filePath, Size size = Size.Large)
 			=> size == Size.Large ? GetShellLargeIcon(filePath) : GetShellSmallIcon(filePath);
 
 		/// <summary>
@@ -90,7 +90,7 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 		/// https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shgetfileinfoa#shgfi_shelliconsize-0x000000004
 		/// I'm really not sure what "shell sized" even means.
 		/// </remarks>
-		public static SDIcon GetShellSmallIcon(string filePath)
+		public static SDIcon? GetShellSmallIcon(string filePath)
 			=> GetIcon(filePath, SHGFI_ICON | SHGFI_SHELLICONSIZE | SHGFI_SMALLICON);
 
 		/// <summary>
@@ -104,7 +104,7 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 		/// https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shgetfileinfoa#shgfi_shelliconsize-0x000000004
 		/// I'm really not sure what "shell sized" even means.
 		/// </remarks>
-		public static SDIcon GetShellLargeIcon(string filePath)
+		public static SDIcon? GetShellLargeIcon(string filePath)
 			=> GetIcon(filePath, SHGFI_ICON | SHGFI_SHELLICONSIZE | SHGFI_LARGEICON);
 
 		/// <summary>
@@ -113,7 +113,7 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 		/// <param name="size">The size of icon to get.</param>
 		/// <param name="folderType">The type of folder icon to get.</param>
 		/// <returns>The requested folder icon.</returns>
-		public static SDIcon GetFolderIcon(Size size, FolderType folderType)
+		public static SDIcon? GetFolderIcon(Size size, FolderType folderType)
 		{
 			// Need to add size check, although errors generated at present!
 			uint flags = SHGFI_ICON | SHGFI_USEFILEATTRIBUTES |
@@ -133,11 +133,11 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 		/// <see cref="Trampolines.ShellGetFileInfo(string, FileAttributes, uint)"/></param>
 		/// <param name="attribs">FileAttributes of the given path.</param>
 		/// <returns>The requested icon.</returns>
-		private static SDIcon GetIcon(string path, uint flags, FileAttributes attribs = 0)
+		private static SDIcon? GetIcon(string path, uint flags, FileAttributes attribs = 0)
 		{
 			(SHFILEINFO info, IntPtr list) = Trampolines.ShellGetFileInfo(path, attribs, flags);
 
-			SDIcon icon = null;
+			SDIcon? icon = null;
 
 			if (info.hIcon != IntPtr.Zero)
 			{
@@ -165,7 +165,7 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 				return (info, list);
 			}
 
-			public static SDIcon GetIconFromList(IntPtr iconList, int index, int flags = ILD_TRANSPARENT)
+			public static SDIcon? GetIconFromList(IntPtr iconList, int index, int flags = ILD_TRANSPARENT)
 			{
 				IntPtr hIcon = ImageList_GetIcon(iconList, index, flags);
 

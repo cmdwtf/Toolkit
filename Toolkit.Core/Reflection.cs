@@ -16,7 +16,7 @@ namespace cmdwtf.Toolkit
 		/// <param name="obj">The object to get the property value of.</param>
 		/// <param name="propertyName">The name of the property.</param>
 		/// <returns>The property value, if found. Otherwise, default.</returns>
-		public static T GetPropertyValue<T>(object obj, string propertyName)
+		public static T? GetPropertyValue<T>(object obj, string propertyName)
 		{
 			if (obj == null)
 			{
@@ -32,17 +32,24 @@ namespace cmdwtf.Toolkit
 			if (propertyName.Contains('.'))
 			{
 				string[] temp = propertyName.Split(new char[] { '.' }, 2);
-				return (T)GetPropertyValue(GetPropertyValue(obj, temp[0]), temp[1]);
+				object? nv = GetPropertyValue(obj, temp[0]);
+
+				if (nv == null)
+				{
+					return default;
+				}
+
+				return (T?)GetPropertyValue(nv, temp[1]);
 			}
 			else
 			{
-				System.Reflection.PropertyInfo prop = obj.GetType().GetProperty(propertyName);
-				return (T)prop?.GetValue(obj, null) ?? default;
+				System.Reflection.PropertyInfo? prop = obj.GetType().GetProperty(propertyName);
+				return (T?)prop?.GetValue(obj, null) ?? default;
 			}
 		}
 
 		/// <inheritdoc cref="GetPropertyValue{T}(object, string)"/>
-		public static object GetPropertyValue(object src, string propName)
+		public static object? GetPropertyValue(object src, string propName)
 			=> GetPropertyValue<object>(src, propName);
 	}
 }

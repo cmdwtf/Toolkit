@@ -87,7 +87,7 @@ namespace cmdwtf.Toolkit
 		/// <returns>true, if the path is a valid rooted local path, otherwise false.</returns>
 		public static bool IsPathValidRootedLocal(string path)
 		{
-			bool isValidUri = Uri.TryCreate(path, UriKind.Absolute, out Uri pathUri);
+			bool isValidUri = Uri.TryCreate(path, UriKind.Absolute, out Uri? pathUri);
 			return isValidUri && pathUri != null && pathUri.IsLoopback;
 		}
 
@@ -107,14 +107,14 @@ namespace cmdwtf.Toolkit
 			}
 
 			// grab the root
-			string pathRoot = SPath.GetPathRoot(path);
+			string? pathRoot = SPath.GetPathRoot(path);
 
 			// If the root is less than 2 characters, it can't be:
 			// - A windows drive (e.g.: "C:\")
 			// - A UNC path (e.g.: "\\name")
 			// If it *is* one character, but that character is a forward slash,
 			// it could be a Unix-like path.
-			if (pathRoot.Length <= 2 && pathRoot.StartsWith("/") == false)
+			if (pathRoot == null || (pathRoot.Length <= 2 && pathRoot.StartsWith("/") == false))
 			{
 				return false;
 			}

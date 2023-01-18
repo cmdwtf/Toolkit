@@ -134,11 +134,11 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 		/// <returns>The coordinate rectangle.</returns>
 		public static Rectangle Coordinates(this Control control)
 		{
-			var form = control.TopLevelControl as Form;
+			Form form = control.TopLevelControl as Form ?? throw new NullReferenceException("Control's TopLevelControl isn't a form.");
 
-			return control == form ?
-				form.ClientRectangle :
-				form.RectangleToClient(control.Parent.RectangleToScreen(control.Bounds));
+			return control == form || control.Parent == null
+				? form.ClientRectangle
+				: form.RectangleToClient(control.Parent.RectangleToScreen(control.Bounds));
 		}
 
 		/// <summary>

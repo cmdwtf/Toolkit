@@ -35,9 +35,9 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 
 #if !NET5_0_OR_GREATER
 		private bool _isMouseEntered;
-		private ContextMenu _splitMenu;
+		private ContextMenu? _splitMenu;
 #endif // !NET5_0_OR_GREATER
-		private ContextMenuStrip _splitMenuStrip;
+		private ContextMenuStrip? _splitMenuStrip;
 
 		/// <summary>
 		/// Creates a new <see cref="SplitButton"/> instance.
@@ -51,7 +51,7 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 
 		/// <inheritdoc/>
 		[Browsable(false)]
-		public override ContextMenuStrip ContextMenuStrip
+		public override ContextMenuStrip? ContextMenuStrip
 		{
 			get => SplitMenuStrip;
 			set => SplitMenuStrip = value;
@@ -60,7 +60,7 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 #if !NET5_0_OR_GREATER
 		/// <inheritdoc cref="ContextMenuStrip"/>
 		[DefaultValue(null)]
-		public ContextMenu SplitMenu
+		public ContextMenu? SplitMenu
 		{
 			get => _splitMenu;
 			set
@@ -89,7 +89,7 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 
 		/// <inheritdoc cref="ContextMenuStrip"/>
 		[DefaultValue(null)]
-		public ContextMenuStrip SplitMenuStrip
+		public ContextMenuStrip? SplitMenuStrip
 		{
 			get => _splitMenuStrip;
 			set
@@ -131,10 +131,7 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 					_showSplit = value;
 					Invalidate();
 
-					if (Parent != null)
-					{
-						Parent.PerformLayout();
-					}
+					Parent?.PerformLayout();
 				}
 			}
 		}
@@ -793,10 +790,10 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 			_splitMenuStrip?.Show(this, new Point(0, Height), ToolStripDropDownDirection.BelowRight);
 		}
 
-		private void SplitMenuStrip_Opening(object sender, CancelEventArgs e)
+		private void SplitMenuStrip_Opening(object? sender, CancelEventArgs e)
 			=> _isSplitMenuVisible = true;
 
-		private void SplitMenuStrip_Closing(object sender, ToolStripDropDownClosingEventArgs e)
+		private void SplitMenuStrip_Closing(object? sender, ToolStripDropDownClosingEventArgs e)
 		{
 			_isSplitMenuVisible = false;
 
@@ -808,7 +805,7 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 			}
 		}
 
-		private void SplitMenu_Popup(object sender, EventArgs e)
+		private void SplitMenu_Popup(object? sender, EventArgs e)
 			=> _isSplitMenuVisible = true;
 
 		/// <inheritdoc/>
@@ -827,7 +824,7 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 
 		private void SetButtonDrawState()
 		{
-			if (Bounds.Contains(Parent.PointToClient(Cursor.Position)))
+			if (Parent != null && Bounds.Contains(Parent.PointToClient(Cursor.Position)))
 			{
 				State = PushButtonState.Hot;
 			}

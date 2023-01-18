@@ -45,13 +45,13 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 			_ = Native.User32.HideCaret(Handle);
 		}
 
-		private void ReadOnlyRichTextBox_Mouse(object sender, MouseEventArgs e)
+		private void ReadOnlyRichTextBox_Mouse(object? sender, MouseEventArgs e)
 		{
 			SelectionLength = 0;
 			_ = Native.User32.HideCaret(Handle);
 		}
 
-		private void ReadOnlyRichTextBox_Resize(object sender, EventArgs e) => _ = Native.User32.HideCaret(Handle);
+		private void ReadOnlyRichTextBox_Resize(object? sender, EventArgs e) => _ = Native.User32.HideCaret(Handle);
 
 		#region RichTextBox overrides
 

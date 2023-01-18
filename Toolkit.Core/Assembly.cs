@@ -23,14 +23,16 @@ namespace cmdwtf.Toolkit
 		/// Gets the calling assembly version.
 		/// </summary>
 		/// <value>The executing assembly version.</value>
-		public static Version CallingAssemblyVersion => CallingAssembly.GetName().Version;
+		public static Version CallingAssemblyVersion => CallingAssembly.GetName()?.Version
+			?? throw new NullReferenceException("Unable to get version from calling assembly.");
 
 		/// <summary>
 		/// Gets the executing assembly version.
 		/// </summary>
 		/// <value>The executing assembly version.</value>
-		public static Version ExecutingAssemblyVersion => _executingAssemblyVersion ??= CallingAssembly.GetName().Version;
-		private static Version _executingAssemblyVersion;
+		public static Version ExecutingAssemblyVersion => _executingAssemblyVersion ??= CallingAssembly.GetName().Version
+			?? throw new NullReferenceException("Unable to get version from calling assembly.");
+		private static Version? _executingAssemblyVersion;
 
 		/// <summary>
 		/// Gets the compile date of the currently calling assembly.
@@ -52,12 +54,12 @@ namespace cmdwtf.Toolkit
 		/// <summary>
 		/// Retrieves the calling assembly's full name.
 		/// </summary>
-		public static string FullName => CallingAssembly.FullName;
+		public static string FullName => CallingAssembly.FullName ?? string.Empty;
 
 		/// <summary>
 		/// Retrieves the calling assembly's short name.
 		/// </summary>
-		public static string ShortName => CallingAssembly.GetName().Name;
+		public static string ShortName => CallingAssembly.GetName()?.Name ?? string.Empty;
 
 		private static DateTime? _compileDate;
 
@@ -70,16 +72,16 @@ namespace cmdwtf.Toolkit
 		{
 			SRAssembly assembly = CallingAssembly;
 			string name = GetAssemblyName<T>();
-			string version = assembly.GetName().Version.ToString();
+			string? version = assembly.GetName()?.Version?.ToString();
 			var configAttrib = assembly.GetCustomAttributes(typeof(AssemblyConfigurationAttribute), true)[0] as AssemblyConfigurationAttribute;
-			string configuration = configAttrib.Configuration;
+			string? configuration = configAttrib?.Configuration;
 
 			if (string.IsNullOrWhiteSpace(configuration) == false)
 			{
 				version = $"{version} {configuration}";
 			}
 
-			string copyright = (assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), true)[0] as AssemblyCopyrightAttribute).Copyright;
+			string? copyright = (assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), true)?[0] as AssemblyCopyrightAttribute)?.Copyright;
 			DateTime linkerTimestamp = assembly.RetrieveLinkerTimestamp();
 			string buildTime = linkerTimestamp.ToShortDateString() + " " + linkerTimestamp.ToShortTimeString();
 
@@ -107,7 +109,7 @@ namespace cmdwtf.Toolkit
 			}
 
 			// couldn't get the title attribute, use executing assembly name.
-			return SRAssembly.GetExecutingAssembly().GetName().Name;
+			return SRAssembly.GetExecutingAssembly()?.GetName()?.Name ?? throw new NullReferenceException("Unable to get name from executing assembly.");
 		}
 
 		/// <summary>
@@ -153,9 +155,11 @@ namespace cmdwtf.Toolkit
 		/// <summary>
 		/// Returns a DateTime based on when the calling assembly was linked.
 		/// </summary>
+		/// <param name="filePath">The file to retrieve the linker timestamp from.</param>
+		/// <param name="timeZoneInfo">A specific timezone to adjust the timestamp to, or null to use the local timezone.</param>
 		/// <returns>A DateTime object based on the linker timestamp in the file.</returns>
 		/// <remarks>Based on: https://stackoverflow.com/a/1600990/944605</remarks>
-		public static DateTime RetrieveLinkerTimestampFromFile(string filePath, TimeZoneInfo timeZoneInfo = null)
+		public static DateTime RetrieveLinkerTimestampFromFile(string filePath, TimeZoneInfo? timeZoneInfo = null)
 		{
 			const int PEHeaderOffset = 60;
 			const int LinkerTimestampOffset = 8;
@@ -193,9 +197,11 @@ namespace cmdwtf.Toolkit
 		/// Returns a DateTime based on when the calling assembly was linked. This functions similarly
 		/// to <see cref="RetrieveLinkerTimestampFromFile(string, TimeZoneInfo)"/>, but reads it from memory instead.
 		/// </summary>
+		/// <param name="assembly">The assembly to retrieve the linker timestamp from.</param>
+		/// <param name="timeZoneInfo">A specific timezone to adjust the timestamp to, or null to use the local timezone.</param>
 		/// <returns>A DateTime object based on the linker timestamp in the file.</returns>
 		/// <remarks>Based on: https://stackoverflow.com/a/44511677/944605</remarks>
-		public static DateTime RetrieveLinkerTimestamp(this SRAssembly assembly, TimeZoneInfo timeZoneInfo = null)
+		public static DateTime RetrieveLinkerTimestamp(this SRAssembly assembly, TimeZoneInfo? timeZoneInfo = null)
 		{
 			const int PEHeaderOffset = 60;
 			const int LinkerTimestampOffset = 8;
@@ -222,9 +228,9 @@ namespace cmdwtf.Toolkit
 		}
 
 		/// <summary>
-		/// Returns true if the given assembly was built withou anyt debuggable attribute.
+		/// Returns true if the given assembly was built without any <see cref="DebuggableAttribute"/>.
 		/// </summary>
-		/// <param name="assembly">The assembly to inspect</param>
+		/// <param name="assembly">The assembly to inspect.</param>
 		/// <returns>true, if release</returns>
 		public static bool IsRelease(this SRAssembly assembly)
 		{
@@ -250,7 +256,7 @@ namespace cmdwtf.Toolkit
 
 
 		/// <summary>
-		/// Returns true if the given assembly was built with a debuggable attribute, or if JITTracking is enabled.
+		/// Returns true if the given assembly was built with a <see cref="DebuggableAttribute"/>, or if JITTracking is enabled.
 		/// </summary>
 		/// <param name="assembly">The assembly to inspect</param>
 		/// <returns>true, if debug</returns>

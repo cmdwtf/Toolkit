@@ -102,7 +102,7 @@ namespace cmdwtf.Toolkit.History
 		/// This function creates a copy of the stored state.
 		/// Be careful calling this often.
 		/// </remarks>
-		public T CurrentState
+		public T? CurrentState
 		{
 			get
 			{

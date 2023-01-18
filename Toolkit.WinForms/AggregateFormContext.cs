@@ -27,7 +27,7 @@ namespace cmdwtf.Toolkit.WinForms
 		{
 			_activeForms = forms?.Length ?? 0;
 
-			if (_activeForms == 0)
+			if (_activeForms == 0 || forms == null)
 			{
 				throw new ArgumentException($"{nameof(forms)} must provide at least a single {nameof(Form)} in order to create the context.", nameof(forms));
 			}
@@ -39,7 +39,7 @@ namespace cmdwtf.Toolkit.WinForms
 			}
 		}
 
-		private void FormClosedHandler(object sender, FormClosedEventArgs args)
+		private void FormClosedHandler(object? sender, FormClosedEventArgs args)
 		{
 			if (Interlocked.Decrement(ref _activeForms) == 0)
 			{

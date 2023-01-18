@@ -16,7 +16,7 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 		/// </summary>
 		[Category("Action")]
 		[Description("Raised when the left mouse button is released.")]
-		public event EventHandler<MouseEventArgs> ClickFinished = null;
+		public event EventHandler<MouseEventArgs>? ClickFinished = null;
 
 		/// <summary>
 		/// If true, the button is being held down.
@@ -95,7 +95,7 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 		/// </summary>
 		/// <param name="sender">The origin of this event.</param>
 		/// <param name="e">The event data.</param>
-		private void RepeatButtonTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+		private void RepeatButtonTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
 		{
 			if (InvokeRequired)
 			{

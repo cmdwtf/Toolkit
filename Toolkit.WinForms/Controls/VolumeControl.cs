@@ -114,7 +114,7 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 		[Category("Appearance")]
 		[DefaultValue(null)]
 		[Description("The image used for the mute button when the volume is zero.")]
-		public Image UnmutedImage { get; set; } = null;
+		public Image? UnmutedImage { get; set; } = null;
 
 		/// <summary>
 		/// Gets or sets the image used to represent the volume being unmuted.
@@ -122,7 +122,7 @@ namespace cmdwtf.Toolkit.WinForms.Controls
 		[Category("Appearance")]
 		[DefaultValue(null)]
 		[Description("The image used for the mute button when the volume is nonzero.")]
-		public Image MutedImage { get; set; } = null;
+		public Image? MutedImage { get; set; } = null;
 
 		private int _dragStartValue;
 

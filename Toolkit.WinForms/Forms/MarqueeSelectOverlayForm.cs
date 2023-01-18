@@ -16,7 +16,7 @@ namespace cmdwtf.Toolkit.WinForms.Forms
 	[ToolboxItem(true)]
 	public partial class MarqueeSelectOverlayForm : Form
 	{
-		private BrushHandle _nativeBackgroundBrush = null;
+		private BrushHandle? _nativeBackgroundBrush = null;
 
 		/// <summary>
 		/// Initializes <see cref="CreateParams"/> with
@@ -93,10 +93,7 @@ namespace cmdwtf.Toolkit.WinForms.Forms
 		/// </summary>
 		private void SetBackgroundBrush()
 		{
-			if (_nativeBackgroundBrush != null)
-			{
-				_nativeBackgroundBrush.Dispose();
-			}
+			_nativeBackgroundBrush?.Dispose();
 
 			// using some native tricks so we can set our background
 			// brush to match our back color, so everything draws nicely on resize.
@@ -122,7 +119,7 @@ namespace cmdwtf.Toolkit.WinForms.Forms
 		protected override void OnFormClosed(FormClosedEventArgs e)
 		{
 			base.OnFormClosed(e);
-			_nativeBackgroundBrush.Dispose();
+			_nativeBackgroundBrush?.Dispose();
 		}
 
 		/// <summary>

@@ -34,7 +34,7 @@ namespace cmdwtf.Toolkit.Timers
 		private const int EventTypeSingle = 0;
 		private const int EventTypePeriodic = 1;
 
-		private static readonly Task TaskDone = Task.FromResult<object>(null);
+		private static readonly Task TaskDone = Task.FromResult<object?>(null);
 
 		private bool _disposed = false;
 		private int _interval;
@@ -47,7 +47,7 @@ namespace cmdwtf.Toolkit.Timers
 		/// <summary>
 		/// Event raised each time the timer's interval elapses.
 		/// </summary>
-		public event EventHandler Elapsed;
+		public event EventHandler? Elapsed;
 
 		/// <summary>
 		/// The period of the timer in milliseconds.
@@ -118,11 +118,11 @@ namespace cmdwtf.Toolkit.Timers
 
 			// allocate an object to hold the callback in the async state.
 			object[] state = new object[1];
-			var completionSource = new TaskCompletionSource<object>(state);
+			var completionSource = new TaskCompletionSource<object?>(state);
 			TimerCallbackDelegate callback = (uint id, uint msg, ref uint uCtx, uint rsv1, uint rsv2) =>
 			{
 				// Note we don't need to kill the timer for one-off events.
-				completionSource.TrySetResult(null);
+				completionSource.TrySetResult(default);
 			};
 
 			state[0] = callback;

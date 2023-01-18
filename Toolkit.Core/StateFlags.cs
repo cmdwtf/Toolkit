@@ -180,7 +180,7 @@ namespace cmdwtf.Toolkit
 		#region object Overrides
 
 		/// <inheritdoc cref="object.Equals(object?)"/>
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 			=> obj switch
 			{
 				StateFlags<T> other => _data == other._data,

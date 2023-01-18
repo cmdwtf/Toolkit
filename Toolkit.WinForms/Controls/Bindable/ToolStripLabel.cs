@@ -2,24 +2,31 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 
+// Bindable 
+
 namespace cmdwtf.Toolkit.WinForms.Controls.Bindable
 {
 	/// <summary>
 	/// A <see cref="System.Windows.Forms.ToolStripLabel"/> that provides
 	/// a bindable interface akin to most WinForms controls.
 	/// </summary>
+	/// <remarks>In .NET 7.0 or later, is just a regular
+	/// <see cref="System.Windows.Forms.ToolStripLabel"/>, since binding was added.</remarks>
 	[ToolboxItem(true)]
 	[ToolStripItemDesignerAvailability(ToolStripItemDesignerAvailability.All)]
+#if NET7_0_OR_GREATER
+	public class ToolStripLabel : System.Windows.Forms.ToolStripLabel { /* nothing to add */ }
+#else
 	public class ToolStripLabel : System.Windows.Forms.ToolStripLabel, IBindableComponent
 	{
-		private BindingContext _context = null;
-		private ControlBindingsCollection _bindings = null;
+		private BindingContext? _context = null;
+		private ControlBindingsCollection? _bindings = null;
 
 		/// <summary>
 		/// Gets or sets the <see cref="System.Windows.Forms.BindingContext"/> for
 		/// this control.
 		/// </summary>
-		public BindingContext BindingContext
+		public BindingContext? BindingContext
 		{
 			get => _context ??= new BindingContext();
 			set => _context = value;
@@ -48,4 +55,5 @@ namespace cmdwtf.Toolkit.WinForms.Controls.Bindable
 			_context = null;
 		}
 	}
+#endif // NET7_0_OR_GREATER
 }

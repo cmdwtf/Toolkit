@@ -47,7 +47,7 @@ namespace cmdwtf.Toolkit
 		/// starts the process, the most recent exception thrown will be thrown after the functions
 		/// attempts all verbs it intends to try.
 		/// </remarks>
-		public static Process Execute(string fileName, string arguments = "", ExecuteOptions options = null)
+		public static Process? Execute(string fileName, string arguments = "", ExecuteOptions? options = null)
 		{
 			const string noVerb = "";
 			const string verbOpenAs = "openas";
@@ -63,7 +63,7 @@ namespace cmdwtf.Toolkit
 				verbsToAttempt.Add(verbOpenAs);
 			}
 
-			Exception startException = null;
+			Exception? startException = null;
 
 			for (int scan = 0; scan < verbsToAttempt.Count; ++scan)
 			{

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 
 namespace cmdwtf.Toolkit.WinForms.Native
@@ -118,7 +118,7 @@ namespace cmdwtf.Toolkit.WinForms.Native
 
 			public bool Equals(RECT r) => r.Left == Left && r.Top == Top && r.Right == Right && r.Bottom == Bottom;
 
-			public override bool Equals(object obj)
+			public override bool Equals(object? obj)
 			{
 				return obj switch
 				{

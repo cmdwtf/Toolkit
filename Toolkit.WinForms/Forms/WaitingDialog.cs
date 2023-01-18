@@ -39,7 +39,7 @@ namespace cmdwtf.Toolkit.WinForms.Forms
 		private string _timeoutContent = string.Empty;
 		private STimeSpan _retryTimeout = STimeSpan.FromSeconds(1);
 		private readonly Stopwatch _retryStopwatch = new();
-		private object _retryContext = null;
+		private object? _retryContext = null;
 
 		private readonly Stopwatch _hideDialogStopwatch = new();
 		private STimeSpan _hideDialogTimeout = STimeSpan.FromSeconds(1);
@@ -58,10 +58,10 @@ namespace cmdwtf.Toolkit.WinForms.Forms
 		/// can be invoked by the user pressing the 'Retry' button on the dialog.
 		/// </summary>
 		/// <param name="context">The context that was provided when the <see cref="WaitingDialog"/> was shown.</param>
-		public delegate void RetryActionDelegate(object context);
+		public delegate void RetryActionDelegate(object? context);
 
-		private CheckForDoneWaitingDelegate _checkForDoneFunc = null;
-		private RetryActionDelegate _retryAction = null;
+		private CheckForDoneWaitingDelegate? _checkForDoneFunc = null;
+		private RetryActionDelegate? _retryAction = null;
 
 		private bool _inTimeoutMode = false;
 
@@ -102,10 +102,10 @@ namespace cmdwtf.Toolkit.WinForms.Forms
 			string mainInstruction,
 			string content,
 			CheckForDoneWaitingDelegate checkForDoneFunc,
-			string timeoutMainInstruction = null,
-			string timeoutContent = null,
-			RetryActionDelegate retryAction = null,
-			object retryContext = null,
+			string? timeoutMainInstruction = null,
+			string? timeoutContent = null,
+			RetryActionDelegate? retryAction = null,
+			object? retryContext = null,
 			STimeSpan retryTimeout = default,
 			STimeSpan disableButtonsFor = default,
 			STimeSpan hideDialogFor = default
@@ -134,14 +134,14 @@ namespace cmdwtf.Toolkit.WinForms.Forms
 		/// <see cref="DialogResult.Cancel"/> value will be returned.
 		/// </returns>
 		public static DialogResult Show(
-			IWin32Window owner,
+			IWin32Window? owner,
 			string mainInstruction,
 			string content,
 			CheckForDoneWaitingDelegate checkForDoneFunc,
-			string timeoutMainInstruction = null,
-			string timeoutContent = null,
-			RetryActionDelegate retryAction = null,
-			object retryContext = null,
+			string? timeoutMainInstruction = null,
+			string? timeoutContent = null,
+			RetryActionDelegate ?retryAction = null,
+			object? retryContext = null,
 			STimeSpan retryTimeout = default,
 			STimeSpan disableButtonsFor = default,
 			STimeSpan hideDialogFor = default

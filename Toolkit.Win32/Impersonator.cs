@@ -28,6 +28,7 @@ namespace cmdwtf.Toolkit.Win32
 		{
 			CurrentIdentity = WindowsIdentity.GetCurrent();
 		}
+
 		/// <summary>
 		/// Creates a new instance of the Impersonator class, and logs in immediately.
 		/// You can use this constructor in a using statement for easy lifetime management.
@@ -52,7 +53,7 @@ namespace cmdwtf.Toolkit.Win32
 		/// The identity associated with the Impersonator. If you are not logged
 		/// in, then it will represent your current user's identity.
 		/// </summary>
-		public WindowsIdentity CurrentIdentity { get; private set; }
+		public WindowsIdentity? CurrentIdentity { get; private set; }
 
 		/// <summary>
 		/// Gets a value indicating whether we are logged on or not.
@@ -138,7 +139,7 @@ namespace cmdwtf.Toolkit.Win32
 		/// <exception cref="System.UnauthorizedAccessException">You are not logged on as a user to impersonate!</exception>
 		public T RunImpersonated<T>(Func<T> func)
 		{
-			if (LoggedOn == false)
+			if (LoggedOn == false || CurrentIdentity == null)
 			{
 				throw new UnauthorizedAccessException("You are not logged on as a user to impersonate!");
 			}
@@ -157,7 +158,7 @@ namespace cmdwtf.Toolkit.Win32
 		/// <exception cref="System.UnauthorizedAccessException">You are not logged on as a user to impersonate!</exception>
 		public void RunImpersonated(Action action)
 		{
-			if (LoggedOn == false)
+			if (LoggedOn == false || CurrentIdentity == null)
 			{
 				throw new UnauthorizedAccessException("You are not logged on as a user to impersonate!");
 			}
@@ -176,8 +177,7 @@ namespace cmdwtf.Toolkit.Win32
 		/// <returns>A task that represents the asynchronous operation of func.</returns>
 		public async Task<T> RunImpersonatedAsync<T>(Func<Task<T>> func)
 		{
-
-			if (LoggedOn == false)
+			if (LoggedOn == false || CurrentIdentity == null)
 			{
 				throw new UnauthorizedAccessException("You are not logged on as a user to impersonate!");
 			}
@@ -192,8 +192,7 @@ namespace cmdwtf.Toolkit.Win32
 		/// <returns> A task that represents the asynchronous operation of the provided <see cref="System.Func{TResult}"/>.</returns>
 		public async Task RunImpersonatedAsync(Func<Task> func)
 		{
-
-			if (LoggedOn == false)
+			if (LoggedOn == false || CurrentIdentity == null)
 			{
 				throw new UnauthorizedAccessException("You are not logged on as a user to impersonate!");
 			}

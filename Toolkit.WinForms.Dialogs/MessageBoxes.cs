@@ -16,13 +16,13 @@ namespace cmdwtf.Toolkit.WinForms
 	/// </summary>
 	public static class MessageBoxes
 	{
-		internal static DialogResult Show(IWin32Window owner, string text, string caption,
+		internal static DialogResult Show(IWin32Window? owner, string text, string caption,
 			MessageBoxButtons buttons = MessageBoxButtons.OK,
-			MessageBoxIcon image = MessageBoxIcon.None, string content = null)
+			MessageBoxIcon image = MessageBoxIcon.None, string? content = null)
 			=> Show(owner, text, caption, buttons, image, null, content);
 
-		internal static DialogResult Show(IWin32Window owner, string text, string caption,
-			MessageBoxButtons buttons, MessageBoxIcon image, Icon customIcon, string content = null)
+		internal static DialogResult Show(IWin32Window? owner, string text, string caption,
+			MessageBoxButtons buttons, MessageBoxIcon image, Icon? customIcon, string? content = null)
 		{
 			var box = new TaskDialog()
 			{
@@ -79,7 +79,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog. It is optional.</param>
 		/// <param name="content">The content. This is the regular text shown below the main instruction. It is optional.</param>
 		/// <returns>The <see cref="DialogResult"/> from the option the user chose.</returns>
-		public static DialogResult Error(IWin32Window owner, string text, string caption = null, string content = null)
+		public static DialogResult Error(IWin32Window? owner, string text, string? caption = null, string? content = null)
 			=> Show(owner, text, caption ?? "Error", image: MessageBoxIcon.Error, content: content);
 
 		/// <summary>
@@ -90,7 +90,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog. It is optional.</param>
 		/// <param name="content">The content. This is the regular text shown below the main instruction. It is optional.</param>
 		/// <returns>The <see cref="DialogResult"/> from the option the user chose.</returns>
-		public static DialogResult Error(string text, string caption = null, string content = null)
+		public static DialogResult Error(string text, string? caption = null, string? content = null)
 			=> Error(null, text, caption, content);
 
 
@@ -103,7 +103,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog. It is optional.</param>
 		/// <param name="content">The content. This is the regular text shown below the main instruction. It is optional.</param>
 		/// <returns>The <see cref="DialogResult"/> from the option the user chose.</returns>
-		public static DialogResult Success(IWin32Window owner, string text, string caption = null, string content = null)
+		public static DialogResult Success(IWin32Window? owner, string text, string? caption = null, string? content = null)
 			=> Show(owner, text, caption ?? "Success", image: MessageBoxIcon.Information, content: content);
 
 
@@ -115,7 +115,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog. It is optional.</param>
 		/// <param name="content">The content. This is the regular text shown below the main instruction. It is optional.</param>
 		/// <returns>The <see cref="DialogResult"/> from the option the user chose.</returns>
-		public static DialogResult Success(string text, string caption = null, string content = null)
+		public static DialogResult Success(string text, string? caption = null, string? content = null)
 			=> Success(null, text, caption, content);
 
 		/// <summary>
@@ -127,7 +127,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog. It is optional.</param>
 		/// <param name="content">The content. This is the regular text shown below the main instruction. It is optional.</param>
 		/// <returns>The <see cref="DialogResult"/> from the option the user chose.</returns>
-		public static DialogResult Information(IWin32Window owner, string text, string caption = null, string content = null)
+		public static DialogResult Information(IWin32Window? owner, string text, string? caption = null, string? content = null)
 			=> Show(owner, text, caption ?? "Information", image: MessageBoxIcon.Information, content: content);
 
 		/// <summary>
@@ -138,7 +138,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog. It is optional.</param>
 		/// <param name="content">The content. This is the regular text shown below the main instruction. It is optional.</param>
 		/// <returns>The <see cref="DialogResult"/> from the option the user chose.</returns>
-		public static DialogResult Information(string text, string caption = null, string content = null)
+		public static DialogResult Information(string text, string? caption = null, string? content = null)
 			=> Information(null, text, caption, content);
 
 		/// <summary>
@@ -150,7 +150,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog. It is optional.</param>
 		/// <param name="content">The content. This is the regular text shown below the main instruction. It is optional.</param>
 		/// <returns>The <see cref="DialogResult"/> from the option the user chose.</returns>
-		public static DialogResult Warning(IWin32Window owner, string text, string caption = null, string content = null)
+		public static DialogResult Warning(IWin32Window? owner, string text, string? caption = null, string? content = null)
 			=> Show(owner, text, caption ?? "Warning", image: MessageBoxIcon.Warning, content: content);
 
 		/// <summary>
@@ -161,7 +161,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog. It is optional.</param>
 		/// <param name="content">The content. This is the regular text shown below the main instruction. It is optional.</param>
 		/// <returns>The <see cref="DialogResult"/> from the option the user chose.</returns>
-		public static DialogResult Warning(string text, string caption = null, string content = null)
+		public static DialogResult Warning(string text, string? caption = null, string? content = null)
 			=> Warning(null, text, caption, content);
 
 		/// <summary>
@@ -173,7 +173,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog. It is optional.</param>
 		/// <param name="content">The content. This is the regular text shown below the main instruction. It is optional.</param>
 		/// <returns>The <see cref="DialogResult"/> from the option the user chose.</returns>
-		public static DialogResult YesNo(IWin32Window owner, string text, string caption = null, string content = null)
+		public static DialogResult YesNo(IWin32Window? owner, string text, string? caption = null, string? content = null)
 			=> Show(owner, text, caption ?? "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question, content: content);
 
 		/// <summary>
@@ -184,7 +184,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="caption">The caption to show in the dialog. This is the text shown on the title bar of the dialog. It is optional.</param>
 		/// <param name="content">The content. This is the regular text shown below the main instruction. It is optional.</param>
 		/// <returns>The <see cref="DialogResult"/> from the option the user chose.</returns>
-		public static DialogResult YesNo(string text, string caption = null, string content = null)
+		public static DialogResult YesNo(string text, string? caption = null, string? content = null)
 			=> YesNo(null, text, caption, content);
 
 		/// <summary>
@@ -196,7 +196,7 @@ namespace cmdwtf.Toolkit.WinForms
 		/// <param name="buttonOptions">An array of strings to show as options on buttons.</param>
 		/// <param name="buttonNotes">An array of strings that are the notes shown under each of the buttons. These are optional.</param>
 		/// <returns>The index of the option the user chose, or -1 if they canceled.</returns>
-		public static int TaskQuestion(string mainInstruction, string text, string caption, string[] buttonOptions, string[] buttonNotes = null)
+		public static int TaskQuestion(string mainInstruction, string text, string caption, string[] buttonOptions, string[]? buttonNotes = null)
 		{
 			var td = new TaskDialog
 			{

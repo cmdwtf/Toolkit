@@ -17,7 +17,7 @@ namespace cmdwtf.Toolkit.WinForms.Forms
 		private readonly System.Diagnostics.Stopwatch _timeElapsed = new();
 		private STimeSpan TimeOut { get; set; }
 
-		private ForcedWaitMessageBox(IWin32Window owner, string message, string title, STimeSpan timeOut)
+		private ForcedWaitMessageBox(IWin32Window? owner, string message, string title, STimeSpan timeOut)
 		{
 			InitializeComponent();
 			Owner = owner as Form;
@@ -50,7 +50,7 @@ namespace cmdwtf.Toolkit.WinForms.Forms
 		/// <param name="title">The caption text to display on the form.</param>
 		/// <param name="timeout">The amount of time that must elapse before the user can make a selection.</param>
 		/// <returns>The choice the user made.</returns>
-		public static DialogResult Show(IWin32Window owner, string message, string title, STimeSpan timeout = default)
+		public static DialogResult Show(IWin32Window? owner, string message, string title, STimeSpan timeout = default)
 		{
 			ForcedWaitMessageBox mb = new(owner, message, title, timeout);
 			return mb.ShowDialog(owner);
@@ -66,7 +66,7 @@ namespace cmdwtf.Toolkit.WinForms.Forms
 		/// <param name="ok_text">The optional text to display on the "OK" button.</param>
 		/// <param name="cancel_text">The optional text to display on the "Cancel" button.</param>
 		/// <returns>The choice the user made.</returns>
-		public static DialogResult Show(IWin32Window owner, string message, string title, STimeSpan timeout, string ok_text = "&OK", string cancel_text = "&Cancel")
+		public static DialogResult Show(IWin32Window? owner, string message, string title, STimeSpan timeout, string ok_text = "&OK", string cancel_text = "&Cancel")
 		{
 			ForcedWaitMessageBox mb = new(owner, message, title, timeout);
 

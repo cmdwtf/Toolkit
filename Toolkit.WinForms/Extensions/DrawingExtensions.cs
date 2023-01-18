@@ -91,7 +91,7 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 		/// <param name="srcHeight">The source height of the image to draw from. Defaults to -1 (will use Image.Width).</param>
 		/// <param name="attribs">Attributes with which to draw the image with.</param>
 		public static void DrawImageAttributed(this Graphics g, Image image, Rectangle destRect,
-		int srcX = 0, int srcY = 0, int srcWidth = 0, int srcHeight = 0, ImageAttributes attribs = null)
+		int srcX = 0, int srcY = 0, int srcWidth = 0, int srcHeight = 0, ImageAttributes? attribs = null)
 		{
 			if (image == null)
 			{
@@ -488,11 +488,11 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 		#region Text
 
 		/// <inheritdoc cref="DrawString(Graphics, string, Font, Brush, RectangleF, float, StringFormat)"/>
-		public static void DrawString(this Graphics g, string s, Font font, Brush brush, float x, float y, float angle, StringFormat format = null)
+		public static void DrawString(this Graphics g, string s, Font font, Brush brush, float x, float y, float angle, StringFormat? format = null)
 			=> g.DrawString(s, font, brush, new RectangleF(x, y, 0, 0), angle, format);
 
 		/// <inheritdoc cref="DrawString(Graphics, string, Font, Brush, RectangleF, float, StringFormat)"/>
-		public static void DrawString(this Graphics g, string s, Font font, Brush brush, PointF point, float angle, StringFormat format = null)
+		public static void DrawString(this Graphics g, string s, Font font, Brush brush, PointF point, float angle, StringFormat? format = null)
 			=> g.DrawString(s, font, brush, new RectangleF(point.X, point.Y, 0, 0), angle, format);
 
 		/// <summary>
@@ -506,7 +506,7 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 		/// <param name="layoutRect">The <see cref="RectangleF"/> representing the bounds of the text.</param>
 		/// <param name="angle">The angle in degrees the text should be drawn at.</param>
 		/// <param name="format">The optional string formatting options.</param>
-		public static void DrawString(this Graphics g, string s, Font font, Brush brush, RectangleF layoutRect, float angle, StringFormat format = null)
+		public static void DrawString(this Graphics g, string s, Font font, Brush brush, RectangleF layoutRect, float angle, StringFormat? format = null)
 		{
 			// Save the graphics state.
 			GraphicsState state = g.Save();
@@ -621,7 +621,10 @@ namespace cmdwtf.Toolkit.WinForms.Extensions
 					format.FormatFlags &= ~StringFormatFlags.DirectionRightToLeft;
 					break;
 				default:
-					format.UpdateRightToLeft(c.Parent);
+					if (c.Parent != null)
+					{
+						format.UpdateRightToLeft(c.Parent);
+					}
 					break;
 			}
 		}

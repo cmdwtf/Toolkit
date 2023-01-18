@@ -14,7 +14,7 @@ namespace cmdwtf.Toolkit.WinForms.Native
 	{
 		public const string NativeLibrary = "gdiplus.dll";
 
-		private static readonly PropertyInfo PathGradientBrushNativeBrushProperty;
+		private static readonly PropertyInfo? PathGradientBrushNativeBrushProperty;
 
 		static GdiPlus()
 		{
@@ -31,8 +31,15 @@ namespace cmdwtf.Toolkit.WinForms.Native
 		{
 			if (PathGradientBrushNativeBrushProperty != null)
 			{
-				var brushRef = (HandleRef)PathGradientBrushNativeBrushProperty.GetValue(brush);
-				return GdipSetPathGradientGammaCorrection(brushRef, useGammaCorrection);
+				object? handleRefBoxed = PathGradientBrushNativeBrushProperty.GetValue(brush);
+
+				if (handleRefBoxed != null)
+				{
+					var brushRef = (HandleRef)handleRefBoxed;
+					return GdipSetPathGradientGammaCorrection(brushRef, useGammaCorrection);
+				}
+
+				return false;
 			}
 
 			return false;

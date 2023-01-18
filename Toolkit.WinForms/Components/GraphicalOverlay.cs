@@ -34,9 +34,9 @@ namespace cmdwtf.Toolkit.WinForms.Components
 		/// <summary>
 		/// Raised when the component needs to paint.
 		/// </summary>
-		public event EventHandler<PaintEventArgs> Paint;
+		public event EventHandler<PaintEventArgs>? Paint;
 
-		private Form _owner;
+		private Form? _owner;
 
 		/// <summary>
 		/// The owning form of the overlay. The overlay will draw on top of
@@ -45,7 +45,7 @@ namespace cmdwtf.Toolkit.WinForms.Components
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Form Owner
 		{
-			get => _owner;
+			get => _owner ?? throw new InvalidOperationException();
 			set
 			{
 				// The owner form can only be set once.
@@ -70,8 +70,8 @@ namespace cmdwtf.Toolkit.WinForms.Components
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">The event data.</param>
-		private void Form_Resize(object sender, EventArgs e)
-			=> _owner.Invalidate(true);
+		private void Form_Resize(object? sender, EventArgs e)
+			=> _owner?.Invalidate(true);
 
 		/// <summary>
 		/// Resubscribes the provided control's Paint &amp; ControlAdded events
@@ -101,8 +101,13 @@ namespace cmdwtf.Toolkit.WinForms.Components
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">The event data.</param>
-		private void Control_ControlAdded(object sender, ControlEventArgs e) =>
-			ConnectPaintEventHandlers(e.Control);
+		private void Control_ControlAdded(object? sender, ControlEventArgs e)
+		{
+			if (e.Control != null)
+			{
+				ConnectPaintEventHandlers(e.Control);
+			}
+		}
 
 		/// <summary>
 		/// Handle's a control's paint event to allow the user to draw on top
@@ -110,19 +115,19 @@ namespace cmdwtf.Toolkit.WinForms.Components
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">The event data.</param>
-		private void Control_Paint(object sender, PaintEventArgs e)
+		private void Control_Paint(object? sender, PaintEventArgs e)
 		{
 			// As each control on the form is repainted, this handler is called.
 			Control control = sender as Control ?? throw new InvalidOperationException($"{nameof(sender)} must be a ${nameof(Control)}.");
-			Point location;
+			Point location = control.Location;
 
 			// Determine the location of the control's client area relative to the form's client area.
-			if (control == _owner)
+			if (control == _owner || _owner == null)
 			{
 				// The form's client area is already form-relative.
-				location = control.Location;
+				// Nothing to do here.
 			}
-			else
+			else if (control.Parent != null)
 			{
 				// The control may be in a hierarchy, so convert to screen coordinates and then back to form coordinates.
 				location = _owner.PointToClient(control.Parent.PointToScreen(control.Location));
@@ -146,7 +151,7 @@ namespace cmdwtf.Toolkit.WinForms.Components
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
 		/// <param name="e">The event data.</param>
-		private void OnPaint(object sender, PaintEventArgs e) =>
+		private void OnPaint(object? sender, PaintEventArgs e) =>
 			Paint?.Invoke(sender, e);
 	}
 }

@@ -10,7 +10,7 @@ namespace cmdwtf.Toolkit.WinForms
 	/// </summary>
 	public struct SynchronizationContextAwaiter : INotifyCompletion
 	{
-		private static readonly SendOrPostCallback PostCallback = state => ((Action)state)();
+		private static readonly SendOrPostCallback PostCallback = state => { if (state is Action a) { a(); } };
 
 		private readonly SynchronizationContext _context;
 

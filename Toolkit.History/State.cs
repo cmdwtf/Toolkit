@@ -23,7 +23,7 @@ namespace cmdwtf.Toolkit.History
 			Info = info;
 		}
 
-		private readonly string _state = null;
+		private readonly string? _state = null;
 
 		private static readonly JsonSerializerSettings SerializerSettings = new()
 		{
@@ -45,14 +45,14 @@ namespace cmdwtf.Toolkit.History
 		/// Gets the deserialzed object stored in the state.
 		/// </summary>
 		/// <returns>The object.</returns>
-		public T GetState()
-			=> JsonConvert.DeserializeObject<T>(_state, SerializerSettings);
+		public T? GetState()
+			=> JsonConvert.DeserializeObject<T>(_state ?? string.Empty, SerializerSettings);
 
 		/// <summary>
 		/// Gets the deserialized object, stored in the state, implicitly.
 		/// </summary>
 		/// <param name="historyState">The state to deserialize.</param>
-		public static implicit operator T(State<T> historyState)
+		public static implicit operator T?(State<T> historyState)
 		{
 			return historyState.GetState();
 		}
