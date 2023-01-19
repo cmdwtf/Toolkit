@@ -43,12 +43,9 @@ namespace cmdwtf.Toolkit
 		/// <returns>A value representing the percentage normalized from 0m to 1m. Unclamped.</returns>
 		public static decimal GetPercentageOf(this STimeSpan partialTime, STimeSpan fullTime)
 		{
-			if (fullTime.TotalMilliseconds == 0)
-			{
-				return 0m;
-			}
-
-			return (decimal)(partialTime.TotalMilliseconds / fullTime.TotalMilliseconds);
+			return fullTime.TotalMilliseconds == 0
+				? 0m
+				: (decimal)(partialTime.TotalMilliseconds / fullTime.TotalMilliseconds);
 		}
 
 		/// <summary>
@@ -63,12 +60,9 @@ namespace cmdwtf.Toolkit
 			long totalTicks = fullTime.Ticks;
 			var result = STimeSpan.FromTicks((long)(totalTicks * percentage));
 
-			if (roundTo != null)
-			{
-				return result.RoundToNearest(roundTo.Value);
-			}
-
-			return result;
+			return roundTo != null
+				? result.RoundToNearest(roundTo.Value)
+				: result;
 		}
 
 		/// <summary>
@@ -87,12 +81,9 @@ namespace cmdwtf.Toolkit
 			long totalTicks = span.Ticks;
 			var result = STimeSpan.FromTicks((long)(totalTicks * percentage));
 
-			if (roundTo != null)
-			{
-				return result.RoundToNearest(roundTo.Value);
-			}
-
-			return result;
+			return roundTo != null
+				? result.RoundToNearest(roundTo.Value)
+				: result;
 		}
 
 		/// <summary>
